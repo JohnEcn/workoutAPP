@@ -1,0 +1,94 @@
+<?php
+require_once("userDB.php");
+
+function userInsert($username,$email,$password,$passwordConfirmation)
+{   
+    $errorLog = [];
+    $username  = validateUsername($username,$errorLog);
+    $email = validateEmail($email,$errorLog);
+    $password = validatePassword($password,$passwordConfirmation,$errorLog);
+
+    if($username != false && $email != false && $password != false)
+    {  
+        $dbConnection = new DBconnect();
+        $password = password_hash($password,PASSWORD_DEFAULT);
+        $status = $dbConnection->insertUser($username,$password,$email);
+        return $status;
+    }
+    else
+    {
+        return $errorLog;
+    }    
+}
+function validatePassword($pass,$passConf,&$errorLog){
+    if($pass == "")
+    {
+         $errorLog["PASSWORD"] = "EMPTY"; 
+          return false;
+    }
+    $passLengthValid = 6 < strlen($pass) && strlen($pass) < 16 ? true : false;
+    $notContainSpace = strpos($pass," ") == false ? true : false;
+    $containsDigit = preg_match('~[0-9]+~',$pass) === 1? true : false;
+    $containLetter = preg_match('/^[a-zA-Z]+$/',$pass) === 1? true : false;
+    $passMatch = $pass === $passConf ? true : false;
+
+    if($passLengthValid && $notContainSpace && $containsDigit && $passMatch && $passMatch)
+    {  
+        return $pass;
+    }
+    else
+    {   $errorLog["PASSWORD"] = "INVALID";
+        return false;
+    }
+}
+function validateEmail($mail,&$errorLog){
+    if($mail !== "")
+    { 
+        $mail = trim($mail);
+        
+        if(filter_var($mail, FILTER_VALIDATE_EMAIL))
+        {
+            return  $mail;
+        }
+        else
+        {   
+            $errorLog["EMAIL"] = "INVALID";         
+            return false;
+        }        
+    }
+    else
+    {     $errorLog["EMAIL"] = "EMPTY"; 
+          return false;
+    }
+}
+function validateUsername($user,&$errorLog){
+    if($user !== "")
+    { 
+        $user = trim($user);
+        $user = strtolower($user);
+
+        $dbConnection = new DBconnect();
+        $usernameValid = $dbConnection->checkUserUnique($user);
+
+        if(count($usernameValid) != 0){
+            $errorLog["USERNAME"] = "ALREADY EXISTS";
+            return false;
+        }
+        
+        if(strlen($user) >= 6 && strlen($user) < 16 )
+        {
+            return $user;
+        }
+        else
+        {   
+            $errorLog["USERNAME"] = "INVALID LENGTH";       
+            return false;
+        }        
+    }
+    else
+    {        
+         $errorLog["USERNAME"] = "EMPTY"; 
+          return false;
+    }
+}
+?>
