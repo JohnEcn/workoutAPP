@@ -54,7 +54,8 @@ function userSignUp($parameters)
     return $response;
     
 }
-function endAuth($cookies){
+function endAuth($cookies)
+{
    $response = ["status"=>"","message"=>""];
 
    if(isset($cookies['token']))
@@ -80,6 +81,21 @@ function endAuth($cookies){
         $response["message"] = "UNATHORIZED USER";
    }
    return $response;
+}
+function checkAuth($cookies)
+{   
+    require_once("../Model/userAuth/checkAuth.php");
+    if(isset($cookies['token']))
+    {
+        $token = $cookies['token'];
+        $userID = getUserID($token);
+    }
+    else
+    {
+        $userID = NULL;
+    }
+    
+    return $userID;
 }
 
 ?>

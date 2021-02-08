@@ -26,22 +26,54 @@
                             unset($response["response"]["token"]);
                         }                        
                     break;
+                    
                     case "PUT":
                         $response["response"] = userSignUp($httpBodyParameters);
                     break; 
+                    
                     case "DELETE":
                         $response["response"] = endAuth($cookies);
                         setcookie("token", "deleted",time()-3600);
                     break;
-                    default:
-                        errorMessage("400");
-                    break;  
                     
+                    default:
+                        //echo userAuth documentation
+                    break;                      
                 }
             }
             elseif($explodedURL[1] == "workout")
             {
+                $userID = checkAuth($cookies);
 
+                if($userID == NULL)
+                {   
+                    $response["status"] = "401 (UNATHORIZED)";
+                    $response["message"] = "NOT AUTHORIZED TO ACCESS WORKOUTS";
+                }
+                else
+                {
+                     switch($requestMethod)
+                    {
+                        case "POST":echo "POST - $userID";
+                                       
+                        break;
+                    
+                        case "PUT":echo "PUT - $userID";
+                        
+                        break; 
+                    
+                        case "DELETE":echo "DELETE - $userID";
+                        
+                        break;
+                        case "GET":echo "GET - $userID";
+                        
+                        break;
+                    
+                        default: echo "DEFAULT";
+                        
+                        break;                      
+                    }
+                }
             }
             elseif($explodedURL[1] == "trainSession")
             {
