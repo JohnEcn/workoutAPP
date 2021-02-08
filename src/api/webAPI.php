@@ -67,8 +67,12 @@ function endAuth($cookies){
            $response["status"] = "401 (UNATHORIZED)";
            $response["message"] = $status;
        }
-       $response["status"] = "200 (OK)";
-       $response["message"] = "USER AUTHORIZATION ENDED";
+       else
+       {
+            $response["status"] = "200 (OK)";
+            $response["message"] = "USER AUTHORIZATION ENDED";
+       }
+       
    }
    else
    {

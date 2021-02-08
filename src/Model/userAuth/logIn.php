@@ -4,10 +4,19 @@ function getToken($userID)
 {
     $dbConnection = new DBconnect();
     
-    $newToken = base64_encode(random_bytes(32));
-    $dbConnection->insertToken($userID,$newToken);
-    $token = $dbConnection->retrieveToken($userID);
-    return $token[0]['token'];
+    while(true)
+    {
+        $newToken = base64_encode(random_bytes(32));
+        $tokenExists = $dbConnection->retrieveUserID($newToken);
+
+        if($tokenExists == NULL)
+        {
+            $dbConnection->insertToken($userID,$newToken);
+            $token = $dbConnection->retrieveToken($userID);
+            return $token[0]['token'];
+            break;
+        }    
+    }
 }
 function userLogIn($username,$password)
 {   
@@ -16,7 +25,7 @@ function userLogIn($username,$password)
         $username = trim($username);
         $dbConnection = new DBconnect();
         $user = $dbConnection->userLogin($username,$password);
-        if($user != null)
+        if($user != NULL)
         {
             $authorisation = password_verify($password,$user[0]['password']);
         }

@@ -31,6 +31,7 @@
                     break; 
                     case "DELETE":
                         $response["response"] = endAuth($cookies);
+                        setcookie("token", "deleted",time()-3600);
                     break;
                     default:
                         errorMessage("400");
