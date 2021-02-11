@@ -29,10 +29,11 @@ function validatePassword($pass,$passConf,&$errorLog){
     $passLengthValid = 6 < strlen($pass) && strlen($pass) < 16 ? true : false;
     $notContainSpace = strpos($pass," ") == false ? true : false;
     $containsDigit = preg_match('~[0-9]+~',$pass) === 1? true : false;
-    $containLetter = preg_match('/^[a-zA-Z]+$/',$pass) === 1? true : false;
+    $containLetter = preg_match('~[a-zA-Z]~',$pass) === 1? true : false;
+    $NotcontainSymbol = preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $pass) === 1? false : true;
     $passMatch = $pass === $passConf ? true : false;
 
-    if($passLengthValid && $notContainSpace && $containsDigit && $passMatch && $passMatch)
+    if($passLengthValid && $containLetter && $notContainSpace && $containsDigit && $passMatch  && $NotcontainSymbol)
     {  
         return $pass;
     }
@@ -74,16 +75,27 @@ function validateUsername($user,&$errorLog){
             $errorLog["USERNAME"] = "ALREADY EXISTS";
             return false;
         }
-        
-        if(strlen($user) >= 6 && strlen($user) < 16 )
-        {
+
+        $passLengthValid = 6 <= strlen($user) && strlen($user) <= 16 ? true : false;
+        $notContainSpace = strpos($user," ") == false ? true : false;
+        $containLetter = preg_match('~[a-zA-Z]~',$user) === 1? true : false;
+        $NotcontainSymbol = preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $user) === 1? false : true;
+    
+
+        if($passLengthValid && $containLetter && $notContainSpace  && $NotcontainSymbol)
+        {  
             return $user;
         }
-        else
+        elseif(!$passLengthValid)
         {   
             $errorLog["USERNAME"] = "INVALID LENGTH";       
             return false;
         }        
+        else
+        {
+            $errorLog["USERNAME"] = "INVALID";   
+        }
+            
     }
     else
     {        
