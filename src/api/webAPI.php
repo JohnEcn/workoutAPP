@@ -23,7 +23,7 @@ function userAuth($parameters)
     else
     {
         $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "WRONG DATA FORMAT";
+        $response["message"] = "REQUIRED FIELDS MISSING";
     }
     return $response;
 }
