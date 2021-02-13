@@ -1,6 +1,6 @@
 <?php
-
-class workout
+require_once("exercise.php");
+class workout 
 {
     private $name;
     private $workoutID;
@@ -10,8 +10,10 @@ class workout
     public function __construct($name,$workoutID,$userID,$exerciseList)
     {
         if($name == NULL && $exerciseList == NULL)
-        {
-            $this->retrieveWorkoutInDB();    
+        {   
+            $this->userID = $userID;
+            $this->workoutID = $workoutID;
+            $this->retrieveWorkoutFromDB();   
         }
         else
         {
@@ -29,7 +31,6 @@ class workout
         
         $routineID = $workoutDB->insertWorkout($this->userID,$this->name);
         
-        require_once("exercise.php");
         $exercises = $this->exerciseList;
         
         for($i=0; $i<count($exercises); $i++)
@@ -42,44 +43,49 @@ class workout
             $exerciseID = NULL;
             
             $exercise = new exercise($name,$exerciseID,$workoutID,$sets,$rest,$index);
-        }
-        //2.Get the auto incremeted routineId of the previous insertion
-        //3.Create a new exercise using the routineID
+        }        
     }
-    private function retrieveWorkoutInDB()
+    private function retrieveWorkoutFromDB()
     {
-        $this->name = "Push workout";
-        $this->workoutID = "A123";
-        $this->userID = 1592;
-        $this->exerciseList = 
-        [
-            ["workoutID"=>"A123","exerciseID"=>9832,"name"=>"Bench Press","sets"=>4,"rest"=>120],
-            ["workoutID"=>"A123","exerciseID"=>9833,"name"=>"Overhead Press","sets"=>3,"rest"=>90],
-            ["workoutID"=>"A123","exerciseID"=>9834,"name"=>"Tricep extensions","sets"=>6,"rest"=>60],
-            ["workoutID"=>"A123","exerciseID"=>9835,"name"=>"Shoulder press","sets"=>6,"rest"=>90]
-        ];
-    }    
-    public function addExercise($exercise)
-    {
-        //add exercise to exericeList
+        require_once("workoutDB.php");
+        $workoutDB = new workoutDB();        
+        $workoutInfo = $workoutDB->retrieveWorkout($this->userID,$this->workoutID);
+        
+        if(isset($workoutInfo[0]['routineName']))
+        {
+            $this->name = $workoutInfo[0]['routineName'];
+            for($i=0; $i<count($workoutInfo); $i++)
+            {   
+                $exerciseID =  $workoutInfo[$i]['exerciseID'];         
+                $exercise = new exercise(NULL,$exerciseID,$this->workoutID,NULL,NULL,NULL);
+                $this->exerciseList[$i] = $exercise; 
+            }       
+        }         
     }
-    public function setName($name)
+    public function toASSOC(){
+        $workoutASSOC=[];
+        $workoutASSOC['name'] = $this->name;
+        $workoutASSOC['workoutID'] = $this->workoutID;
+
+        for($i=0; $i<count($this->exerciseList); $i++)
+        {   
+            $exerciseASSOC  =  $this->exerciseList[$i]->toASSOC();
+            $workoutASSOC['exerciseList'][$i] = $exerciseASSOC; 
+        }  
+
+        return $workoutASSOC;
+    } 
+    public function NULLCheck()
     {
-        $this->name = $name;
-    }  
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function getWorkoudID()
-    {
-        return $this->workoutID;
-    }
-    public function getExerciseList()
-    {
-        return $this->exerciseList;
-    }
-    
+       if($this->name == NULL)
+       {
+           return NULL;
+       }
+       else
+       {
+           return 1;
+       }
+    }     
 }
 
 

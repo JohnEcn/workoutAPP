@@ -1,57 +1,36 @@
 <?php
-require_once("workout.php");  
+require_once("workout.php"); 
 
-$WorkoutStr =
-'{
-    "workout":
-    {
-        "name":"test",
-        "userID":666,
-        "exerciseList":
-        [
-            {"name":"Bench press","sets":6,"rest":66},
-            {"name":"Push ups","sets":3,"rest":66},
-            {"name":"Military Press","sets":4,"rest":66},
-            {"name":"Triceps Dips","sets":6,"rest":66}
-        ]
-    }
-}';
-function insertWorkout($WorkoutStr)
+function insertWorkout($Workout,$userID)
 {
     $name;
-    $userID;
     $exerciseList;
     
-    $dataStatus = workoutDataHandle($WorkoutStr,$name,$userID,$exerciseList); 
+    $dataStatus = workoutDataHandle($Workout,$name,$exerciseList); 
     
     if($dataStatus == "VALID")
     {  
         $workout = new workout($name,NULL,$userID,$exerciseList);
-        var_dump($workout);
         return "SUCCESS";
     }
     else
     {
-        echo $dataStatus;
         return $dataStatus;
     }  
 }
-function workoutDataHandle($JsonStr,&$name,&$userID,&$exercises)
+function workoutDataHandle($workout,&$name,&$exercises)
 {
-    $workout = json_decode($JsonStr,true); 
-    
+   
     $nameSet = isset($workout['workout']['name']);
-    $userIDSet = isset($workout['workout']['userID']);
     $exercisesSet = isset($workout['workout']['exerciseList']);
     
-    if($nameSet && $userIDSet && $exercisesSet)
+    if($nameSet &&  $exercisesSet)
     {
         $name =  $workout['workout']['name'];
-        $userID =  $workout['workout']['userID'];
         $exercises = $workout['workout']['exerciseList'];   
     }    
     
-    $dataStatus = validateWorkoutData($name,$userID,$exercises);
+    $dataStatus = validateWorkoutData($name,$exercises);
 
     if($dataStatus != "VALID")
     {
@@ -59,17 +38,17 @@ function workoutDataHandle($JsonStr,&$name,&$userID,&$exercises)
     }  
     return "VALID";
 }
-function validateWorkoutData($name,$userID,$exerciseList)
+function validateWorkoutData($name,$exerciseList)
 {
-    if($name == "" || $userID == "" || $exerciseList == NULL)
+    if($name == "" || $exerciseList == NULL)
     {
         return "REQUIRED DATA MISSING";
     }
     else
     {   
-        // require_once("workoutDB.php");  
-        // $workoutBD = new workoutDBconnect();
-        // $nameAvailability = $workoutBD->checkIfNameExists($userID,$workoutName);
+        //require_once("workoutDB.php");  
+        // $workoutBD = new workoutDB();
+        //$nameAvailability = $workoutBD->checkIfNameExists($userID,$workoutName);
 
         if(false)
         {
@@ -99,7 +78,7 @@ function validateExercises($exerciseList)
             $exerciseSetsValid = checkExerciseSets($exerciseList[$i]["sets"]);
             $exerciseRestValid = checkExerciseRest($exerciseList[$i]["rest"]); 
             
-            if(!$exerciseNameValid || !$exerciseSetsValid || !$exercRest)
+            if(!$exerciseNameValid || !$exerciseSetsValid || !$exerciseRestValid)
             {
                 return false; 
             }            
@@ -113,7 +92,7 @@ function validateExercises($exerciseList)
 }
 function checkExerciseName($name)
 {
-    $exerciseData = json_decode(file_get_contents('exerciseData.json'));
+    $exerciseData = json_decode(file_get_contents(dirname(__FILE__).'/exerciseData.json'));
     for($i = 0;$i < count($exerciseData); $i++)
     {
         if(strtoupper($name) == strtoupper($exerciseData[$i][0]))
@@ -149,8 +128,15 @@ function checkExerciseRest($rest)
 function retrieveWorkout($workoutID,$userID)
 {
     $workout = new workout(NULL,$workoutID,$userID,NULL);
-    //var_dump($workout);
+    if($workout->NULLCheck() == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        $workoutASSOC = $workout->toASSOC();    
+        return $workoutASSOC;
+    }
+    
 }
-insertWorkout($WorkoutStr);
-
 ?>

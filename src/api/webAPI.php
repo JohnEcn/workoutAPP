@@ -97,6 +97,40 @@ function checkAuth($cookies)
     
     return $userID;
 }
+function saveWorkout($httpBody,$userID)
+{   $response = [];
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $status  = insertWorkout($httpBody,$userID);
+    
+    if($status == "SUCCESS")
+    {   
+        $response["status"] = "200 (OK)";
+        $response["message"] = $status;
+    }
+    else
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = $status;        
+    }
+    return $response;
+}
+function getWorkout($workoutID,$userID)
+{  
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $responseWorkout = retrieveWorkout($workoutID,$userID);
+    if($responseWorkout != NULL)
+    {   $response["status"] = "200 (OK)";
+        $response["message"] = $responseWorkout;
+    }
+    else
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = "INVALID WORKOUT ID";        
+    }
 
+    return $response;    
+}
 ?>
 

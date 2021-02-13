@@ -1,10 +1,13 @@
 <?php
-    
+    ini_set('session.use_cookies', '0');
     $requestMethod = $_SERVER['REQUEST_METHOD'];
-    $requestURL = $_SERVER['REQUEST_URI'];   
+    $requestURL = $_SERVER['REQUEST_URI'];    
+    if (strpos($requestURL, '?') !== false) 
+    {
+        $requestURL = substr($requestURL, 0, strpos($requestURL, "?"));  
+    }
     $httpBody = file_get_contents('php://input');
     $cookies = $_COOKIE;
-
     $explodedURL = array_slice(explode ( "/" , $requestURL ), 4);    
     $httpBodyParameters =  json_decode($httpBody, true); 
      
@@ -54,7 +57,7 @@
                 {
                      switch($requestMethod)
                     {
-                        case "POST":echo "POST - $userID";
+                        case "POST":$response["response"] = saveWorkout($httpBodyParameters,$userID);
                                        
                         break;
                     
@@ -65,8 +68,17 @@
                         case "DELETE":echo "DELETE - $userID";
                         
                         break;
-                        case "GET":echo "GET - $userID";
-                        
+                        case "GET":
+                            if(isset($_GET['wid']) && $_GET['wid'] !="")
+                            {
+                                $workoutID = $_GET['wid']; 
+                                $response["response"] = getWorkout($workoutID,$userID);   
+                            }
+                            else
+                            {
+                                $response["status"] = "400 (BAD REQUEST)";
+                                $response["message"] = "REQUIRED FIELDS MISSING";
+                            }                   
                         break;
                     
                         default: echo "DEFAULT";
