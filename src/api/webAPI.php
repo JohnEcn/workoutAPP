@@ -98,7 +98,8 @@ function checkAuth($cookies)
     return $userID;
 }
 function saveWorkout($httpBody,$userID)
-{   $response = [];
+{   
+    $response = [];
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status  = insertWorkout($httpBody,$userID);
     

@@ -6,7 +6,7 @@ function insertWorkout($Workout,$userID)
     $name;
     $exerciseList;
     
-    $dataStatus = workoutDataHandle($Workout,$name,$exerciseList); 
+    $dataStatus = workoutDataHandle($Workout,$name,$exerciseList,$userID); 
     
     if($dataStatus == "VALID")
     {  
@@ -18,8 +18,8 @@ function insertWorkout($Workout,$userID)
         return $dataStatus;
     }  
 }
-function workoutDataHandle($workout,&$name,&$exercises)
-{
+function workoutDataHandle($workout,&$name,&$exercises,$userID)
+{   
    
     $nameSet = isset($workout['workout']['name']);
     $exercisesSet = isset($workout['workout']['exerciseList']);
@@ -30,7 +30,7 @@ function workoutDataHandle($workout,&$name,&$exercises)
         $exercises = $workout['workout']['exerciseList'];   
     }    
     
-    $dataStatus = validateWorkoutData($name,$exercises);
+    $dataStatus = validateWorkoutData($name,$exercises,$userID);
 
     if($dataStatus != "VALID")
     {
@@ -38,23 +38,33 @@ function workoutDataHandle($workout,&$name,&$exercises)
     }  
     return "VALID";
 }
-function validateWorkoutData($name,$exerciseList)
+function validateWorkoutData($name,$exerciseList,$userID)
 {
     if($name == "" || $exerciseList == NULL)
     {
         return "REQUIRED DATA MISSING";
     }
+    elseif(preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $name) === 1)
+    {
+        return "INVALID WORKOUT NAME";
+    }
     else
     {   
-        //require_once("workoutDB.php");  
-        // $workoutBD = new workoutDB();
-        //$nameAvailability = $workoutBD->checkIfNameExists($userID,$workoutName);
-
-        if(false)
+        require_once("workoutDB.php");  
+        $workoutBD = new workoutDB();
+        $workoutList = $workoutBD->getWorkoutList($userID);
+        
+        if(isset($workoutList[0]['routineName']))
         {
-            return "WORKOUT NAME NOT UNIQUE";
+            for($i=0; $i<count($workoutList); $i++)
+            {
+                if($workoutList[$i]['routineName'] == $name)
+                {
+                    return "WORKOUT NAME NOT UNIQUE";
+                }
+            }            
         }
-
+        
         $exercisesValid = validateExercises($exerciseList);
 
         if(!$exercisesValid)

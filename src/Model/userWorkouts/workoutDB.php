@@ -81,6 +81,13 @@ class workoutDB
         $statement->bindParam(1, $exerciseID, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getWorkoutList($userID)
+    {
+        $statement = $this->pdo->prepare("SELECT  r.routineID , r.routineName FROM routine r JOIN userroutine u ON r.routineID = u.routineID WHERE userID	= ?");
+        $statement->bindParam(1, $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }    
 }
 ?>
