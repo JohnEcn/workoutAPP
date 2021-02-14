@@ -133,5 +133,24 @@ function getWorkout($workoutID,$userID)
 
     return $response;    
 }
+function getWorkoutList($userID)
+{
+    $response = ["status"=>"","message"=>""];    
+    require_once("../Model/userWorkouts/workoutDB.php");
+    $conn = new workoutDB;
+    $workoutList = $conn->getWorkoutList($userID);
+
+    if(empty($workoutList))
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = "WORKOUT LIST EMPTY";        
+    }
+    else
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $workoutList ; 
+    }
+    return $response;
+}  
 ?>
 

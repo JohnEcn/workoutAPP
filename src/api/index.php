@@ -44,7 +44,7 @@
                     break;                      
                 }
             }
-            elseif($explodedURL[1] == "workout")
+            elseif($explodedURL[1] == "workouts")
             {
                 $userID = checkAuth($cookies);
 
@@ -73,6 +73,10 @@
                             {
                                 $workoutID = $_GET['wid']; 
                                 $response["response"] = getWorkout($workoutID,$userID);   
+                            }
+                            elseif(count($_GET)==1)
+                            {
+                                $response["response"] = getWorkoutList($userID);   
                             }
                             else
                             {
