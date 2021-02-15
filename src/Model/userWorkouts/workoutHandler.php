@@ -149,4 +149,40 @@ function retrieveWorkout($workoutID,$userID)
     }
     
 }
+function changeWorkoutName($workoutID,$userID,$newName)
+{
+    if(preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $newName) === 1)
+    {
+        return "INVALID WORKOUT NAME";
+    }
+    else
+    {   
+        require_once("workoutDB.php");  
+        $workoutBD = new workoutDB();
+        $workoutList = $workoutBD->getWorkoutList($userID);
+        
+        if(isset($workoutList[0]['routineName']))
+        {
+            for($i=0; $i<count($workoutList); $i++)
+            {
+                if($workoutList[$i]['routineName'] == $newName)
+                {
+                    return "WORKOUT NAME NOT UNIQUE";
+                }
+            }            
+        }
+    }
+
+    $workout = new workout(NULL,$workoutID,$userID,NULL);
+
+    if($workout->NULLCheck() == NULL)
+    {
+        return "INVALID WORKOUT ID";
+    }
+    else
+    {
+        $workout->changeName($newName);
+        return "SUCCESS";
+    }   
+}
 ?>

@@ -152,5 +152,26 @@ function getWorkoutList($userID)
     }
     return $response;
 }  
+function alterWorkoutName($workoutID,$userID,$newName)
+{   
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $status = changeWorkoutName($workoutID,$userID,$newName);
+
+    if($status == "SUCCESS")
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = "WORKOUT NAME CHANGED"; 
+    }
+    else
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = $status;    
+    }    
+    return $response;
+}
+
+
 ?>
 

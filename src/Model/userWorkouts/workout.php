@@ -62,7 +62,8 @@ class workout
             }       
         }         
     }
-    public function toASSOC(){
+    public function toASSOC()
+    {
         $workoutASSOC=[];
         $workoutASSOC['name'] = $this->name;
         $workoutASSOC['workoutID'] = $this->workoutID;
@@ -85,7 +86,14 @@ class workout
        {
            return 1;
        }
-    }     
+    }
+    public function changeName($newName)
+    {
+        $this->name = $newName; 
+        require_once("workoutDB.php");
+        $workoutDB = new workoutDB();  
+        $workoutDB->changeWorkoutName($this->workoutID,$newName);
+    }    
 }
 
 

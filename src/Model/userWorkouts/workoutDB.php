@@ -88,6 +88,13 @@ class workoutDB
         $statement->bindParam(1, $userID, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function changeWorkoutName($workoutID,$newName)
+    {
+        $statement = $this->pdo->prepare("UPDATE routine SET routineName = ? WHERE routineID = ?");
+        $statement->bindParam(1, $newName, PDO::PARAM_STR);
+        $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
+        $statement->execute();        
     }    
 }
 ?>

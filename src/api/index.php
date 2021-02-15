@@ -1,4 +1,5 @@
 <?php
+    
     ini_set('session.use_cookies', '0');
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $requestURL = $_SERVER['REQUEST_URI'];    
@@ -9,8 +10,7 @@
     $httpBody = file_get_contents('php://input');
     $cookies = $_COOKIE;
     $explodedURL = array_slice(explode ( "/" , $requestURL ), 4);    
-    $httpBodyParameters =  json_decode($httpBody, true); 
-     
+    $httpBodyParameters =  json_decode($httpBody, true);      
     
     function ApiRequest($requestMethod,$explodedURL,$httpBodyParameters,$cookies)
     {   
@@ -61,7 +61,13 @@
                                        
                         break;
                     
-                        case "PUT":echo "PUT - $userID";
+                        case "PUT":
+                            if(isset($_GET['wid']) && $_GET['wid'] !="" && isset($_GET['newName']) && $_GET['newName'] !="")
+                            {
+                                $workoutID = $_GET['wid'];
+                                $newName =  $_GET['newName'];
+                                $response["response"] = alterWorkoutName($workoutID,$userID,$newName); 
+                            }
                         
                         break; 
                     
