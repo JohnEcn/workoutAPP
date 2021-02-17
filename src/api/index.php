@@ -68,10 +68,29 @@
                                 $newName =  $_GET['newName'];
                                 $response["response"] = alterWorkoutName($workoutID,$userID,$newName); 
                             }
-                        
+                            elseif(isset($_GET['wid']) && $_GET['wid'] !="" && $explodedURL[2] == "exercises")
+                                {   $workoutID = $_GET['wid'];
+                                    $response["response"] = addNewExercise($workoutID,$userID,$httpBodyParameters);
+                            }    
+                            else
+                            {
+                                $response["status"] = "400 (BAD REQUEST)";
+                                $response["message"] = "REQUIRED FIELDS MISSING";
+                            }              
                         break; 
                     
-                        case "DELETE":echo "DELETE - $userID";
+                        case "DELETE":
+                            if(isset($_GET['wid']) && $_GET['wid'] !="" && isset($_GET['exid']) && $_GET['exid'] !="" && $explodedURL[2] == "exercises")
+                            {
+                                $workoutID = $_GET['wid'];
+                                $exerciseID =  $_GET['exid'];
+                                $response["response"] = removeExercise($workoutID,$userID,$exerciseID);
+                            }
+                            else
+                            {
+                                $response["response"]["status"] = "400 (BAD REQUEST)";
+                                $response["response"]["message"] = "REQUIRED FIELDS MISSING";
+                            }   
                         
                         break;
                         case "GET":

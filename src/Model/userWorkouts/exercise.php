@@ -60,5 +60,14 @@ class exercise
         $exerciseASSOC['index'] = $this->exerciseIndex; 
         return $exerciseASSOC;
     }
+    public function getID(){
+        return $this->exerciseID;
+    }
+    public function deleteExerciseFromDB()
+    {
+        require_once("workoutDB.php");
+        $workoutDB = new workoutDB();
+        $workoutDB->deleteExercise($this->exerciseID);
+    }
 }
 ?>

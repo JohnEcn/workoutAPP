@@ -177,12 +177,57 @@ function changeWorkoutName($workoutID,$userID,$newName)
 
     if($workout->NULLCheck() == NULL)
     {
-        return "INVALID WORKOUT ID";
+        return "INVALID WORKOUT";
     }
     else
     {
         $workout->changeName($newName);
         return "SUCCESS";
+    }   
+}
+function addExercise($workoutID,$userID,$newExercise)
+{
+    $workout = new workout(NULL,$workoutID,$userID,NULL);
+
+    if($workout->NULLCheck() == NULL)
+    {
+        return "INVALID WORKOUT";
+    }
+    else
+    {   $exerciseArr[0] = $newExercise;
+        $validExercise = validateExercises($exerciseArr);
+        if($validExercise)
+        {
+            
+            $workout->addExercise($newExercise);
+            return "SUCCESS";
+        }
+        else
+        {
+            return "INVALID EXERCISE";
+        }        
+    }   
+}
+function deleteExercise($workoutID,$userID,$exerciseID)
+{
+    $workout = new workout(NULL,$workoutID,$userID,NULL);
+
+    if($workout->NULLCheck() == NULL)
+    {
+        return "INVALID WORKOUT";
+    }
+    else
+    {   
+        $status = $workout->deleteExercise($exerciseID);
+
+        if($status != NULL)
+        {
+               return "SUCCESS"; 
+        }
+        else
+        {
+            return "INVALID EXERCISE ID"; 
+        }
     }   
 }
 ?>

@@ -171,7 +171,43 @@ function alterWorkoutName($workoutID,$userID,$newName)
     }    
     return $response;
 }
+function addNewExercise($workoutID,$userID,$newExercise)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $status = addExercise($workoutID,$userID,$newExercise);
 
-
+    if($status == "SUCCESS")
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = "EXERCISE INSERTED"; 
+    }
+    else
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = $status;    
+    }    
+    return $response;
+    
+}
+function removeExercise($workoutID,$userID,$exerciseID)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $status = deleteExercise($workoutID,$userID,$exerciseID);
+    if($status == "SUCCESS")
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = "EXERCISE DELETED"; 
+    }
+    else
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = $status;    
+    }    
+    return $response;
+}
 ?>
 

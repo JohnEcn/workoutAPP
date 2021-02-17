@@ -93,6 +93,30 @@ class workout
         require_once("workoutDB.php");
         $workoutDB = new workoutDB();  
         $workoutDB->changeWorkoutName($this->workoutID,$newName);
+    }
+    public function addExercise($exercise)
+    {
+        $name = $exercise['name'];
+        $sets = $exercise['sets'];
+        $rest = $exercise['rest'];
+        $index = $exercise['index'];
+        $workoutID = $this->workoutID;
+        $exerciseID = NULL;
+
+        $exercise = new exercise($name,$exerciseID,$workoutID,$sets,$rest,$index); 
+    } 
+    public function deleteExercise($exerciseID)
+    {
+        $selectedExercise = NULL;
+        for($i=0; $i<count($this->exerciseList); $i++)
+            {   
+                if($this->exerciseList[$i]->getID() == $exerciseID)
+                {
+                    $selectedExercise = $this->exerciseList[$i];
+                    $this->exerciseList[$i]->deleteExerciseFromDB();
+                }                
+            }   
+        return $selectedExercise;
     }    
 }
 
