@@ -168,27 +168,4 @@ class trainingSession
         $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList));
     }
 }
-
-$workoutID = 2;
-$userID = 2;
-$workout = new workout(NULL,$workoutID,$userID,NULL);
-//$session = new trainingSession($workout,$userID);
-$session = new trainingSession(NULL,$userID);
-//$session->nextSet();
-//$session->nextExercise();
-$session->selectExercise(5);
-var_dump($session);
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
