@@ -1,5 +1,4 @@
 <?php
-require_once("../userWorkouts/workout.php");
 class trainingSession 
 {
     private $workout;
@@ -28,8 +27,8 @@ class trainingSession
 
     private function initializeSession()
     {
-        $this->exerciseList = $this->BsortExerciseArray($this->workout->toAssoc()['exerciseList']);
-        $this->workoutID = $this->workout->toAssoc()['workoutID'];    
+        $this->exerciseList = $this->BsortExerciseArray($this->workout['exerciseList']);
+        $this->workoutID = $this->workout['workoutID'];    
         $this->currentExercise =$this->exerciseList[0]['exerciseID'];
         $this->setsRemaining = $this->exerciseList[0]['sets'];
 
@@ -43,13 +42,16 @@ class trainingSession
     {   
         require_once("trainingSessionDB.php");
         $sessionDB = new trainingSessionDB;
-        $session = $sessionDB->loadSession($this->userID)[0];
-      
-        $this->workoutID = (int)$session["workoutID"];        
-        $this->currentExercise = (int)$session["currentExerciseID"];        
-        $this->setsRemaining = (int)$session["setsRemaining"];        
-        $this->exerciseList = json_decode($session["exerciseList"],true);
-        $this->lastModified = $session["lastModified"];
+        $session = $sessionDB->loadSession($this->userID);
+
+        if(count($session) != 0)
+        {            
+            $this->workoutID = (int)$session[0]["workoutID"];        
+            $this->currentExercise = (int)$session[0]["currentExerciseID"];        
+            $this->setsRemaining = (int)$session[0]["setsRemaining"];        
+            $this->exerciseList = json_decode($session[0]["exerciseList"],true);
+            $this->lastModified = $session[0]["lastModified"];
+        }      
     }
 
     function BsortExerciseArray($array)
@@ -166,6 +168,17 @@ class trainingSession
         $sessionDB = new trainingSessionDB;
         $sessionDB->deleteSession($this->userID);
         $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList));
+    }
+
+    function getSessionASSOC()
+    {
+        $trainSession = [];
+        $trainSession['workoutID'] = $this->workoutID;
+        $trainSession['currentExercise'] = $this->currentExercise;
+        $trainSession['setsRemaining'] = $this->setsRemaining;
+        $trainSession['exerciseList'] = $this->exerciseList;        
+        
+        return $trainSession;
     }
 }
 ?>
