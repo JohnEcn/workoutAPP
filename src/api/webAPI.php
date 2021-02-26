@@ -209,5 +209,77 @@ function removeExercise($workoutID,$userID,$exerciseID)
     }    
     return $response;
 }
+function getTrainingSession($userID)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    $trainSession = retrieveTrainSession($userID);
+    if($trainSession['workoutID'] == NULL)
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = "NO ACTIVE SESSION FOUND"; 
+    }
+    else
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $trainSession;    
+    }    
+    return $response;
+}
+function newTrainingSession($workoutID,$userID)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    $trainSession = createTrainSession($workoutID,$userID);
+    if($trainSession == NULL)
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = "INVALID WORKOUT ID"; 
+    }
+    else
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $trainSession;    
+    }    
+    return $response;
+}
+function selectExercise($exerciseID,$userID)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    $trainSession = changeExercise($userID,$exerciseID);    
+    if($trainSession == NULL)
+    {
+        $response["status"] = "400 (BAD REQUEST)";
+        $response["message"] = "INVALID EXERCISE ID"; 
+    }
+    else
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $trainSession;    
+    }    
+    return $response;
+}
+function setComplete($userID)
+{
+    $response = ["status"=>"","message"=>""];    
+    
+    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    $trainSession = nextSet($userID);  
+    if($trainSession == "WORKOUT COMPLETE")
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $trainSession; 
+    }
+    else
+    {
+        $response["status"] = "200 (OK)";
+        $response["message"] = $trainSession;    
+    }    
+    return $response;
+}
 ?>
 

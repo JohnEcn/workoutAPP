@@ -100,8 +100,8 @@ class trainingSession
     {  
         if($this->workoutCompleteFlag == 2)
         {
-            $this->workoutComplete();
-            return;
+            return $this->workoutComplete();
+            
         }
         for($i = 0; $i < count($this->exerciseList); $i++)
         {
@@ -144,12 +144,12 @@ class trainingSession
 
     function workoutComplete()
     {
-        echo "under construction";
+        return "WORKOUT COMPLETE";
     }
     
     function selectExercise($exerciseId)
     {
-        $status = false;
+        $status = NULL;
         for($i = 0; $i < count($this->exerciseList); $i++)
         {
             if($exerciseId == $this->exerciseList[$i]['exerciseID'] && $this->exerciseList[$i]['sets'] != 1 )  
@@ -159,7 +159,8 @@ class trainingSession
                 $status = true;
                 break;
             }
-        }        
+        } 
+        return $status;       
     }  
 
     function updateSession()

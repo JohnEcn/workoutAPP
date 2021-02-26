@@ -44,7 +44,7 @@
                     break;                      
                 }
             }
-            elseif($explodedURL[1] == "workouts")
+            elseif($explodedURL[1] == "workouts" && isset($explodedURL[2] ) == false)
             {
                 $userID = checkAuth($cookies);
 
@@ -55,7 +55,7 @@
                 }
                 else
                 {
-                     switch($requestMethod)
+                    switch($requestMethod)
                     {
                         case "POST":$response["response"] = saveWorkout($httpBodyParameters,$userID);
                                        
@@ -116,9 +116,55 @@
                     }
                 }
             }
-            elseif($explodedURL[1] == "trainSession")
+            elseif($explodedURL[2] == "sessions" && $explodedURL[1] == "workouts")
             {
+                $userID = checkAuth($cookies);
+                if($userID == NULL)
+                {   
+                    $response["status"] = "401 (UNATHORIZED)";
+                    $response["message"] = "NOT AUTHORIZED TO ACCESS WORKOUTS";
+                }
+                else
+                {
+                    switch($requestMethod)
+                    {
+                        case "POST":
+                            if(isset($_GET['wid']) && $_GET['wid'] !="")
+                            {
+                                $workoutID = $_GET['wid'];
+                                $response["response"] = newTrainingSession($workoutID,$userID);
+                            }
+                            else
+                            {
+                                $response["response"]["status"] = "400 (BAD REQUEST)";
+                                $response["response"]["message"] = "WORKOUT ID MISSING";
+                            }                                       
+                        break;
+                    
+                        case "PUT":
+                            if(isset($_GET['exid']) && $_GET['exid'] !="")
+                            {
+                                $exerciseID =  $_GET['exid'];
+                                $response["response"] = selectExercise($exerciseID,$userID);
+                            }  
+                            elseif(isset($_GET['setComplete']) && $_GET['setComplete'] =="true")
+                            {
+                                $response["response"] = setComplete($userID);
+                            }                  
+                        break; 
+                    
+                        case "DELETE":                            
+                        break;
 
+                        case "GET":
+                            $response["response"] = getTrainingSession($userID);
+                        break;
+                    
+                        default: echo "DEFAULT";
+                        
+                        break;                      
+                    }
+                }                
             }
         }
         elseif($explodedURL[0] == "whatever")
