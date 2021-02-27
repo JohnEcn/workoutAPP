@@ -8,11 +8,11 @@ function userLogout($token){
     if(isset($user[0]['userID']))
     {           
         $dbConnection->insertToken($user[0]['userID'],NULL);
-        return "USER AUTHORIZATION ENDED";
+        return "User authentication ended";
     }
     else
     {
-        return "UNATHORIZED USER";
+        return "Unathorized user";
     }
 }
 

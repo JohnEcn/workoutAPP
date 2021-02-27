@@ -23,8 +23,8 @@ function userInsert($username,$email,$password,$passwordConfirmation)
 function validatePassword($pass,$passConf,&$errorLog){
     if($pass == "")
     {
-         $errorLog["PASSWORD"] = "EMPTY"; 
-          return false;
+        array_push($errorLog, "Password is empty");
+        return false;
     }
     $passLengthValid = 6 < strlen($pass) && strlen($pass) < 16 ? true : false;
     $notContainSpace = strpos($pass," ") == false ? true : false;
@@ -38,7 +38,7 @@ function validatePassword($pass,$passConf,&$errorLog){
         return $pass;
     }
     else
-    {   $errorLog["PASSWORD"] = "INVALID";
+    {   array_push($errorLog, "Password is Invalid");
         return false;
     }
 }
@@ -53,12 +53,12 @@ function validateEmail($mail,&$errorLog){
         }
         else
         {   
-            $errorLog["EMAIL"] = "INVALID";         
+            array_push($errorLog, "Email is Invalid");   
             return false;
         }        
     }
     else
-    {     $errorLog["EMAIL"] = "EMPTY"; 
+    {     array_push($errorLog, "Password is empty");
           return false;
     }
 }
@@ -72,7 +72,7 @@ function validateUsername($user,&$errorLog){
         $usernameValid = $dbConnection->checkUserUnique($user);
 
         if(count($usernameValid) != 0){
-            $errorLog["USERNAME"] = "ALREADY EXISTS";
+            array_push($errorLog, "Username already exists");
             return false;
         }
 
@@ -88,19 +88,19 @@ function validateUsername($user,&$errorLog){
         }
         elseif(!$passLengthValid)
         {   
-            $errorLog["USERNAME"] = "INVALID LENGTH";       
+            array_push($errorLog, "Invalid username length");   
             return false;
         }        
         else
         {
-            $errorLog["USERNAME"] = "INVALID";   
+            array_push($errorLog, "Username is Invalid");
         }
             
     }
     else
     {        
-         $errorLog["USERNAME"] = "EMPTY"; 
-          return false;
+        array_push($errorLog, "Username is empty");
+        return false;
     }
 }
 ?>

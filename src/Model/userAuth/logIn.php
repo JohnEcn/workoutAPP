@@ -35,7 +35,7 @@ function userLogIn($username,$password)
         }
         if(!$authorisation)
         {
-            $status = "WRONG USERNAME OR PASSWORD";
+            $status = "Wrong username or password";
             return $status;
         }
         elseif($authorisation)
@@ -45,7 +45,7 @@ function userLogIn($username,$password)
     }
     else
     {
-        $status = "EMPTY USERAME OR PASSWORD";
+        $status = "Empty username or password";
         return $status;        
     }
 

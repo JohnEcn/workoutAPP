@@ -2,34 +2,34 @@
 
 function userAuth($parameters)
 {   
-    $response = ["status"=>"","message"=>""];
+    $response = ["HttpResponse"=>"","message"=>""];
     if($parameters !=null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ))
     {
             require_once("../Model/userAuth/login.php");
             $token = userLogIn($parameters["user"],$parameters["pass"]);
             
-            if($token == "WRONG USERNAME OR PASSWORD" || $token == "EMPTY USERAME OR PASSWORD")
+            if($token == "Wrong username or password" || $token == "Empty username or password")
             {
-                $response["status"] = "401 (UNATHORIZED)";
+                $response["HttpResponse"] = 401;
                 $response["message"] = $token;
             }
             else
             {
-                $response["status"] = "200 (OK)";
-                $response["message"] = "AUTHORISATION SUCESSFULL";
+                $response["HttpResponse"] = 200;
+                unset($response["message"]);
                 $response["token"] = $token;
             }
     }
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "REQUIRED FIELDS MISSING";
+        $response["HttpResponse"] = 400;
+        $response["message"] = "Malformed request syntax";
     }
     return $response;
 }
 function userSignUp($parameters)
-{
-    $response = ["status"=>"","message"=>""];
+{   
+    $response = ["HttpResponse"=>"","message"=>""];
     if($parameters !=null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ) && array_key_exists ( "email" , $parameters ) && array_key_exists ( "passconf" , $parameters ))
     {       
             require_once("../Model/userAuth/signUp.php");
@@ -37,48 +37,47 @@ function userSignUp($parameters)
             
             if($status == "SUCCESS")
             {
-                $response["status"] = "200 (OK)";
-                $response["message"] = "USER REGISTRATION SUCCESSFULL";
+                $response["HttpResponse"] = 201;
+                unset($response["message"]);
             }
             else
             {
-                $response["status"] = "401 (UNATHORIZED)";
+                $response["HttpResponse"] = 409;
                 $response["message"] = $status;
             }
     }
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "REQUIRED FIELDS MISSING";
+        $response["HttpResponse"] = 400;
+        $response["message"] = "Malformed request syntax";
     }
     return $response;
     
 }
 function endAuth($cookies)
 {
-   $response = ["status"=>"","message"=>""];
+   $response = ["HttpResponse"=>"","message"=>""];
 
    if(isset($cookies['token']))
    {
        require_once("../Model/userAuth/logOut.php");
        $status = userLogout($cookies['token']);
        
-       if($status == "UNATHORIZED USER")
+       if($status == "Unathorized user")
        {
-           $response["status"] = "401 (UNATHORIZED)";
-           $response["message"] = $status;
+           $response["HttpResponse"] = 401;
+           unset($response["message"]);
        }
        else
        {
-            $response["status"] = "200 (OK)";
-            $response["message"] = "USER AUTHORIZATION ENDED";
-       }
-       
+            $response["HttpResponse"] = 200;
+            unset($response["message"]);
+       }       
    }
    else
    {
-        $response["status"] = "401 (UNATHORIZED)";
-        $response["message"] = "UNATHORIZED USER";
+        $response["HttpResponse"] = 401;
+        unset($response["message"]);
    }
    return $response;
 }
