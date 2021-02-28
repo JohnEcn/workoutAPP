@@ -104,87 +104,97 @@ function saveWorkout($httpBody,$userID)
     
     if($status == "SUCCESS")
     {   
-        $response["status"] = "200 (OK)";
-        $response["message"] = $status;
+        $response["status"] = 201;
+        $response["message"] = "Workout routine saved succesfully";
     }
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
+        $response["status"] = 409;
         $response["message"] = $status;        
     }
     return $response;
 }
 function getWorkout($workoutID,$userID)
 {  
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $responseWorkout = retrieveWorkout($workoutID,$userID);
     if($responseWorkout != NULL)
-    {   $response["status"] = "200 (OK)";
+    {   $response["HttpResponse"] = 200;
         $response["message"] = $responseWorkout;
     }
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "INVALID WORKOUT ID";        
+        $response["HttpResponse"] = 404;
+        $response["message"] = "Workout routine not found.";        
     }
 
     return $response;    
 }
 function getWorkoutList($userID)
 {
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     require_once("../Model/userWorkouts/workoutDB.php");
     $conn = new workoutDB;
     $workoutList = $conn->getWorkoutList($userID);
 
     if(empty($workoutList))
     {
-        $response["status"] = "200 (OK)";
-        $response["message"] = "WORKOUT LIST EMPTY";        
+        $response["HttpResponse"] = 204;
+        $response["message"] = "Workout List empty";        
     }
     else
     {
-        $response["status"] = "200 (OK)";
+        $response["HttpResponse"] = 200;
         $response["message"] = $workoutList ; 
     }
     return $response;
 }  
 function alterWorkoutName($workoutID,$userID,$newName)
 {   
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = changeWorkoutName($workoutID,$userID,$newName);
 
     if($status == "SUCCESS")
     {
-        $response["status"] = "200 (OK)";
-        $response["message"] = "WORKOUT NAME CHANGED"; 
+        $response["HttpResponse"] = 200;
+        $response["message"] = "Workout routine renamed succesfully."; 
+    }
+    elseif($status =="Invalid Workout")
+    {
+        $response["HttpResponse"] = 404;
+        $response["message"] = "Workout routine not found.";
     }
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
+        $response["HttpResponse"] = 409;
         $response["message"] = $status;    
     }    
     return $response;
 }
 function addNewExercise($workoutID,$userID,$newExercise)
 {
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = addExercise($workoutID,$userID,$newExercise);
 
     if($status == "SUCCESS")
     {
-        $response["status"] = "200 (OK)";
-        $response["message"] = "EXERCISE INSERTED"; 
+        $response["HttpResponse"] = 201;
+        $response["message"] = "Exercise inserted succesfully in workout routine."; 
     }
+    elseif($status == "Workout routine not found.")
+    {
+        $response["HttpResponse"] = 404;
+        $response["message"] = $status;    
+    }  
     else
     {
-        $response["status"] = "400 (BAD REQUEST)";
+        $response["HttpResponse"] = 409;
         $response["message"] = $status;    
     }    
     return $response;
@@ -192,54 +202,54 @@ function addNewExercise($workoutID,$userID,$newExercise)
 }
 function removeExercise($workoutID,$userID,$exerciseID)
 {
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = deleteExercise($workoutID,$userID,$exerciseID);
-    if($status == "SUCCESS")
+    if($status == "Exercise succesfully deleted.")
     {
-        $response["status"] = "200 (OK)";
-        $response["message"] = "EXERCISE DELETED"; 
+        $response["HttpResponse"] = 200;
+        $response["message"] = "Exercise succesfully deleted."; 
     }
-    else
+    elseif($status == "Workout routine not found." || $status ==  "Exercise not found.")
     {
-        $response["status"] = "400 (BAD REQUEST)";
+        $response["HttpResponse"] = 404;
         $response["message"] = $status;    
-    }    
+    }     
     return $response;
 }
 function getTrainingSession($userID)
 {
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = retrieveTrainSession($userID);
     if($trainSession['workoutID'] == NULL)
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "NO ACTIVE SESSION FOUND"; 
+        $response["HttpResponse"] = 204;
+        $response["message"] = "No active session found"; 
     }
     else
     {
-        $response["status"] = "200 (OK)";
+        $response["HttpResponse"] = 200;
         $response["message"] = $trainSession;    
     }    
     return $response;
 }
 function newTrainingSession($workoutID,$userID)
 {
-    $response = ["status"=>"","message"=>""];    
+    $response = ["HttpResponse"=>"","message"=>""];    
     
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = createTrainSession($workoutID,$userID);
     if($trainSession == NULL)
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "INVALID WORKOUT ID"; 
+        $response["HttpResponse"] = 404;
+        $response["message"] = 'Workout routine not found.'; 
     }
     else
     {
-        $response["status"] = "200 (OK)";
+        $response["HttpResponse"] = 201;
         $response["message"] = $trainSession;    
     }    
     return $response;
@@ -252,12 +262,12 @@ function selectExercise($exerciseID,$userID)
     $trainSession = changeExercise($userID,$exerciseID);    
     if($trainSession == NULL)
     {
-        $response["status"] = "400 (BAD REQUEST)";
-        $response["message"] = "INVALID EXERCISE ID"; 
+        $response["status"] = 404;
+        $response["message"] = "Exercise id not found."; 
     }
     else
     {
-        $response["status"] = "200 (OK)";
+        $response["status"] = 200;
         $response["message"] = $trainSession;    
     }    
     return $response;
@@ -280,5 +290,7 @@ function setComplete($userID)
     }    
     return $response;
 }
+
+var_dump(selectExercise(72,2));
 ?>
 

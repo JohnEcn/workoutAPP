@@ -42,11 +42,11 @@ function validateWorkoutData($name,$exerciseList,$userID)
 {
     if($name == "" || $exerciseList == NULL)
     {
-        return "REQUIRED DATA MISSING";
+        return "Required data missing";
     }
     elseif(preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $name) === 1)
     {
-        return "INVALID WORKOUT NAME";
+        return "Invalid Workout name";
     }
     else
     {   
@@ -60,7 +60,7 @@ function validateWorkoutData($name,$exerciseList,$userID)
             {
                 if($workoutList[$i]['routineName'] == $name)
                 {
-                    return "WORKOUT NAME NOT UNIQUE";
+                    return "Workout name not unique";
                 }
             }            
         }
@@ -69,7 +69,7 @@ function validateWorkoutData($name,$exerciseList,$userID)
 
         if(!$exercisesValid)
         {
-            return "INVALID EXERCISE"; 
+            return "Invalid exercise"; 
         }
     }
     return "VALID";
@@ -153,7 +153,7 @@ function changeWorkoutName($workoutID,$userID,$newName)
 {
     if(preg_match('/[\'^£$%&*()}{@#~?><;>,|=+¬-]/', $newName) === 1)
     {
-        return "INVALID WORKOUT NAME";
+        return "Invalid workout routine name";
     }
     else
     {   
@@ -167,7 +167,7 @@ function changeWorkoutName($workoutID,$userID,$newName)
             {
                 if($workoutList[$i]['routineName'] == $newName)
                 {
-                    return "WORKOUT NAME NOT UNIQUE";
+                    return "Workout name not unique";
                 }
             }            
         }
@@ -177,7 +177,7 @@ function changeWorkoutName($workoutID,$userID,$newName)
 
     if($workout->NULLCheck() == NULL)
     {
-        return "INVALID WORKOUT";
+        return "Invalid Workout";
     }
     else
     {
@@ -191,7 +191,7 @@ function addExercise($workoutID,$userID,$newExercise)
 
     if($workout->NULLCheck() == NULL)
     {
-        return "INVALID WORKOUT";
+        return "Workout routine not found.";
     }
     else
     {   $exerciseArr[0] = $newExercise;
@@ -204,7 +204,7 @@ function addExercise($workoutID,$userID,$newExercise)
         }
         else
         {
-            return "INVALID EXERCISE";
+            return "Invalid exercise";
         }        
     }   
 }
@@ -214,7 +214,7 @@ function deleteExercise($workoutID,$userID,$exerciseID)
 
     if($workout->NULLCheck() == NULL)
     {
-        return "INVALID WORKOUT";
+        return "Workout routine not found.";
     }
     else
     {   
@@ -222,11 +222,11 @@ function deleteExercise($workoutID,$userID,$exerciseID)
 
         if($status != NULL)
         {
-               return "SUCCESS"; 
+               return "Exercise succesfully deleted."; 
         }
         else
         {
-            return "INVALID EXERCISE ID"; 
+            return "Exercise not found."; 
         }
     }   
 }
