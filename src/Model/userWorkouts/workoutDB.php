@@ -105,6 +105,17 @@ class workoutDB
         $statement = $this->pdo->prepare("DELETE FROM routineexercise WHERE exerciseID	= ?");
         $statement->bindParam(1, $exerciseID, PDO::PARAM_INT);
         $statement->execute();
-    }   
+    }
+    public function deleteWorkout($userID,$workoutID) 
+    {
+        $statement = $this->pdo->prepare("DELETE FROM userroutine WHERE routineID	= ?");
+        $statement->bindParam(1, $workoutID, PDO::PARAM_INT);
+        $statement->execute();
+
+        $statement = $this->pdo->prepare("INSERT INTO `userDeletedroutine` (`userID`, `routineID`) VALUES (?,?)");
+        $statement->bindParam(1, $userID, PDO::PARAM_INT);
+        $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
+        $statement->execute();
+    }      
 }
 ?>

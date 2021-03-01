@@ -18,6 +18,20 @@ function insertWorkout($Workout,$userID)
         return $dataStatus;
     }  
 }
+function deleteWorkout($WorkoutID,$userID)
+{
+    $workout = new workout(NULL,$WorkoutID,$userID,NULL);
+    $status = $workout->NULLCheck();   
+    if($status == 1)
+    {    
+        $workout->moveWorkoutToDeleted();
+        return "SUCCESS";
+    }
+    else
+    {
+        return false;
+    }  
+}
 function workoutDataHandle($workout,&$name,&$exercises,$userID)
 {   
    

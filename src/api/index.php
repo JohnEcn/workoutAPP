@@ -104,8 +104,15 @@
                 }                  
             break;
 
-            case "DELETE": 
-                //Method to delete a workout .. To be implemented                
+            case "DELETE":
+                if(isset($queryParameters['wid']) && $queryParameters['wid'] != "")
+                {
+                    $response = removeWorkout($queryParameters['wid'],$userID);
+                }
+                else
+                {
+                    $response = 400;
+                }                               
             break;  
                     
             default:

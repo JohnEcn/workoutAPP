@@ -138,6 +138,25 @@ function getWorkout($workoutID,$userID)
 
     return $response;    
 }
+function removeWorkout($workoutID,$userID)
+{  
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
+    require_once("../Model/userWorkouts/workoutHandler.php");
+    $status = deleteWorkout($workoutID,$userID);
+    if($status == "SUCCESS")
+    {   
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL; 
+    }
+    else
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  = ["message"=>"Workout routine not found."];
+        $response["cookie"] = NULL;  
+    }
+    return $response;    
+}
 function getWorkoutList($userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""]; 

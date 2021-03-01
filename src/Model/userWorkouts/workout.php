@@ -62,6 +62,13 @@ class workout
             }       
         }         
     }
+    public function moveWorkoutToDeleted()
+    {
+        require_once("workoutDB.php");
+        $workoutDB = new workoutDB();
+        
+        $workoutDB->deleteWorkout($this->userID,$this->workoutID);
+    }
     public function toASSOC()
     {
         $workoutASSOC=[];
