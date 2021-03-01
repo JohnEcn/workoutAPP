@@ -2,34 +2,38 @@
 
 function userAuth($parameters)
 {   
-    $response = ["HttpResponse"=>"","message"=>""];
-    if($parameters !=null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ))
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
+    
+    if($parameters != null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ))
     {
             require_once("../Model/userAuth/login.php");
-            $token = userLogIn($parameters["user"],$parameters["pass"]);
+            $status = userLogIn($parameters["user"],$parameters["pass"]);
             
-            if($token == "Wrong username or password" || $token == "Empty username or password")
-            {
-                $response["HttpResponse"] = 401;
-                $response["message"] = $token;
+            if($status == "Wrong username or password" || $status == "Empty username or password")
+            {              
+                $response["HttpCode"] = 401;
+                $response["HttpBody"]  = ["message"=>$status];
+                $response["cookie"] = NULL;                
             }
             else
             {
-                $response["HttpResponse"] = 200;
-                unset($response["message"]);
-                $response["token"] = $token;
+                $response["HttpCode"] = 200;
+                $response["HttpBody"]  = NULL;
+                $response["cookie"] = $status;
             }
     }
     else
     {
-        $response["HttpResponse"] = 400;
-        $response["message"] = "Malformed request syntax";
+        $response["HttpCode"] = 400;
+        $response["HttpBody"] = ["message"=>"Malformed request syntax"];
+        $response["cookie"] = NULL;
     }
     return $response;
 }
 function userSignUp($parameters)
 {   
-    $response = ["HttpResponse"=>"","message"=>""];
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
+
     if($parameters !=null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ) && array_key_exists ( "email" , $parameters ) && array_key_exists ( "passconf" , $parameters ))
     {       
             require_once("../Model/userAuth/signUp.php");
@@ -37,49 +41,38 @@ function userSignUp($parameters)
             
             if($status == "SUCCESS")
             {
-                $response["HttpResponse"] = 201;
-                unset($response["message"]);
+                $response["HttpCode"] = 201;
+                $response["HttpBody"]  = NULL;  
+                $response["cookie"] = NULL;    
             }
             else
-            {
-                $response["HttpResponse"] = 409;
-                $response["message"] = $status;
+            {           
+                $response["HttpCode"] = 409;
+                $response["HttpBody"]  = ["message"=>$status];
+                $response["cookie"] = NULL;         
             }
     }
     else
     {
-        $response["HttpResponse"] = 400;
-        $response["message"] = "Malformed request syntax";
+        $response["HttpCode"] = 400;
+        $response["HttpBody"]  = ["message"=>"Malformed request syntax"];
+        $response["cookie"] = NULL;         
     }
-    return $response;
-    
+    return $response;    
 }
-function endAuth($cookies)
+function endAuth($userID)
 {
-   $response = ["HttpResponse"=>"","message"=>""];
-
-   if(isset($cookies['token']))
-   {
-       require_once("../Model/userAuth/logOut.php");
-       $status = userLogout($cookies['token']);
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
+    require_once("../Model/userAuth/logOut.php");
+    $status = userLogout($userID);
        
-       if($status == "Unathorized user")
-       {
-           $response["HttpResponse"] = 401;
-           unset($response["message"]);
-       }
-       else
-       {
-            $response["HttpResponse"] = 200;
-            unset($response["message"]);
-       }       
-   }
-   else
-   {
-        $response["HttpResponse"] = 401;
-        unset($response["message"]);
-   }
-   return $response;
+    if($status == "User auth ended")
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  = NULL;  
+        $response["cookie"] = "deleted";           
+    }       
+    return $response;
 }
 function checkAuth($cookies)
 {   
@@ -98,199 +91,222 @@ function checkAuth($cookies)
 }
 function saveWorkout($httpBody,$userID)
 {   
-    $response = [];
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status  = insertWorkout($httpBody,$userID);
     
     if($status == "SUCCESS")
     {   
-        $response["status"] = 201;
-        $response["message"] = "Workout routine saved succesfully";
+        $response["HttpCode"] = 201;
+        $response["HttpBody"]  = NULL;  
+        $response["cookie"] = NULL;          
     }
     else
     {
-        $response["status"] = 409;
-        $response["message"] = $status;        
+        $response["HttpCode"] = 409;
+        $response["HttpBody"]  = ["message"=>$status];
+        $response["cookie"] = NULL;        
     }
     return $response;
 }
 function getWorkout($workoutID,$userID)
 {  
-    $response = ["HttpResponse"=>"","message"=>""];    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""]; 
     
+    if($workoutID == "" || is_int((int)$workoutID) == false)
+    {
+        $response["HttpCode"] = 400;
+        $response["HttpBody"]  = ["message"=>"Parameter 'wid' must be integer."];
+        $response["cookie"] = NULL;  
+        return $response;  
+    }
+
     require_once("../Model/userWorkouts/workoutHandler.php");
     $responseWorkout = retrieveWorkout($workoutID,$userID);
     if($responseWorkout != NULL)
-    {   $response["HttpResponse"] = 200;
-        $response["message"] = $responseWorkout;
+    {   
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  = $responseWorkout;
+        $response["cookie"] = NULL; 
     }
     else
     {
-        $response["HttpResponse"] = 404;
-        $response["message"] = "Workout routine not found.";        
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  = ["message"=>"Workout routine not found."];
+        $response["cookie"] = NULL;  
     }
 
     return $response;    
 }
 function getWorkoutList($userID)
 {
-    $response = ["HttpResponse"=>"","message"=>""];    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""]; 
     require_once("../Model/userWorkouts/workoutDB.php");
     $conn = new workoutDB;
     $workoutList = $conn->getWorkoutList($userID);
 
     if(empty($workoutList))
-    {
-        $response["HttpResponse"] = 204;
-        $response["message"] = "Workout List empty";        
+    { 
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  = ["message"=>"Workout List IS empty"];
+        $response["cookie"] = NULL; 
     }
     else
     {
-        $response["HttpResponse"] = 200;
-        $response["message"] = $workoutList ; 
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  = $workoutList ; 
+        $response["cookie"] = NULL; 
     }
     return $response;
 }  
 function alterWorkoutName($workoutID,$userID,$newName)
 {   
-    $response = ["HttpResponse"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = changeWorkoutName($workoutID,$userID,$newName);
 
     if($status == "SUCCESS")
-    {
-        $response["HttpResponse"] = 200;
-        $response["message"] = "Workout routine renamed succesfully."; 
+    {      
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  = NULL; 
+        $response["cookie"] = NULL; 
     }
     elseif($status =="Invalid Workout")
-    {
-        $response["HttpResponse"] = 404;
-        $response["message"] = "Workout routine not found.";
+    {  
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  = ["message"=>"Workout routine not found."];
+        $response["cookie"] = NULL; 
     }
     else
     {
-        $response["HttpResponse"] = 409;
-        $response["message"] = $status;    
+        $response["HttpCode"] = 409;
+        $response["HttpBody"]  = ["message"=>$status];
+        $response["cookie"] = NULL; 
     }    
     return $response;
 }
 function addNewExercise($workoutID,$userID,$newExercise)
 {
-    $response = ["HttpResponse"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];      
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = addExercise($workoutID,$userID,$newExercise);
 
     if($status == "SUCCESS")
     {
-        $response["HttpResponse"] = 201;
-        $response["message"] = "Exercise inserted succesfully in workout routine."; 
+        $response["HttpCode"] = 201;
+        $response["HttpBody"]  = NULL; 
+        $response["cookie"] = NULL;  
     }
     elseif($status == "Workout routine not found.")
     {
-        $response["HttpResponse"] = 404;
-        $response["message"] = $status;    
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  = ["message"=>$status];
+        $response["cookie"] = NULL;    
     }  
     else
     {
-        $response["HttpResponse"] = 409;
-        $response["message"] = $status;    
+        $response["HttpCode"] = 409;
+        $response["HttpBody"]  = ["message"=>$status];
+        $response["cookie"] = NULL;  
     }    
     return $response;
     
 }
 function removeExercise($workoutID,$userID,$exerciseID)
 {
-    $response = ["HttpResponse"=>"","message"=>""];    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
     
     require_once("../Model/userWorkouts/workoutHandler.php");
     $status = deleteExercise($workoutID,$userID,$exerciseID);
     if($status == "Exercise succesfully deleted.")
     {
-        $response["HttpResponse"] = 200;
-        $response["message"] = "Exercise succesfully deleted."; 
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL; 
     }
     elseif($status == "Workout routine not found." || $status ==  "Exercise not found.")
     {
-        $response["HttpResponse"] = 404;
-        $response["message"] = $status;    
+        $response["HttpCode"] = 404;
+        $response["message"] = ["message"=>$status];
+        $response["cookie"] = NULL;   
     }     
     return $response;
 }
 function getTrainingSession($userID)
 {
-    $response = ["HttpResponse"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = retrieveTrainSession($userID);
     if($trainSession['workoutID'] == NULL)
-    {
-        $response["HttpResponse"] = 204;
-        $response["message"] = "No active session found"; 
+    {       
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL;  
     }
     else
     {
-        $response["HttpResponse"] = 200;
-        $response["message"] = $trainSession;    
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $trainSession;
+        $response["cookie"] = NULL;  
     }    
     return $response;
 }
 function newTrainingSession($workoutID,$userID)
 {
-    $response = ["HttpResponse"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];    
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = createTrainSession($workoutID,$userID);
     if($trainSession == NULL)
-    {
-        $response["HttpResponse"] = 404;
-        $response["message"] = 'Workout routine not found.'; 
+    { 
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL;   
     }
     else
-    {
-        $response["HttpResponse"] = 201;
-        $response["message"] = $trainSession;    
+    {       
+        $response["HttpCode"] = 201;
+        $response["HttpBody"]  =  $trainSession;
+        $response["cookie"] = NULL;       
     }    
     return $response;
 }
 function selectExercise($exerciseID,$userID)
 {
-    $response = ["status"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];        
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = changeExercise($userID,$exerciseID);    
     if($trainSession == NULL)
-    {
-        $response["status"] = 404;
-        $response["message"] = "Exercise id not found."; 
+    {    
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL;    
     }
     else
     {
-        $response["status"] = 200;
-        $response["message"] = $trainSession;    
+        $response["HttpCode"] = 400;
+        $response["HttpBody"]  =  $trainSession;
+        $response["cookie"] = NULL;    
     }    
     return $response;
 }
 function setComplete($userID)
 {
-    $response = ["status"=>"","message"=>""];    
-    
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
     require_once("../Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = nextSet($userID);  
     if($trainSession == "WORKOUT COMPLETE")
     {
-        $response["status"] = "200 (OK)";
-        $response["message"] = $trainSession; 
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  ["message"=>"Workout session complete."];
+        $response["cookie"] = NULL;    
     }
     else
-    {
-        $response["status"] = "200 (OK)";
-        $response["message"] = $trainSession;    
+    {      
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $trainSession;
+        $response["cookie"] = NULL;        
     }    
     return $response;
 }
-
-var_dump(selectExercise(72,2));
 ?>
 

@@ -1,180 +1,220 @@
 <?php
-    
+
     ini_set('session.use_cookies', '0');
+
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $requestURL = $_SERVER['REQUEST_URI'];    
-    if (strpos($requestURL, '?') !== false) 
+    $httpBodyParameters = json_decode(file_get_contents('php://input'), true);
+    $queryParameters = $_GET;
+    $cookies = $_COOKIE;   
+
+    //Separate path from query string
+    if (strpos($requestURL, '?') != false) 
     {
         $requestURL = substr($requestURL, 0, strpos($requestURL, "?"));  
-    }
-    $httpBody = file_get_contents('php://input');
-    $cookies = $_COOKIE;
-    $explodedURL = array_slice(explode ( "/" , $requestURL ), 4);    
-    $httpBodyParameters =  json_decode($httpBody, true);      
+    }    
+    $path = array_slice(explode ( "/" , $requestURL ), 4);          
     
-    function ApiRequest($requestMethod,$explodedURL,$httpBodyParameters,$cookies)
-    {   
-        $response = [];
-        if($explodedURL[0] == "user")
+    function ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies)
+    {
+        $userID = checkAuth($cookies);  //Check if the user us authorized
+        $response = NULL;               //response[0] contains the httpCode and the response[1] contains the reply body and response[2] contains cookies              
+
+        switch($path)
         {
-            if($explodedURL[1] == "auth")
-            {
-                switch($requestMethod)
-                {
-                    case "POST":
-                        $response["response"] = userAuth($httpBodyParameters);
-                        if(array_key_exists("token", $response["response"]))
-                        {
-                            setcookie("token", $response["response"]["token"],time()+3600);
-                            unset($response["response"]["token"]);
-                        }                        
-                    break;
+            case $path[0] == "user" && $path[1] == "auth" && isset($path[2]) == false:                        
+                $response =  $userID == NULL && $requestMethod == "DELETE"  ? 401 : user_auth($requestMethod,$httpBodyParameters,$userID);                
+            break;
                     
-                    case "PUT":
-                        $response["response"] = userSignUp($httpBodyParameters);
-                    break; 
+            case $path[0] == "user" && $path[1] == "workouts" && isset($path[2]) == false:
+                $response =  $userID == NULL ? 401 : user_workouts($requestMethod,$httpBodyParameters,$userID,$queryParameters);
+            break; 
                     
-                    case "DELETE":
-                        $response["response"] = endAuth($cookies);
-                        setcookie("token", "deleted",time()-3600);
-                    break;
-                    
-                    default:
-                        //echo userAuth documentation
-                    break;                      
-                }
-            }
-            elseif($explodedURL[1] == "workouts" && isset($explodedURL[2] ) == false)
-            {
-                $userID = checkAuth($cookies);
+            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "exercises":
+                $response =  $userID == NULL ? 401 : user_workouts_exercises($requestMethod,$httpBodyParameters,$userID,$queryParameters);
+            break;
 
-                if($userID == NULL)
-                {   
-                    $response["status"] = "401 (UNATHORIZED)";
-                    $response["message"] = "NOT AUTHORIZED TO ACCESS WORKOUTS";
-                }
-                else
-                {
-                    switch($requestMethod)
-                    {
-                        case "POST":$response["response"] = saveWorkout($httpBodyParameters,$userID);
-                                       
-                        break;
+            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions":
+                $response =  $userID == NULL ? 401 : user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters);
+            break;  
                     
-                        case "PUT":
-                            if(isset($_GET['wid']) && $_GET['wid'] !="" && isset($_GET['newName']) && $_GET['newName'] !="")
-                            {
-                                $workoutID = $_GET['wid'];
-                                $newName =  $_GET['newName'];
-                                $response["response"] = alterWorkoutName($workoutID,$userID,$newName); 
-                            }
-                            elseif(isset($_GET['wid']) && $_GET['wid'] !="" && $explodedURL[2] == "exercises")
-                                {   $workoutID = $_GET['wid'];
-                                    $response["response"] = addNewExercise($workoutID,$userID,$httpBodyParameters);
-                            }    
-                            else
-                            {
-                                $response["status"] = "400 (BAD REQUEST)";
-                                $response["message"] = "REQUIRED FIELDS MISSING";
-                            }              
-                        break; 
-                    
-                        case "DELETE":
-                            if(isset($_GET['wid']) && $_GET['wid'] !="" && isset($_GET['exid']) && $_GET['exid'] !="" && $explodedURL[2] == "exercises")
-                            {
-                                $workoutID = $_GET['wid'];
-                                $exerciseID =  $_GET['exid'];
-                                $response["response"] = removeExercise($workoutID,$userID,$exerciseID);
-                            }
-                            else
-                            {
-                                $response["response"]["status"] = "400 (BAD REQUEST)";
-                                $response["response"]["message"] = "REQUIRED FIELDS MISSING";
-                            }   
-                        
-                        break;
-                        case "GET":
-                            if(isset($_GET['wid']) && $_GET['wid'] !="")
-                            {
-                                $workoutID = $_GET['wid']; 
-                                $response["response"] = getWorkout($workoutID,$userID);   
-                            }
-                            elseif(count($_GET)==1)
-                            {
-                                $response["response"] = getWorkoutList($userID);   
-                            }
-                            else
-                            {
-                                $response["status"] = "400 (BAD REQUEST)";
-                                $response["message"] = "REQUIRED FIELDS MISSING";
-                            }                   
-                        break;
-                    
-                        default: echo "DEFAULT";
-                        
-                        break;                      
-                    }
-                }
-            }
-            elseif($explodedURL[2] == "sessions" && $explodedURL[1] == "workouts")
-            {
-                $userID = checkAuth($cookies);
-                if($userID == NULL)
-                {   
-                    $response["status"] = "401 (UNATHORIZED)";
-                    $response["message"] = "NOT AUTHORIZED TO ACCESS WORKOUTS";
-                }
-                else
-                {
-                    switch($requestMethod)
-                    {
-                        case "POST":
-                            if(isset($_GET['wid']) && $_GET['wid'] !="")
-                            {
-                                $workoutID = $_GET['wid'];
-                                $response["response"] = newTrainingSession($workoutID,$userID);
-                            }
-                            else
-                            {
-                                $response["response"]["status"] = "400 (BAD REQUEST)";
-                                $response["response"]["message"] = "WORKOUT ID MISSING";
-                            }                                       
-                        break;
-                    
-                        case "PUT":
-                            if(isset($_GET['exid']) && $_GET['exid'] !="")
-                            {
-                                $exerciseID =  $_GET['exid'];
-                                $response["response"] = selectExercise($exerciseID,$userID);
-                            }  
-                            elseif(isset($_GET['setComplete']) && $_GET['setComplete'] =="true")
-                            {
-                                $response["response"] = setComplete($userID);
-                            }                  
-                        break; 
-                    
-                        case "DELETE":                            
-                        break;
-
-                        case "GET":
-                            $response["response"] = getTrainingSession($userID);
-                        break;
-                    
-                        default: echo "DEFAULT";
-                        
-                        break;                      
-                    }
-                }                
-            }
-        }
-        elseif($explodedURL[0] == "whatever")
-        {
-
-        }
+            default:
+                $response = 404;
+            break;           
+        } 
+        
         return $response;
     }
+    function user_auth($requestMethod,$httpBodyParameters,$userID)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {                  
+            case "POST": 
+                $response = userAuth($httpBodyParameters);
+            break; 
+                    
+            case "PUT": 
+                $response = userSignUp($httpBodyParameters);
+            break;
+
+            case "DELETE": 
+                $response = endAuth($userID);
+            break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function user_workouts($requestMethod,$httpBodyParameters,$userID,$queryParameters)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {   
+            case "GET": 
+                if(isset($queryParameters['wid']))
+                {
+                    $response = getWorkout($queryParameters['wid'],$userID);
+                }
+                elseif(count($queryParameters) == 1)
+                {
+                    $response = getWorkoutList($userID);
+                }
+                else
+                {
+                    $response = 400;
+                }              
+            break; 
+
+            case "POST": 
+                $response = saveWorkout($httpBodyParameters,$userID);
+            break; 
+                    
+            case "PUT": 
+                if(isset($queryParameters['newName']) && isset($queryParameters['wid']))
+                {
+                    $response = alterWorkoutName($queryParameters['wid'],$userID,$queryParameters['newName']);
+                }
+                else
+                {
+                    $response = 400;
+                }                  
+            break;
+
+            case "DELETE": 
+                //Method to delete a workout .. To be implemented                
+            break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function user_workouts_exercises($requestMethod,$httpBodyParameters,$userID,$queryParameters)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {                      
+            case "PUT": 
+                if(isset($queryParameters['wid']) && $queryParameters['wid'] != "" )
+                {
+                    $response = addNewExercise($queryParameters['wid'],$userID,$httpBodyParameters);
+                }
+                else
+                {
+                    $response = 400;
+                }                  
+            break;
+
+            case "DELETE":
+                if(isset($queryParameters['wid']) && isset($queryParameters['exid']) && $queryParameters['wid'] != "" && $queryParameters['exid'] != "" )
+                {
+                    $response = removeExercise($queryParameters['wid'],$userID,$queryParameters['exid']);
+                }
+                 else
+                {
+                    $response = 400;
+                }    
+            break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {     
+            case "GET":                 
+                $response = getTrainingSession($userID);                         
+            break;
+
+            case "POST": 
+                if(isset($queryParameters['wid']) && $queryParameters['wid'] != "" )
+                {
+                    $response = newTrainingSession($queryParameters['wid'],$userID);
+                }
+                else
+                {
+                    $response = 400;
+                }                  
+            break;
+
+            case "PUT":
+                if(isset($queryParameters['exid']) && $queryParameters['exid'] != "")
+                {
+                    $response = selectExercise($queryParameters['exid'],$userID);
+                }
+                elseif(isset($queryParameters['action']) && $queryParameters['action'] != "setComplete")
+                {
+                    $response = setComplete($userID);
+                }    
+                else
+                {
+                    $response = 400;
+                }    
+            break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function sendResponse($response)
+    {
+        if($response == 401 || $response == 405 || $response == 400)
+        {
+            http_response_code($response);
+        }
+        else
+        {
+            http_response_code($response['HttpCode']);
+
+            if($response['cookie'] != NULL)
+            {
+                setcookie("token", $response['cookie'], time()+(60*60*24*10));
+            }
+            if($response['HttpBody'] != NULL)
+            {
+                echo json_encode($response['HttpBody']);
+            } 
+        }          
+    }
+
     require_once("webAPI.php");
-    echo json_encode(ApiRequest($requestMethod,$explodedURL,$httpBodyParameters,$cookies));
+    $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
+    sendResponse($response);
    
 
 ?>
