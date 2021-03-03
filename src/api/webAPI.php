@@ -25,7 +25,7 @@ function userAuth($parameters)
     else
     {
         $response["HttpCode"] = 400;
-        $response["HttpBody"] = ["message"=>"Malformed request syntax"];
+        $response["HttpBody"] = NULL;
         $response["cookie"] = NULL;
     }
     return $response;
@@ -55,7 +55,7 @@ function userSignUp($parameters)
     else
     {
         $response["HttpCode"] = 400;
-        $response["HttpBody"]  = ["message"=>"Malformed request syntax"];
+        $response["HttpBody"]  = NULL;
         $response["cookie"] = NULL;         
     }
     return $response;    
@@ -100,6 +100,12 @@ function saveWorkout($httpBody,$userID)
         $response["HttpCode"] = 201;
         $response["HttpBody"]  = NULL;  
         $response["cookie"] = NULL;          
+    }
+    elseif($status == "Required data missing")
+    {
+        $response["HttpCode"] = 400;
+        $response["HttpBody"]  = NULL;
+        $response["cookie"] = NULL;        
     }
     else
     {

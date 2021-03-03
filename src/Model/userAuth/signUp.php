@@ -58,7 +58,7 @@ function validateEmail($mail,&$errorLog){
         }        
     }
     else
-    {     array_push($errorLog, "Password is empty");
+    {     array_push($errorLog, "Email is empty");
           return false;
     }
 }
