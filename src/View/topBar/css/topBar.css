@@ -1,0 +1,85 @@
+/* -----------------------------------top bar----------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Heebo&display=swap");
+#topBar {
+  grid-row: 0 1;
+  grid-column: span 2;
+  background-color: #ffffff;
+  border-bottom: 1px solid #adadad;
+
+  display: flex;
+  flex-direction: row;
+}
+.topBarSection {
+  height: 100%;
+  flex: 1 1 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-size: 16px;
+  font-family: "Heebo", sans-serif;
+  font-weight: 500;
+}
+#leftTopBar {
+  justify-content: left;
+  padding-left: 10px;
+}
+#rightTopBar {
+  justify-content: center;
+}
+#rightTopBar > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+#logOutButton {
+  min-width: 120px;
+}
+#logOutButton > a {
+  text-decoration: underline;
+  color: #050505;
+  font-weight: 700;
+  padding-left: 10px;
+  border-left: 3px solid #0784dd;
+}
+#username {
+  min-width: 120px;
+  color: rgb(83, 82, 82);
+}
+#username > span {
+  text-decoration: underline;
+  color: #050505;
+  font-weight: 700;
+  padding-left: 10px;
+  border-left: 3px solid #0784dd;
+}
+#timeAndDate {
+  font-family: "Heebo", sans-serif;
+  color: #050505;
+  font-weight: 400;
+  padding-left: 10px;
+}
+#filler {
+  flex: 4 4 0;
+}
+
+@media screen and (max-width: 500px) {
+  #leftTopBar {
+    display: none;
+  }
+  #filler {
+    display: none !important;
+  }
+  #rightTopBar {
+    width: 100%;
+    display: initial;
+  }
+  #logOutButton {
+    float: right;
+  }
+  #username {
+    float: left;
+  }
+}
