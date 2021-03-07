@@ -1,7 +1,7 @@
 <?php
 
     ini_set('session.use_cookies', '0');
-    error_reporting(0);
+    //error_reporting(0);
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $requestURL = $_SERVER['REQUEST_URI'];    
@@ -211,7 +211,7 @@
 
             if($response['cookie'] != NULL)
             {
-                setcookie("token", $response['cookie'], time()+(60*60*24*10));
+                setcookie("token", $response['cookie'], time()+(60*60*24*10),"/");
             }
             if($response['HttpBody'] != NULL)
             {
