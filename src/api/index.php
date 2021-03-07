@@ -221,8 +221,12 @@
     }
 
     require_once("webAPI.php");
-    $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
-    sendResponse($response);
+    if(isset($GLOBALS["internalRequest"]) == false)
+    {
+        $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
+        sendResponse($response);
+    }
+    
    
 
 ?>
