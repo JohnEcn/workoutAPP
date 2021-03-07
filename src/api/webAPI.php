@@ -5,8 +5,8 @@ function userAuth($parameters)
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
     
     if($parameters != null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ))
-    {
-            require_once("../Model/userAuth/login.php");
+    {       
+            require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userAuth/login.php");
             $status = userLogIn($parameters["user"],$parameters["pass"]);
             
             if($status == "Wrong username or password" || $status == "Empty username or password")
@@ -36,7 +36,7 @@ function userSignUp($parameters)
 
     if($parameters !=null && array_key_exists ( "user" , $parameters ) && array_key_exists ( "pass" , $parameters ) && array_key_exists ( "email" , $parameters ) && array_key_exists ( "passconf" , $parameters ))
     {       
-            require_once("../Model/userAuth/signUp.php");
+            require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userAuth/signUp.php");
             $status = userInsert($parameters["user"],$parameters["email"],$parameters["pass"],$parameters["passconf"]);
             
             if($status == "SUCCESS")
@@ -63,7 +63,7 @@ function userSignUp($parameters)
 function endAuth($userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
-    require_once("../Model/userAuth/logOut.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userAuth/logOut.php");
     $status = userLogout($userID);
        
     if($status == "User auth ended")
@@ -76,7 +76,7 @@ function endAuth($userID)
 }
 function checkAuth($cookies)
 {   
-    require_once("../Model/userAuth/checkAuth.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userAuth/checkAuth.php");
     if(isset($cookies['token']))
     {
         $token = $cookies['token'];
@@ -92,7 +92,7 @@ function checkAuth($cookies)
 function saveWorkout($httpBody,$userID)
 {   
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $status  = insertWorkout($httpBody,$userID);
     
     if($status == "SUCCESS")
@@ -127,7 +127,7 @@ function getWorkout($workoutID,$userID)
         return $response;  
     }
 
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $responseWorkout = retrieveWorkout($workoutID,$userID);
     if($responseWorkout != NULL)
     {   
@@ -147,7 +147,7 @@ function getWorkout($workoutID,$userID)
 function removeWorkout($workoutID,$userID)
 {  
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $status = deleteWorkout($workoutID,$userID);
     if($status == "SUCCESS")
     {   
@@ -166,7 +166,7 @@ function removeWorkout($workoutID,$userID)
 function getWorkoutList($userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""]; 
-    require_once("../Model/userWorkouts/workoutDB.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutDB.php");
     $conn = new workoutDB;
     $workoutList = $conn->getWorkoutList($userID);
 
@@ -187,7 +187,7 @@ function getWorkoutList($userID)
 function alterWorkoutName($workoutID,$userID,$newName)
 {   
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];     
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $status = changeWorkoutName($workoutID,$userID,$newName);
 
     if($status == "SUCCESS")
@@ -213,7 +213,7 @@ function alterWorkoutName($workoutID,$userID,$newName)
 function addNewExercise($workoutID,$userID,$newExercise)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];      
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $status = addExercise($workoutID,$userID,$newExercise);
 
     if($status == "SUCCESS")
@@ -241,7 +241,7 @@ function removeExercise($workoutID,$userID,$exerciseID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
     
-    require_once("../Model/userWorkouts/workoutHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userWorkouts/workoutHandler.php");
     $status = deleteExercise($workoutID,$userID,$exerciseID);
     if($status == "Exercise succesfully deleted.")
     {
@@ -260,7 +260,7 @@ function removeExercise($workoutID,$userID,$exerciseID)
 function getTrainingSession($userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];
-    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = retrieveTrainSession($userID);
     if($trainSession['workoutID'] == NULL)
     {       
@@ -279,7 +279,7 @@ function getTrainingSession($userID)
 function newTrainingSession($workoutID,$userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];    
-    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = createTrainSession($workoutID,$userID);
     if($trainSession == NULL)
     { 
@@ -298,7 +298,7 @@ function newTrainingSession($workoutID,$userID)
 function selectExercise($exerciseID,$userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];        
-    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = changeExercise($userID,$exerciseID);    
     if($trainSession == NULL)
     {    
@@ -317,7 +317,7 @@ function selectExercise($exerciseID,$userID)
 function setComplete($userID)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
-    require_once("../Model/userTrainingSession/trainSessionHandler.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
     $trainSession = nextSet($userID);  
     if($trainSession == "WORKOUT COMPLETE")
     {
