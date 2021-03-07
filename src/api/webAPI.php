@@ -308,7 +308,7 @@ function selectExercise($exerciseID,$userID)
     }
     else
     {
-        $response["HttpCode"] = 400;
+        $response["HttpCode"] = 200;
         $response["HttpBody"]  =  $trainSession;
         $response["cookie"] = NULL;    
     }    

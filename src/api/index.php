@@ -1,6 +1,7 @@
 <?php
 
     ini_set('session.use_cookies', '0');
+    error_reporting(0);
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $requestURL = $_SERVER['REQUEST_URI'];    
@@ -181,7 +182,7 @@
                 {
                     $response = selectExercise($queryParameters['exid'],$userID);
                 }
-                elseif(isset($queryParameters['action']) && $queryParameters['action'] != "setComplete")
+                elseif(isset($queryParameters['action']) && $queryParameters['action'] == "setComplete")
                 {
                     $response = setComplete($userID);
                 }    
