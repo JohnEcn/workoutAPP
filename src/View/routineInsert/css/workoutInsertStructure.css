@@ -1,0 +1,101 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+#exerciseInsertContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Heebo", sans-serif;
+  background-color: #edf6fd;
+}
+#exerciseInsertContainer > div {
+  height: 100%;
+}
+#itopSection {
+  flex: 2 2 10%;
+  width: 100%;
+  font-size: 2.1em;
+  font-family: "Heebo", sans-serif;
+  font-weight: 300;
+  padding-top: 45px;
+  padding-left: 30px;
+}
+#icenterSection {
+  flex: 5 5 25%;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#routineContainerTitle {
+  margin: 0;
+  padding-left: 10px;
+  border-left: 5px solid #0784dd;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#ibottomSection {
+  flex: 3 3 65%;
+  width: 95%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+@media screen and (max-width: 500px) {
+  #exerciseInsertContainer {
+    background-color: #f7fafc;
+  }
+  #itopSection {
+    flex: 2 2 6%;
+    width: 94%;
+    overflow: hidden;
+    font-size: 1.3em;
+    padding-top: 25px;
+    padding-bottom: 35px;
+    padding-left: 30px;
+  }
+  #icenterSection {
+    flex: 5 5 29%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #routineContainerTitle {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 5px solid #0784dd;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  #ibottomSection {
+    flex: 3 3 65%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}

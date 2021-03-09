@@ -1,19 +1,29 @@
-function requestPage(file,section){
-    //The section parameter means where the requested page will be displayed
-    //This parameter is passed to the displayPage();    
+function requestPage(page,callBackMethod){
+    
+    let domain = window.location.hostname;  
+    let url = "http://" + domain;
+    let httpMethod;
+
+    switch(page)
+    {   
+        case "workoutInsert":
+            url += "/workoutAPP/src/View/routineInsert/workoutInsert.php"
+            httpMethod = "GET";                        
+        break;
+    }
+
     let requestPage = new XMLHttpRequest;
-    requestPage.open('GET',file)
+    requestPage.open(httpMethod,url)
     requestPage.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     requestPage.send();
     
     requestPage.onreadystatechange = function()
     {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) 
+        if (this.readyState === XMLHttpRequest.DONE) 
         {               
-            let requestedPage = requestPage.response;
-            displayPage(requestedPage,section);
-            changeButton(file);
-            //alterPageVisibilityInMobile(section);                                     
+            let statusCode = requestPage.status;
+            let responseBody = requestPage.responseText; 
+            callBackMethod(statusCode,responseBody);                                 
         }  
     }
 }

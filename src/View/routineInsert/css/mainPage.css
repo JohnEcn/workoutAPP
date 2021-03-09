@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo&display=swap");
+html,
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  width: 70%;
+  font-family: "Heebo", sans-serif;
+}
+#inputTable {
+  width: 100%;
+  text-align: center;
+  font-size: 1.4em;
+  background-color: #f1f9ff00;
+  padding-top: 25px;
+  border-top: 2px solid #0784dd;
+  border-bottom: 2px solid #0784dd;
+}
+#exercTable {
+  width: 90%;
+  text-align: center;
+  font-size: 1.2em;
+  border-collapse: collapse;
+}
+
+#exercTable > tr:nth-child(odd) {
+  background-color: #c8e7ff;
+}
+
+#exercTable > tr:nth-child(even) {
+  background-color: #b9d7fa;
+}
+
+#exercInput {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#exercDisplay {
+  width: 100%;
+  border-collapse: collapse;
+}
+.inputTableRow {
+  height: 2 40px;
+}
+.inputTableRow > td {
+  height: 100%;
+}
+#exercTable > td {
+  height: 30px;
+  background-color: rgb(0, 0, 68);
+  border: 3px solid rgb(0, 0, 0);
+}
+
+.exercRow > td {
+  height: 40px;
+  border: 0px;
+  width: 33%;
+}
+
+.exercRow {
+  border-top: 10px solid;
+  border-bottom: 10px solid;
+  border-color: rgb(255, 255, 255);
+}
+
+.exercInput {
+  height: 23px;
+  width: 70%;
+  border: 1px solid grey;
+  font-size: 1.1 em;
+}
+
+#deleteButton {
+  background-color: rgb(209, 75, 75);
+}
+
+#inputErrorMessage {
+  font-size: 15px;
+  padding-top: 8px;
+  color: rgb(167, 56, 56);
+}
+
+#saveWorkoutDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+#workoutName {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
+#saveWorkoutButton {
+  margin-top: 20px;
+}
+@media screen and (max-width: 500px) {
+  #exNameTD {
+    width: 50%;
+  }
+  #setsNumTD {
+    width: 12%;
+  }
+  #secRestTD {
+    width: 21%;
+  }
+  #exercTable {
+    width: 100%;
+    font-size: 1em;
+  }
+  .exercRow {
+    border-top: 4px solid;
+    border-bottom: 4px solid;
+    border-color: rgb(255, 255, 255);
+  }
+}
