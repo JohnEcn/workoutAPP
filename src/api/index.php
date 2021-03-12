@@ -37,7 +37,11 @@
 
             case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions":
                 $response =  $userID == NULL ? 401 : user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters);
-            break;  
+            break; 
+
+            case $path[0] == "autocomplete" && isset($path[1]) == false:
+                $response = request_AutoComplete($requestMethod,$queryParameters);
+            break; 
                     
             default:
                 $response = 404;
@@ -199,6 +203,22 @@
 
         return $response;
     }
+    function request_AutoComplete($requestMethod,$queryParameters)
+    {
+        $response = NULL;  
+        switch($requestMethod)
+        {     
+            case "GET":                 
+                $response = autoComplete($queryParameters);                         
+            break;
+
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
     function sendResponse($response)
     {
         if($response == 401 || $response == 405 || $response == 400)
@@ -226,7 +246,4 @@
         $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
         sendResponse($response);
     }
-    
-   
-
 ?>

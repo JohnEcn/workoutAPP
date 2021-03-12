@@ -333,5 +333,34 @@ function setComplete($userID)
     }    
     return $response;
 }
+function autoComplete($queryParameters)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+
+    if(isset($queryParameters['str']) == true && $queryParameters['str'] != "")
+    {
+        require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/exerciseAutoComplete/exerciseAutocomplete.php");
+        $results = findMatchingStrings($queryParameters['str']);  
+        if($results != null)
+        {
+            $response["HttpCode"] = 200;
+            $response["HttpBody"]  =  $results;
+            $response["cookie"] = NULL;    
+        }
+        else
+        {      
+            $response["HttpCode"] = 204;
+            $response["HttpBody"]  =  NULL;
+            $response["cookie"] = NULL;        
+        }
+    }
+    else
+    {
+        $response["HttpCode"] = 400;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL;  
+    }   
+return $response;
+}
 ?>
 
