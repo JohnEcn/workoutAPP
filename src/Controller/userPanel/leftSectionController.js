@@ -6,9 +6,11 @@ function displayContent(statusCode,responseBody)
     displayExerciseList(); 
 }
 function doneLoading()
-{
-    console.log("swiss");
+{   
     let leftContainer = document.getElementById("leftSection");
-    leftContainer.style.visibility='initial';
-    enableButton("addWorkoutBut");
+    setTimeout(function()
+    {
+        leftContainer.style.visibility='initial';
+        enableButton("addWorkoutBut");    
+    }, 350);
 }
