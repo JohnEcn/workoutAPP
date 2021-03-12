@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="src/View/routineInsert/css/workoutInsertStructure.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/mainPage.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/inputFields.css">
-    <link rel="stylesheet" href="src/View/routineInsert/css/autoComplete.css">
-    <link rel="stylesheet" href="src/View/routineInsert/css/button.css">
+    <!-- <link rel="stylesheet" href="src/View/routineInsert/css/autoComplete.css"> -->
+    <link onload='doneLoading();' rel="stylesheet" href="src/View/routineInsert/css/button.css">
 </head>
 <body>
 <div id='exerciseInsertContainer'>
@@ -47,26 +47,16 @@
                     </td> 
                  </tr>                    
             </table>
-
     </div>
-    <div id='ibottomSection'>   
-            <div id="saveWorkoutDiv">          
+    <div id='ibottomSection'>
+        <div id="saveWorkoutDiv">          
             <div  class="input-container">                
                 <input id="workoutName" class = "exercInput " type="text" placeholder="Workout Name">
                 <button class = "btn draw-border" id="saveWorkoutButton" onclick="saveWorkout()">Save workout routine</button>      
             </div>
-           </div> 
             <table id="exercTable"></table>
-</div>     
-    <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
-    <script src="sendWorkout.js"></script>
-    <script src="workoutManage.js"></script>
-    <script src="onload.js"></script>
-    <script src="./userPanel/requestPage.js"></script> 
-    <script src="./userPanel/timeAndDate.js"></script> 
-    <script src="./userPanel/selectRoutine.js"></script> 
-    <script src="./userPanel/deleteRoutine.js"></script> 
-    <script src="./userPanel/startWorkout.js"></script>   
+        </div> 
+    </div>           
 </body>
 </html>
 
