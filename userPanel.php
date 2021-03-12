@@ -39,7 +39,8 @@
     <script src="src/Controller/routinePreview/routinePreview.js"></script>
     <script src="src/Controller/userPanel/refreshRoutineList.js"></script>
     <script src="src/Controller/clientEndPoint/endpoint.js"></script>
-    <script src="src/Controller/clientEndPoint/pageFetch.js"></script>        
+    <script src="src/Controller/clientEndPoint/pageFetch.js"></script> 
+    <script src="src/Controller/routineInsert/exerciseHandle.js"></script>        
     <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
     <script src="sendWorkout.js"></script>
     <script src="workoutManage.js"></script>
