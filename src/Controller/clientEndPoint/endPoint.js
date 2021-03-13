@@ -65,6 +65,11 @@ function ajaxRequest(httpPayload,queryParametersStr,calledFrom,callBackMethod)
             path = apiIndex + "/user/workouts/sessions";
             httpMethod = "PUT";
         break;
+        //Input field autocomplete
+        case autocompleteEx:
+            path = apiIndex + "/autocomplete";
+            httpMethod = "GET";
+        break;
     }    
 
     if(queryParametersStr != null)
@@ -171,4 +176,13 @@ function updateSession(action,exerciseID,callBackMethod)
         queryParameters = "?exid="+exerciseID;
     }
     ajaxRequest(httpBody,queryParameters,updateSession,callBackMethod); 
+}
+//Input field autocomplete
+function autocompleteEx(inputStr,callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = null;    
+    queryParameters = "?str="+inputStr;    
+    
+    ajaxRequest(httpBody,queryParameters,autocompleteEx,callBackMethod); 
 }
