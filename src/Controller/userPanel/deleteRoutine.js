@@ -5,7 +5,7 @@ function deleteRoutine()
     if(routineID !== undefined)
     {        
         deleteWorkout(routineID,refreshRoutineList);  
-        refreshRoutineList();            
+                   
     }    
 }
 function displayDeleteButton(status)

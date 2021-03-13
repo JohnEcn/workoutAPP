@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="src/View/routineInsert/css/workoutInsertStructure.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/mainPage.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/inputFields.css">
-    <!-- <link rel="stylesheet" href="src/View/routineInsert/css/autoComplete.css"> -->
+    <link rel="stylesheet" href="src/View/routineInsert/css/autoComplete.css">
     <link onload='doneLoading();' rel="stylesheet" href="src/View/routineInsert/css/button.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
                     <td id='exNameTD'>                      
                         <div class="input-container">
                             <div class="autocomplete">
-                                <input autocomplete="off" class="exercInput" required="" onkeyup='autoComplete()' id="exerciseNameInp" type="text" >
+                                <input autocomplete="off" class="exercInput" required="" onkeyup='requestSuggestions()' id="exerciseNameInp" type="text" >
                                 <label>Exercise</label>                         
                             </div>
                             <div id="autocompleteContainer"></div>
@@ -52,7 +52,7 @@
         <div id="saveWorkoutDiv">          
             <div  class="input-container">                
                 <input id="workoutName" class = "exercInput " type="text" placeholder="Workout Name">
-                <button class = "btn draw-border" id="saveWorkoutButton" onclick="saveWorkout()">Save workout routine</button>      
+                <button class = "btn draw-border" id="saveWorkoutButton" onclick="saveRoutine()">Save workout routine</button>      
             </div>
             <table id="exercTable"></table>
         </div> 

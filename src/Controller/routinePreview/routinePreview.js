@@ -30,7 +30,6 @@ function hideRoutinePreview(){
         existingPreview.remove();
     }
 }
-
 function displayArrow(id){
     let exerciseRows = document.getElementById(id).parentNode.children;
     
