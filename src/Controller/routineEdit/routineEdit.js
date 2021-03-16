@@ -127,7 +127,7 @@ function newExercise()
         }
         else
         {
-            let Exercise = {name:exName,sets:exSets,rest:exRest};
+            let Exercise = {name:exName,sets:parseInt(exSets),rest:parseInt(exRest),index:-1};
             exAddList.push(Exercise);
             sessionStorage.setItem("exercToAdd",JSON.stringify(exAddList));
         }
