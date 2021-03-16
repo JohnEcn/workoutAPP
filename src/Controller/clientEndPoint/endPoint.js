@@ -1,5 +1,6 @@
 function ajaxRequest(httpPayload,queryParametersStr,calledFrom,callBackMethod)
 {
+    startLoadAnimation();
     let domain = window.location.hostname;
     let protocol = "http";
     let apiIndex = protocol + "://" + domain + "/workoutAPP/src/API";
@@ -89,6 +90,7 @@ function ajaxRequest(httpPayload,queryParametersStr,calledFrom,callBackMethod)
             let responseBody = request.responseText;
  
             callBackMethod(statusCode,responseBody);
+            stopLoadAnimation()
         }   
     }
 }

@@ -1,5 +1,6 @@
 function requestPage(page,callBackMethod){
     
+    startLoadAnimation();
     let domain = window.location.hostname;  
     let url = "http://" + domain;
     let httpMethod;
@@ -23,7 +24,8 @@ function requestPage(page,callBackMethod){
         {               
             let statusCode = requestPage.status;
             let responseBody = requestPage.responseText; 
-            callBackMethod(statusCode,responseBody);                                 
+            callBackMethod(statusCode,responseBody);  
+            stopLoadAnimation();                               
         }  
     }
 }

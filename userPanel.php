@@ -8,10 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="src/View/userPanel/css/structure.css">
     <link rel="stylesheet" href="src/View/userPanel/css/routinePreview.css">
-    <link rel="stylesheet" href="src/View/topBar/css/topBar.css">    
+    <link rel="stylesheet" href="src/View/topBar/css/topBar.css"> 
+    <link rel="stylesheet" href="src/View/loadingAnimations/loading.css">      
     <title>Document</title>
 </head>
 <body>
+    <div id="loadingAnimation">
+        <img src="./src/View/loadingAnimations/Eclipse-0.5s-141px.gif" alt="Loading.."/>
+    </div>
     <userPanel>
         <div id="topBar">   
             <?php include "src/View/topBar/topBar.php" ?>         
@@ -44,7 +48,8 @@
     <script src="src/Controller/routineInsert/exerciseAutocomplete.js"></script>  
     <script src="src/Controller/routineInsert/routineSave.js"></script> 
     <script src="src/Controller/routineEdit/routineEdit.js"></script>  
-    <script src="src/Controller/routineEdit/saveChanges.js"></script>           
+    <script src="src/Controller/routineEdit/saveChanges.js"></script> 
+    <script src="src/Controller/loadingIndicator/loadingAnimate.js"></script>            
     <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
     <script src="sendWorkout.js"></script>
     <script src="workoutManage.js"></script>
