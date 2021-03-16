@@ -1,12 +1,24 @@
 function routinePreview(routineID){
-    getWorkout(routineID,displayRoutinePreview);  
+    
+    let routinePreviewCheck = document.getElementsByClassName("routinePreview").length;
+    if(routinePreviewCheck == 0)
+    {
+        getWorkout(routineID,displayRoutinePreview);  
+    }
+    else
+    {
+        hideRoutinePreview();
+    }
+    
 }
 function displayRoutinePreview(statusCode,responseBody){
     
     hideRoutinePreview();
     if(statusCode == 200)
-    {
-        let exerciseList = JSON.parse(responseBody)['exerciseList'];
+    {   
+        let workout = JSON.parse(responseBody);
+        let exerciseList = workout['exerciseList'];
+        let workoutID = workout['workoutID'];
         let preview = document.createElement("div");
         let rows = "";
         preview.classList.add("routinePreview");
@@ -18,6 +30,10 @@ function displayRoutinePreview(statusCode,responseBody){
             let rest = exerciseList[i].rest;
             rows += "<div id='exercisePreview'><div id='exerciseNamePreview'>"+name+"</div><div id='setsPreview'>"+sets+" sets</div><div id='restPreview'>"+rest+" sec</div></div>";           
         }
+
+        let editRoutineButton = "<div id='editRoutineBut' onclick='editRoutine("+workoutID+");'>Edit routine</div>";
+        rows += editRoutineButton;
+
         preview.innerHTML = rows;
         let routine = document.getElementById(JSON.parse(responseBody)['workoutID']);
         routine.parentNode.insertBefore(preview, routine.nextSibling);
