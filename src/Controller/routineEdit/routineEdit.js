@@ -22,6 +22,8 @@ function insertWorkoutToSessionStorage(statusCode,responseBody)
         sessionStorage.setItem("tempWorkout",JSON.stringify(workout));
         displayExerciseList();
         editPageModify();
+
+        hideRoutinePreview();
     }
 }
 function editPageModify()
