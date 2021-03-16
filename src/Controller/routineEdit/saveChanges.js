@@ -26,4 +26,7 @@ function saveChanges()
     } 
 
     getWorkoutList(refreshRoutineList);
+    sessionStorage.removeItem("exForDelete");
+    sessionStorage.removeItem("exercToAdd");
+    sessionStorage.removeItem("tempWorkout");
 }

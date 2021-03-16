@@ -2,7 +2,8 @@ function displayContent(statusCode,responseBody)
 {
     let leftContainer = document.getElementById("leftSection");
     leftContainer.style.visibility="hidden";
-    leftContainer.innerHTML = responseBody;   
+    leftContainer.innerHTML = responseBody; 
+    sessionStorage.removeItem("tempWorkout");  
     displayExerciseList(); 
 }
 function doneLoading()
