@@ -16,16 +16,19 @@ function saveRoutineResponseHandler(statusCode,responseBody)
         sessionStorage.removeItem("tempWorkout");
         getWorkoutList(refreshRoutineList);
         displayExerciseList();      
-        document.getElementById("workoutName").value = "";             
+        document.getElementById("workoutName").value = "";  
+        indicateOK();           
     }
     else if(statusCode == 409)
     {
         let responseMesssage = JSON.parse(responseBody);
         displayError(responseMesssage.message);
+        indicateError();  
     }
-    else if(statusCode == 409)
+    else if(statusCode == 400)
     {
         let responseMesssage = JSON.parse(responseBody);
         displayError("Error , try again.");
+        indicateError();  
     }
 }

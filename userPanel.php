@@ -9,12 +9,19 @@
     <link rel="stylesheet" href="src/View/userPanel/css/structure.css">
     <link rel="stylesheet" href="src/View/userPanel/css/routinePreview.css">
     <link rel="stylesheet" href="src/View/topBar/css/topBar.css"> 
-    <link rel="stylesheet" href="src/View/loadingAnimations/loading.css">      
+    <link rel="stylesheet" href="src/View/loadingAnimations/loading.css"> 
+    <link rel="stylesheet" href="src/View/statusIndicator/statusIndicator.css">      
     <title>Document</title>
 </head>
 <body>
     <div id="loadingAnimation">
         <img src="./src/View/loadingAnimations/Eclipse-0.5s-141px.gif" alt="Loading.."/>
+    </div>
+    <div id="statusIndicator">
+        <img src="./src/View/statusIndicator/animation_500_kmccuizn.gif" alt=""/>
+    </div>
+    <div id="errorIndicator">
+        <img src="./src/View/statusIndicator/animation_500_kmf8rvk2.gif" alt=""/>
     </div>
     <userPanel>
         <div id="topBar">   
@@ -49,7 +56,8 @@
     <script src="src/Controller/routineInsert/routineSave.js"></script> 
     <script src="src/Controller/routineEdit/routineEdit.js"></script>  
     <script src="src/Controller/routineEdit/saveChanges.js"></script> 
-    <script src="src/Controller/loadingIndicator/loadingAnimate.js"></script>            
+    <script src="src/Controller/loadingIndicator/loadingAnimate.js"></script> 
+    <script src="src/Controller/statusIndicator/statusIndicator.js"></script>                  
     <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
     <script src="sendWorkout.js"></script>
     <script src="workoutManage.js"></script>

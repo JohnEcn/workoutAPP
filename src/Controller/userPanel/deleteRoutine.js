@@ -4,9 +4,24 @@ function deleteRoutine()
     
     if(routineID !== undefined)
     {        
-        deleteWorkout(routineID,refreshRoutineList);  
+        deleteWorkout(routineID,deleteRoutineResponse);  
                    
     }    
+}
+function deleteRoutineResponse(statusCode,responseBody)
+{
+    if(statusCode == 200)
+    {
+        refreshRoutineList(statusCode,responseBody);
+        displayDeleteButton("hidden");
+        indicateOK();
+    }
+    else
+    {
+        displayDeleteButton("hidden");
+        indicateError();
+    }
+
 }
 function displayDeleteButton(status)
 {

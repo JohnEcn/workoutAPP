@@ -8,22 +8,34 @@ function saveChanges()
 
     if(newName != oldName)
     {
-        renameWorkout(workoutID,newName,console.log);  
+        renameWorkout(workoutID,newName,saveChangesResponseHandle);  
     } 
     if(exercDelList != null)
     {
         for(let i = 0;i < exercDelList.length; i++)
         {
-            deleteExercise(workoutID,exercDelList[i],console.log);
+            deleteExercise(workoutID,exercDelList[i],saveChangesResponseHandle);
         }        
     } 
     if(exercAddList != null)
     {
         for(let i = 0;i < exercAddList.length; i++)
         {
-            insertExercise(workoutID,exercAddList[i],console.log);            
+            insertExercise(workoutID,exercAddList[i],saveChangesResponseHandle);            
         }        
     } 
 
     getWorkoutList(refreshRoutineList);
+}
+function saveChangesResponseHandle(statusCode,responseBody)
+{
+    if(statusCode == 200 || statusCode == 201)
+    {
+        indicateOK();
+    }
+    else
+    {
+        indicateError();
+    }
+
 }
