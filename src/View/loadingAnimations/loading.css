@@ -1,14 +1,16 @@
-#loadingAnimation >img
-{
-    width:50px;  
-    
+#loadingAnimation > img {
+  width: 50px;
 }
-#loadingAnimation 
-{
-    display: inline;
-    position: absolute;
-    bottom: 5%;
-    right:50%;
-    z-index:99;  
-    visibility: hidden;  
+#loadingAnimation {
+  display: inline;
+  position: absolute;
+  bottom: 5%;
+  right: 50%;
+  z-index: 99;
+  visibility: hidden;
+}
+@media screen and (max-width: 600px) {
+  #loadingAnimation {
+    right: 45%;
+  }
 }

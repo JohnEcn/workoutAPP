@@ -17,8 +17,8 @@ html {
   grid-template-rows: 5% 56% auto;
 
   font-family: var(--mainFont);
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 #navBar {
   grid-column-start: 1;
@@ -41,4 +41,11 @@ html {
   grid-row-start: 3;
   grid-row-end: 3;
   background-color: var(--secondaryColor);
+}
+@media screen and (max-width: 600px) {
+  #landingPage {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 10% 85% auto;
+  }
 }
