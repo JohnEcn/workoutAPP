@@ -14,9 +14,17 @@
     <link rel="stylesheet" href="./src/View/landingPage/css/navBar.css">
     <link rel="stylesheet" href="./src/View/landingPage/css/topHorizSection.css">
     <link rel="stylesheet" href="./src/View/landingPage/css/authContainer.css">
+    <link rel="stylesheet" href="./src/View/loadingAnimations/loading.css">
+    <link rel="stylesheet" href="./src/View/statusIndicator/statusIndicator.css">
 
 </head>
 <body>
+    <div id="loadingAnimation">
+        <img src="./src/View/loadingAnimations/Eclipse-0.5s-141px.gif" alt="Loading.."/>
+    </div>
+    <div id="statusIndicator">
+        <img src="./src/View/statusIndicator/animation_500_kmccuizn.gif" alt=""/>
+    </div>
     <landingPage id='landingPage'>
         <div id='navBar'>
             <div id='navLeft'><span id='appTitle'>WorkoutApp    </span></div>
@@ -44,7 +52,7 @@
                     <input type='text' id='username' autocomplete='off' class='authInput' title ="migga" placeholder='Username' name='fname'><br><br>
                     <input type='password' id='password' autocomplete='off' class='authInput' 
                     placeholder='Password' name='lname'><br><br>
-                    <input type='submit' value='Log in' id='loginButt'>
+                    <input type='submit' value='Log in' id='loginButt' onclick='logInRequest();'>
                     <span id='signUpText' onclick='signUpForm();'>Sign up!</span>                     
                     <span id='errorMessage'></span>  
                 </div>
@@ -53,5 +61,9 @@
         <div id='bottomHorizSect'>  </div>    
     </landingPage>  
     <script src="./src/Controller/landingPage/userAuthForms.js"></script>  
+    <script src="./src/Controller/landingPage/userAuthHandler.js"></script> 
+    <script src="./src/Controller/clientEndPoint/endPoint.js"></script>  
+    <script src="./src/Controller/loadingIndicator/loadingAnimate.js"></script>
+    <script src="./src/Controller/statusIndicator/statusIndicator.js"></script>  
 </body>
 </html>
