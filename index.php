@@ -41,8 +41,8 @@
             </div>
             <div id='topHorizSect_right'>
                 <div id='userAuthContainer'>
-                    <input type='text' id='username' class='authInput' title ="migga" placeholder='Username' name='fname'><br><br>
-                    <input type='password' id='password' class='authInput' 
+                    <input type='text' id='username' autocomplete='off' class='authInput' title ="migga" placeholder='Username' name='fname'><br><br>
+                    <input type='password' id='password' autocomplete='off' class='authInput' 
                     placeholder='Password' name='lname'><br><br>
                     <input type='submit' value='Log in' id='loginButt'>
                     <span id='signUpText' onclick='signUpForm();'>Sign up!</span>                     
