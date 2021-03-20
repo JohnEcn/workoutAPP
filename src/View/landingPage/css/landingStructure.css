@@ -1,0 +1,44 @@
+:root {
+  --mainColor: #4877fb;
+  --secondaryColor: #f8f9fa;
+  --mainFont: "Poppins", sans-serif;
+}
+body,
+html {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#landingPage {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 5% 56% auto;
+
+  font-family: var(--mainFont);
+  width: 100vw;
+  height: 100vh;
+}
+#navBar {
+  grid-column-start: 1;
+  grid-column-end: -1;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  background-color: var(--mainColor);
+  color: var(--secondaryColor);
+}
+#topHorizSect {
+  grid-column-start: 1;
+  grid-column-end: -1;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  background-color: var(--mainColor);
+}
+#bottomHorizSect {
+  grid-column-start: 1;
+  grid-column-end: -1;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  background-color: var(--secondaryColor);
+}

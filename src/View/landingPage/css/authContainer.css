@@ -1,0 +1,55 @@
+#userAuthContainer {
+  height: 60%;
+  width: 50%;
+  max-width: 400px;
+  background-color: var(--secondaryColor);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 7px 7px 5px -6px rgba(0, 0, 0, 0.47);
+  border-radius: 6px;
+}
+.authInput {
+  width: 70%;
+  height: 25px;
+  background-color: var(--secondaryColor);
+  border: 0px;
+  border-bottom: 2px solid var(--mainColor);
+  font-size: 22px;
+  color: black;
+}
+.authInput::placeholder {
+  color: rgba(0, 0, 0, 0.774);
+  font-size: 16px;
+}
+.authInput:focus {
+  background-color: rgb(255, 255, 255);
+  outline: none;
+}
+
+#loginButt,
+#signUpButt {
+  border-radius: 0px;
+  border: 0px;
+  width: 40%;
+  height: 30px;
+  background-color: var(--mainColor);
+  color: var(--secondaryColor);
+  box-shadow: 3px 3px 6px -3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  font-size: 16px;
+}
+#signUpText {
+  margin-top: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#errorMessage {
+  position: relative;
+  bottom: -20px;
+  color: red;
+}

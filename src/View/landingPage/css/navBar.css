@@ -1,0 +1,40 @@
+#navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#navLeft {
+  flex: 1 1 40%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+#navRight {
+  flex: 1 1 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#appTitle {
+  padding-left: 12vw;
+  font-size: 20px;
+  font-weight: 700;
+}
+#navLinks,
+.navlink {
+  display: inline;
+}
+#navLinks {
+  margin: 0;
+  padding-top: 12px;
+}
+.navlink {
+  margin-left: 8px;
+  margin-right: 8px;
+}
