@@ -1,4 +1,23 @@
 <?php 
+function checkUserAuth()
+{
+    $GLOBALS["internalRequest"] = true;   
+    $_GET['q'] ='user/workouts';    
+    $URL  = ['user','workouts'];
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");
+    
+    $response = ApiRequest("GET",$URL,"",$_GET,$_COOKIE);
+
+    $authStatus = $response == 401 ? false : true;
+    return $authStatus;
+}
+$authStatus = checkUserAuth();
+
+if($authStatus == false)
+{
+    header("Location:/workoutApp/");
+    exit();
+}
 
 ?>
 <!DOCTYPE html>

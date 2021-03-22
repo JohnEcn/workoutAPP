@@ -5,7 +5,7 @@ function fetchAndDisplayRoutines()
     $GLOBALS["internalRequest"] = true;   
     $_GET['q'] ='user/workouts';    
     $URL  = ['user','workouts'];
-    require $_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php";
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");
     $arrowImage =  "/src/View/userPanel/previewIcon.jpg";
     
     $response = ApiRequest("GET",$URL,"",$_GET,$_COOKIE);
