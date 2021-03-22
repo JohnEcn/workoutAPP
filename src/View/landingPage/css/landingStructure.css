@@ -54,10 +54,12 @@ html {
 @media screen and (max-height: 630px) and (min-height: 430px) {
   #landingPage {
     grid-template-rows: 7% 80% auto;
+    min-height: 650px;
   }
 }
 @media screen and (max-height: 429px) {
   #landingPage {
     grid-template-rows: 7% 90% 0% auto;
+    min-height: 650px;
   }
 }
