@@ -29,13 +29,13 @@
                     </td>
                     <td id='setsNumTD'>
                         <div class="input-container">
-                            <input autocomplete="off" class = "exercInput" required="" id="setsNum" type="text" >
+                            <input autocomplete="off" class = "exercInput" required="" id="setsNum" type="number" >
                             <label>Number of sets</label>
                         </div>
                     </td>
                     <td id='secRestTD' colspan="5">
                         <div class="input-container">
-                            <input  autocomplete="off" class = "exercInput " required="" id="secondsRest" type="text" >
+                            <input  autocomplete="off" class = "exercInput " required="" id="secondsRest" type="number" >
                             <label>Rest time</label>
                         </div>
                     </td>

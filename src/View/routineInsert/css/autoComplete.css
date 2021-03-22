@@ -11,6 +11,8 @@
   background-color: rgb(211, 211, 211);
   z-index: 99;
   box-sizing: border-box;
+  box-shadow: 5px 5px 6px -1px rgba(0, 0, 0, 0.26);
+  overflow-y: scroll;
 }
 .suggestionDiv {
   border-bottom: 1px solid #0d86dd7c;
@@ -24,12 +26,12 @@
   border-left: 5px solid #0784dd;
   cursor: pointer;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1100px) {
   .suggestionDiv {
-    border-bottom: 1px solid #0d86dd7c;
-    background-color: #ffffff;
-    height: 25px;
-    font-size: 16px;
-    text-align: left;
+    height: 30px;
+    font-size: 14px;
+  }
+  #autocompleteContainer {
+    width: 200%;
   }
 }

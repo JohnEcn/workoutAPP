@@ -5,6 +5,7 @@ function displayContent(statusCode,responseBody)
     leftContainer.innerHTML = responseBody; 
     sessionStorage.removeItem("tempWorkout");  
     displayExerciseList(); 
+    changeActivePage("left");
 }
 function doneLoading()
 {   

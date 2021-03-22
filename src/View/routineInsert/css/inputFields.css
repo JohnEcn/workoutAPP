@@ -35,9 +35,9 @@
   font-size: 12px;
   color: #00000077;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1100px) {
   .input-container label {
-    font-size: 10px;
+    font-size: 14px;
   }
   .input-container input {
     font-size: 15px;
@@ -47,5 +47,13 @@
     top: -12px;
     font-size: 0px;
     color: #00000077;
+  }
+}
+@media screen and (max-width: 430px) {
+  .input-container label {
+    font-size: 12px;
+  }
+  .input-container input {
+    font-size: 13px;
   }
 }
