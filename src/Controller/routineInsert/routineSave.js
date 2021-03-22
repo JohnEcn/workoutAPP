@@ -17,7 +17,8 @@ function saveRoutineResponseHandler(statusCode,responseBody)
         getWorkoutList(refreshRoutineList);
         displayExerciseList();      
         document.getElementById("workoutName").value = "";  
-        indicateOK();           
+        indicateOK();  
+        changeActivePage("right"); 
     }
     else if(statusCode == 409)
     {

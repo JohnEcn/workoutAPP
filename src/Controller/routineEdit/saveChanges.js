@@ -37,5 +37,5 @@ function saveChangesResponseHandle(statusCode,responseBody)
     {
         indicateError();
     }
-
+    changeActivePage("right");
 }

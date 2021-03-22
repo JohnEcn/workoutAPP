@@ -133,6 +133,18 @@ body {
 .deleteImg {
   width: 17px;
 }
+/* Routine edit page */
+.markedDel {
+  opacity: 0.35;
+  border-left: 4px solid red !important;
+}
+.markedDel > div {
+  background-color: red;
+}
+.newExerc {
+  border-left: 4px solid rgb(166, 255, 0) !important;
+  background-color: rgb(234, 255, 195) !important;
+}
 
 @media screen and (max-width: 1100px) {
   #saveWorkoutDiv {

@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="src/View/routineInsert/css/mainPage.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/inputFields.css">
     <link rel="stylesheet" href="src/View/routineInsert/css/autoComplete.css">
+    <link rel="stylesheet" href="src/View/routineInsert/css/backButton.css">
     <link onload='doneLoading();' rel="stylesheet" href="src/View/routineInsert/css/button.css">
 </head>
 <body>
+<div id="backBtnDiv" onclick='changeActivePage("right");'>
+    <span id='backBtn'>Back</span>
+</div>
 <div id='exerciseInsertContainer'>
     <div id='itopSection'>
         <h4 id='routineContainerTitle'>Insert a new workout routine</h3>

@@ -1,0 +1,26 @@
+#backBtnDiv {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  position: absolute;
+  bottom: 0px;
+  width: 100vw;
+  z-index: 99;
+  background-color: #f7be89;
+  height: 4vh;
+  visibility: hidden;
+  cursor: pointer;
+}
+#backBtnDiv:hover {
+  background-color: #ffd3aa;
+}
+#backBtn {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.075);
+  font-size: 1.2em;
+  font-family: "Heebo", sans-serif;
+  font-weight: 700;
+}
