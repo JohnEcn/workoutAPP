@@ -9,7 +9,6 @@ html {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 }
 #landingPage {
   display: grid;
@@ -42,10 +41,23 @@ html {
   grid-row-end: 3;
   background-color: var(--secondaryColor);
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 599px) and (min-width: 350px) {
   #landingPage {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: 10% 85% auto;
+    grid-template-rows: 7% 85% auto;
+  }
+}
+@media screen and (max-width: 350px) {
+  #landingPage {
+    grid-template-rows: 7% 95% auto !important;
+  }
+}
+@media screen and (max-height: 630px) and (min-height: 430px) {
+  #landingPage {
+    grid-template-rows: 7% 80% auto;
+  }
+}
+@media screen and (max-height: 429px) {
+  #landingPage {
+    grid-template-rows: 7% 90% 0% auto;
   }
 }
