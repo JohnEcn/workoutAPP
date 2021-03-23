@@ -77,7 +77,8 @@ if($authStatus == false)
     <script src="src/Controller/routineEdit/saveChanges.js"></script> 
     <script src="src/Controller/loadingIndicator/loadingAnimate.js"></script> 
     <script src="src/Controller/statusIndicator/statusIndicator.js"></script> 
-    <script src="src/View/userPanel/responsivePages.js"></script>                 
+    <script src="src/View/userPanel/responsivePages.js"></script> 
+    <script src="src/Controller/logOut/logOutAndRedirect.js"></script>                    
     <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
     <script src="sendWorkout.js"></script>
     <script src="workoutManage.js"></script>
