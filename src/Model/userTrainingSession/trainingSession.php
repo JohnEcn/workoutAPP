@@ -157,6 +157,7 @@ class trainingSession
                 $this->currentExercise = $this->exerciseList[$i]['exerciseID'];
                 $this->setsRemaining = $this->exerciseList[$i]['sets'];
                 $status = true;
+                $this->updateSession();
                 break;
             }
         } 
