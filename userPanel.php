@@ -56,7 +56,7 @@ if($authStatus == false)
             </div>                        
             <div id="rbottomSection">
                 <div id="addWorkoutBut" onclick="InsertRoutinePage()">Add new routine</div>
-                <div id="startWorkoutBut" onclick="startWorkout()">Start workout</div>
+                <div id="startWorkoutBut" onclick="initializeRoutine()">Start workout</div>
                 <div id="deleteRoutineBut" onclick="deleteRoutine()">Delete selected routine</div>
             </div>
         </div>      
@@ -78,7 +78,8 @@ if($authStatus == false)
     <script src="src/Controller/loadingIndicator/loadingAnimate.js"></script> 
     <script src="src/Controller/statusIndicator/statusIndicator.js"></script> 
     <script src="src/View/userPanel/responsivePages.js"></script> 
-    <script src="src/Controller/logOut/logOutAndRedirect.js"></script>                    
+    <script src="src/Controller/logOut/logOutAndRedirect.js"></script> 
+    <script src="src/Controller/routinePerform/startRoutine.js"></script>                   
     <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
     <script src="sendWorkout.js"></script>
     <script src="workoutManage.js"></script>
