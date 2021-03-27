@@ -1,9 +1,13 @@
+.exerciseRowContainer {
+  width: 100%;
+}
 .exerciseRowContainer > #exerciseContainer > exrow {
   background-color: #b1d5ff;
   height: 35px;
-  width: 500px;
+  width: 62%;
+  border-radius: 3px;
 
-  font-size: 21px;
+  font-size: 19px;
   font-family: "Heebo", sans-serif;
   font-weight: 500;
 
@@ -23,14 +27,14 @@ exrest {
 }
 
 .exerciseRowContainer > #exerciseContainer > exrow > exname {
-  flex: 35 1 0;
+  flex: 45 1 0;
   padding-left: 25px;
 }
 .exerciseRowContainer > #exerciseContainer > exrow > exnsets {
   flex: 25 1 0;
 }
 .exerciseRowContainer > #exerciseContainer > exrow > exrest {
-  flex: 40 1 0;
+  flex: 30 1 0;
   justify-content: center !important;
 }
 
@@ -59,37 +63,61 @@ exrest {
   justify-items: center;
   align-items: center;
 }
-
-@media screen and (max-width: 500px) {
-  .exerciseRowContainer {
-    width: 100%;
-  }
+@media screen and (max-width: 1000px) and (min-width: 500px) {
   .exerciseRowContainer > #exerciseContainer > exrow {
-    background-color: #b1d5ff;
-    height: 37px;
-    width: 100%;
-
-    font-size: 16px;
-    font-weight: 500;
-
-    display: flex;
-    flex-direction: row;
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 830px) and (min-width: 700px) {
+  .exerciseRowContainer > #exerciseContainer > exrow {
+    width: 75%;
   }
   .exerciseRowContainer > #exerciseContainer > exrow > exname {
-    flex: 55 1 0;
-    padding-left: 2px;
+    flex: 50 1 0;
+    padding-left: 20px;
   }
   .exerciseRowContainer > #exerciseContainer > exrow > exnsets {
-    flex: 30 1 0;
+    flex: 25 1 0;
   }
   .exerciseRowContainer > #exerciseContainer > exrow > exrest {
-    flex: 15 1 0;
-    justify-content: center !important;
+    flex: 25 1 0;
   }
   #setRowContainer {
-    width: 85%;
+    width: 76%;
+  }
+}
+@media screen and (max-width: 699px) {
+  .exerciseRowContainer > #exerciseContainer > exrow {
+    width: 80%;
+  }
+  .exerciseRowContainer > #exerciseContainer > exrow > exname {
+    flex: 50 1 0;
+    padding-left: 20px;
+  }
+  .exerciseRowContainer > #exerciseContainer > exrow > exnsets {
+    flex: 25 1 0;
+  }
+  .exerciseRowContainer > #exerciseContainer > exrow > exrest {
+    flex: 25 1 0;
+  }
+  #setRowContainer {
+    width: 76%;
   }
   #image {
     height: 20px;
+  }
+  #checkmark {
+    flex: 1 1 6%;
+  }
+}
+@media screen and (max-width: 499px) {
+  .exerciseRowContainer > #exerciseContainer > exrow {
+    font-size: 15px;
+  }
+  .exerciseRowContainer > #exerciseContainer > exrow {
+    width: 84%;
+  }
+  #setRowContainer {
+    width: 90%;
   }
 }

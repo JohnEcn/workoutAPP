@@ -5,6 +5,11 @@ function setComplete()
 }
 function selectActiveExercise(exid)
 {
-    updateSession(null,exid,updateWorkoutList);
-    updateTimerValue();
+    let activeExercID = document.getElementsByClassName("activeRowContainer")[0].id;
+
+    if(activeExercID != exid)
+    {
+        updateSession(null,exid,updateWorkoutList);
+        document.getElementById("secondsSpan").setAttribute("stopSignal","On")
+    }   
 }

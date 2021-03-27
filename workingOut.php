@@ -119,12 +119,12 @@ $activeWorkout = getActiveWorkout($sessionInfo['workoutID'])['HttpBody'];
     <div id='workingOutPageContainer'> 
         <div id="topBar"><?php include "src/View/topBar/topBar.php" ?></div>
         <div id="leftSection">
-        <?php displayWorkout($sessionInfo,$activeWorkout) ?>;
+        <?php displayWorkout($sessionInfo,$activeWorkout) ?>
         </div>
         <div id="rightSection">
             <div id="rtopSection"></div>
             <div id="rcenterSection">
-                <div id='timer'> <span id='secondsSpan'> 01:23</span>
+                <div id='timer'> <span id='secondsSpan' stopSignal = "off"> 01:23</span>
                 <div id="secondsPlusMinus"><div id='plusBut' onclick='modifyTimer(10)'>+ 10''</div><div id='minusBut' onclick='modifyTimer(-10)'>- 10''</div></div>
                         
                 </div>

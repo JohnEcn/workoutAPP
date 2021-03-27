@@ -31,11 +31,12 @@ function updateWorkoutList(httpCode,httpBody)
                 completeExerciseDiv.classList.add("completeExerciseRowContainer"); 
             }
         }
+        updateTimerValue();
     }
     else
     {
-        // indicateError();
-        // location.reload();
+        indicateError();
+        location.reload();
     }
 }
     

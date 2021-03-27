@@ -2,12 +2,13 @@
 .activeRowContainer {
   margin-top: 25px;
   margin-bottom: 25px;
+  width: 100%;
 }
 .activeRowContainer > #exerciseContainer > exrow {
   flex: 1 1 90%;
   background-color: #6db0ff;
   height: 50px;
-  width: 650px;
+  width: 80%;
   border-radius: 5px;
 
   font-size: 21px;
@@ -27,14 +28,14 @@ exrest {
 }
 
 .activeRowContainer > #exerciseContainer > exrow > exname {
-  flex: 30 1 0;
+  flex: 45 1 0;
   padding-left: 25px;
 }
 .activeRowContainer > #exerciseContainer > exrow > exsets {
-  flex: 30 1 0;
+  flex: 35 1 0;
 }
 .activeRowContainer > #exerciseContainer > exrow > exrest {
-  flex: 40 1 0;
+  flex: 20 1 0;
 }
 
 .setRow {
@@ -78,48 +79,16 @@ exrest {
 .activeSetRow {
   background-color: #c5ffaa;
 }
-@media screen and (max-width: 500px) {
-  .activeRowContainer {
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-  .activeRowContainer > #exerciseContainer {
-    width: 100%;
-  }
+@media screen and (max-width: 1000px) and (min-width: 700px) {
   .activeRowContainer > #exerciseContainer > exrow {
-    flex: 1 1 90%;
-    background-color: #6db0ff;
-    height: 40px;
-    width: 100%;
-    border-radius: 0px;
-    font-size: 16px;
+    font-size: 19px;
   }
-  .activeRowContainer > #exerciseContainer > exrow > exname {
-    flex: 55 1 0;
-    padding-left: 5px;
-  }
-  .activeRowContainer > #exerciseContainer > exrow > exsets {
-    flex: 30 1 0;
-  }
-  .activeRowContainer > #exerciseContainer > exrow > exrest {
-    flex: 15 1 0;
-  }
-  .activeSetRow {
-    background-color: #c5ffaa !important;
-  }
-  .setRow {
-    padding-left: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 5px;
+}
 
-    background-color: #e2eaed;
-    width: 40%;
-    height: 40px;
-    border: 1px solid #96bffd;
-    border-radius: 1px;
-    margin-top: 2px;
-    flex: 1 1 80%;
+@media screen and (max-width: 699px) {
+  .activeRowContainer > #exerciseContainer > exrow {
+    font-size: 19px;
+    width: 100%;
+    flex: 1 1 94%;
   }
 }
