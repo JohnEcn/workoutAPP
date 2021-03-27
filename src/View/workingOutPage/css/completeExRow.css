@@ -1,0 +1,8 @@
+.completeExerciseRowContainer {
+  pointer-events: none;
+}
+.completeExerciseRowContainer > #exerciseContainer {
+}
+.completeExerciseRowContainer > #exerciseContainer > #checkmark {
+  visibility: initial;
+}

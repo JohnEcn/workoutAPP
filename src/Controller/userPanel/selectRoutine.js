@@ -13,5 +13,6 @@ function selectedRoutine(routineID)
     window.selected = routineID;
     hideRoutinePreview();
     displayArrow(routineID);
-    displayDeleteButton("initial");       
+    displayDeleteButton("initial");    
+    enableButton("startWorkoutBut");   
 }
