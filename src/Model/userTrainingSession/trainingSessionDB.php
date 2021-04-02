@@ -13,14 +13,15 @@ class trainingSessionDB
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     }
 
-    function saveSession($userID,$workoutID,$currentExercise,$setsRemaining,$exerciseList)
+    function saveSession($userID,$workoutID,$currentExercise,$setsRemaining,$exerciseList,$sessionExStats)
     {
-        $statement = $this->pdo->prepare("INSERT INTO `trainingsession` ( `userID`,`workoutID`,`currentExerciseID`,`setsremaining`,`exerciseList`) VALUES (?,?,?,?,?)");
+        $statement = $this->pdo->prepare("INSERT INTO `trainingsession` ( `userID`,`workoutID`,`currentExerciseID`,`setsremaining`,`exerciseList`,`sessionStats`) VALUES (?,?,?,?,?,?)");
         $statement->bindParam(1,$userID,PDO::PARAM_INT);
         $statement->bindParam(2,$workoutID,PDO::PARAM_INT);
         $statement->bindParam(3,$currentExercise,PDO::PARAM_INT);
         $statement->bindParam(4,$setsRemaining,PDO::PARAM_INT);
         $statement->bindParam(5,$exerciseList,PDO::PARAM_STR);
+        $statement->bindParam(6,$sessionExStats,PDO::PARAM_STR);
         $statement->execute();        
     }
     function loadSession($userID)

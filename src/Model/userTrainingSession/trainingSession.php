@@ -7,6 +7,7 @@ class trainingSession
     private $currentExercise;
     private $setsRemaining;
     private $exerciseList;
+    private $sessionExStats;
     private $lastModified;
     private $workoutCompleteFlag = 0;
 
@@ -31,11 +32,12 @@ class trainingSession
         $this->workoutID = $this->workout['workoutID'];    
         $this->currentExercise =$this->exerciseList[0]['exerciseID'];
         $this->setsRemaining = $this->exerciseList[0]['sets'];
+        $this->sessionExStats = null;
 
         require_once("trainingSessionDB.php");
         $sessionDB = new trainingSessionDB;
         $sessionDB->deleteSession($this->userID);
-        $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList));
+        $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList),$this->sessionExStats);
     }
 
     private function loadExistingSession()
@@ -51,6 +53,7 @@ class trainingSession
             $this->setsRemaining = (int)$session[0]["setsRemaining"];        
             $this->exerciseList = json_decode($session[0]["exerciseList"],true);
             $this->lastModified = $session[0]["lastModified"];
+            $this->sessionExStats = $session[0]["sessionStats"];
         }      
     }
 
@@ -169,7 +172,7 @@ class trainingSession
         require_once("trainingSessionDB.php");
         $sessionDB = new trainingSessionDB;
         $sessionDB->deleteSession($this->userID);
-        $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList));
+        $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList),$this->sessionExStats);
     }
 
     function getSessionASSOC()
