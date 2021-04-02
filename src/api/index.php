@@ -35,8 +35,12 @@
                 $response =  $userID == NULL ? 401 : user_workouts_exercises($requestMethod,$httpBodyParameters,$userID,$queryParameters);
             break;
 
-            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions":
+            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions" && isset($path[3]) == false:
                 $response =  $userID == NULL ? 401 : user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters);
+            break;
+            
+            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions" && $path[3] == "stats":
+                $response =  $userID == NULL ? 401 : user_workouts_sessions_stats($requestMethod,$httpBodyParameters,$userID,$queryParameters);
             break; 
 
             case $path[0] == "autocomplete" && isset($path[1]) == false:
@@ -195,6 +199,55 @@
                     $response = 400;
                 }    
             break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function user_workouts_sessions_stats($requestMethod,$httpBodyParameters,$userID,$queryParameters)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {     
+            case "GET":                 
+                $response = getWorkoutStats($userID);                      
+            break;
+
+            case "POST": 
+                if(isset($queryParameters['exid']) && $queryParameters['exid'] != "" && isset($queryParameters['reps']) && $queryParameters['reps'] != "" && isset($queryParameters['wt']) && $queryParameters['wt'] != "" )
+                {
+                    $response = addExerciseStats($userID,$queryParameters['exid'],$queryParameters['reps'],$queryParameters['wt']);
+                }
+                else
+                {
+                    $response = 400;
+                }                  
+            break;
+
+            case "PUT":
+                if(isset($queryParameters['exid']) && $queryParameters['exid'] != "" && isset($queryParameters['reps']) && $queryParameters['reps'] != "" && isset($queryParameters['wt']) && $queryParameters['wt'] != "" && isset($queryParameters['exIndex']) && $queryParameters['exIndex'] != "" )
+                {
+                    $response = changeExerciseEntry($userID,$queryParameters['exid'],$queryParameters['exIndex'],$queryParameters['reps'],$queryParameters['wt']);
+                }
+                else
+                {
+                    $response = 400;
+                }    
+            break;
+            
+            case "DELETE":
+                if(isset($queryParameters['exid']) && $queryParameters['exid'] != "")
+                {
+                    $response = deleteExerciseEntry($userID,$queryParameters['exid']);
+                }
+                else
+                {
+                    $response = deleteAllEntries($userID);
+                }    
+            break;
                     
             default:
                 $response = 405;

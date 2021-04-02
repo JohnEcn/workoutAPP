@@ -360,7 +360,125 @@ function autoComplete($queryParameters)
         $response["HttpBody"]  =  NULL;
         $response["cookie"] = NULL;  
     }   
-return $response;
+    return $response;
+}
+function getWorkoutStats($userID)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userStatsHandle/sessionStatsHandler.php");
+    $stats = getRoutineStats($userID);
+    
+    if($stats === "session 404")
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  ["message"=>"No active session found"];
+        $response["cookie"] = NULL;    
+    }
+    else if($stats == null)
+    {      
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  $stats;
+        $response["cookie"] = NULL;        
+    }  
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $stats;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function addExerciseStats($userID,$exerciseID,$repetition,$weight)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userStatsHandle/sessionStatsHandler.php");
+    $status = addEntry($userID,$exerciseID,$repetition,$weight);
+    
+    if($status === "session 404")
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  ["message"=>"No active session found"];
+        $response["cookie"] = NULL;    
+    }
+    else
+    {
+        $response["HttpCode"] = 201;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;      
+}
+function changeExerciseEntry($userID,$exerciseID,$setIndex,$repetition,$weight)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userStatsHandle/sessionStatsHandler.php");
+    $status = changeEntry($userID,$exerciseID,$setIndex,$repetition,$weight);
+    
+    if($status === "session 404")
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  ["message"=>"No active session found"];
+        $response["cookie"] = NULL;    
+    }
+    else if($status == false)
+    {      
+        $response["HttpCode"] = 409;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;        
+    }  
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function deleteExerciseEntry($userID,$exerciseID)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userStatsHandle/sessionStatsHandler.php");
+    $status = removeExerciseEntry($userID,$exerciseID);
+    
+    if($status === "session 404")
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  ["message"=>"No active session found"];
+        $response["cookie"] = NULL;    
+    }
+    else if($status == false)
+    {      
+        $response["HttpCode"] = 409;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;        
+    }  
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function deleteAllEntries($userID)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userStatsHandle/sessionStatsHandler.php");
+    $status = removeAllEntries($userID);
+    
+    if($status === "session 404")
+    {
+        $response["HttpCode"] = 404;
+        $response["HttpBody"]  =  ["message"=>"No active session found"];
+        $response["cookie"] = NULL;    
+    }    
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  NULL;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
 }
 ?>
 
