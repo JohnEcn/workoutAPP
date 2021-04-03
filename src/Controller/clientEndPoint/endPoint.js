@@ -71,6 +71,28 @@ function ajaxRequest(httpPayload,queryParametersStr,calledFrom,callBackMethod)
             path = apiIndex + "/autocomplete";
             httpMethod = "GET";
         break;
+        //Session statistics handle
+        case getSessionStats:
+            path = apiIndex + "/user/workouts/sessions/stats";
+            httpMethod = "GET";
+        break;
+        case newSessionStatEntry:
+            path = apiIndex + "/user/workouts/sessions/stats";
+            httpMethod = "POST";
+        break;
+        case changeSessionStatEntry:
+            path = apiIndex + "/user/workouts/sessions/stats";
+            httpMethod = "PUT";
+        break;
+        case deleteExerciseStats:
+            path = apiIndex + "/user/workouts/sessions/stats";
+            httpMethod = "DELETE";
+        break;
+        case deleteAllStats:
+            path = apiIndex + "/user/workouts/sessions/stats";
+            httpMethod = "DELETE";
+        break;
+        
     }    
 
     if(queryParametersStr != null)
@@ -187,4 +209,40 @@ function autocompleteEx(inputStr,callBackMethod)
     queryParameters = "?str="+inputStr;    
     
     ajaxRequest(httpBody,queryParameters,autocompleteEx,callBackMethod); 
+}
+//Session statistics handle
+function getSessionStats(callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = null;      
+    
+    ajaxRequest(httpBody,queryParameters,getSessionStats,callBackMethod); 
+}
+function newSessionStatEntry(exerciseID,reps,wt,callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = "?exid="+exerciseID+"&"+"reps="+reps+"&"+"wt="+wt;
+    
+    ajaxRequest(httpBody,queryParameters,newSessionStatEntry,callBackMethod); 
+}
+function changeSessionStatEntry(index,exerciseID,reps,wt,callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = "?exid="+exerciseID+"&"+"reps="+reps+"&"+"wt="+wt+"&"+"exIndex="+index;
+    
+    ajaxRequest(httpBody,queryParameters,changeSessionStatEntry,callBackMethod); 
+}
+function deleteExerciseStats(exerciseID,callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = "?exid="+exerciseID;
+    
+    ajaxRequest(httpBody,queryParameters,deleteExerciseStats,callBackMethod); 
+}
+function deleteAllStats(callBackMethod)
+{
+    let httpBody = "";
+    let queryParameters = null;
+    
+    ajaxRequest(httpBody,queryParameters,deleteAllStats,callBackMethod); 
 }
