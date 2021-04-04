@@ -171,8 +171,7 @@ class trainingSession
     {
         require_once("trainingSessionDB.php");
         $sessionDB = new trainingSessionDB;
-        $sessionDB->deleteSession($this->userID);
-        $sessionDB->saveSession($this->userID,$this->workoutID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList),$this->sessionExStats);
+        $sessionDB->updateSession($this->userID,$this->currentExercise,$this->setsRemaining,json_encode($this->exerciseList));
     }
 
     function getSessionASSOC()
