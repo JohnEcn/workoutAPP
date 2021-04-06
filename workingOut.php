@@ -158,6 +158,7 @@ $activeWorkout = getActiveWorkout($sessionInfo['workoutID'])['HttpBody'];
 <script src="src/Controller/routinePerform/updateWorkoutList.js"></script> 
 <script src="src/Controller/routinePerform/workoutStatsHandler.js"></script> 
 <script src="src/Controller/routinePerform/timer.js"></script> 
+<script src="src/Controller/logOut/logOutAndRedirect.js"></script> 
 
 
 </body>

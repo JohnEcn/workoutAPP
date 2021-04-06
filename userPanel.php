@@ -61,6 +61,8 @@ if($authStatus == false)
             </div>
         </div>      
     </userPanel>
+    
+    
     <script src="src/View/topBar/timeAndDate.js"></script>   
     <script src="src/Controller/userPanel/selectRoutine.js"></script>
     <script src="src/Controller/userPanel/deleteRoutine.js"></script>
@@ -79,15 +81,8 @@ if($authStatus == false)
     <script src="src/Controller/statusIndicator/statusIndicator.js"></script> 
     <script src="src/View/userPanel/responsivePages.js"></script> 
     <script src="src/Controller/logOut/logOutAndRedirect.js"></script> 
-    <script src="src/Controller/routinePerform/startRoutine.js"></script>                   
-    <!-- <script src="./exerciseAutocomplete/requestAutocomplete.js"></script> 
-    <script src="sendWorkout.js"></script>
-    <script src="workoutManage.js"></script>
-    <script src="onload.js"></script>
-    <script src="./userPanel/requestPage.js"></script> 
-    <script src="./userPanel/timeAndDate.js"></script> 
-    <script src="./userPanel/deleteRoutine.js"></script> 
-    <script src="./userPanel/startWorkout.js"></script>
-    <script src="./userPanel/responsiveJS.js"></script> -->
+    <script src="src/Controller/routinePerform/startRoutine.js"></script>
+    <script src="src/Controller/clientEndPoint/endPoint.js"></script> 
+    <script src="src/Controller/userPanel/continueRoutine.js"></script>                  
 </body>
 </html>    
