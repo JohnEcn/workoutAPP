@@ -1,5 +1,6 @@
 function setComplete()
 {
+    addExerciseStatEntry();
     updateSession('setComplete',null,updateWorkoutList);
     startTimer();
 }

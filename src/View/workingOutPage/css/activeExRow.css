@@ -51,7 +51,7 @@ exrest {
   margin-left: 10px;
 
   background-color: #e2eaed;
-  width: 40%;
+  width: 10%;
   height: 40px;
   border: 1px solid #96bffd;
   border-radius: 3px;
@@ -78,6 +78,10 @@ exrest {
 }
 .activeSetRow {
   background-color: #c5ffaa;
+}
+.completeSetRow {
+  opacity: 0.65;
+  pointer-events: none;
 }
 @media screen and (max-width: 1000px) and (min-width: 700px) {
   .activeRowContainer > #exerciseContainer > exrow {

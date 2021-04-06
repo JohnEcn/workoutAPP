@@ -77,8 +77,6 @@ function displayWorkout($sessionInfo,$workout)
                                     <input type='number' pattern=\"\d*\" class='kgInput' placeholder='kg'>
                                 </div>
                             </div> 
-                            <chechmark id='checkmark'><img id='image' src='src/View/workingOutPage/checkmark.png'>
-                            </chechmark>
                         </div>";
                     }  
 
@@ -152,13 +150,15 @@ $activeWorkout = getActiveWorkout($sessionInfo['workoutID'])['HttpBody'];
             </div>             
         </div>
     </div>
+<script src="src/Controller/loadingIndicator/loadingAnimate.js"></script>
+<script src="src/Controller/statusIndicator/statusIndicator.js"></script> 
+<script src="src/Controller/clientEndPoint/endpoint.js"></script>
 <script src="src/View/topBar/timeAndDate.js"></script> 
 <script src="src/Controller/routinePerform/workoutActions.js"></script> 
 <script src="src/Controller/routinePerform/updateWorkoutList.js"></script> 
+<script src="src/Controller/routinePerform/workoutStatsHandler.js"></script> 
 <script src="src/Controller/routinePerform/timer.js"></script> 
-<script src="src/Controller/clientEndPoint/endpoint.js"></script>
-<script src="src/Controller/loadingIndicator/loadingAnimate.js"></script>
-<script src="src/Controller/statusIndicator/statusIndicator.js"></script> 
+
 
 </body>
 </html>

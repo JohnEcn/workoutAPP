@@ -31,6 +31,7 @@ function updateWorkoutList(httpCode,httpBody)
                 completeExerciseDiv.classList.add("completeExerciseRowContainer"); 
             }
         }
+        markCompletedSets();
         updateTimerValue();
     }
     else
@@ -39,4 +40,40 @@ function updateWorkoutList(httpCode,httpBody)
         location.reload();
     }
 }
+function markCompletedSets()
+{
+    let activeSet = document.getElementsByClassName("activeSetRow")[0].parentElement;
+    while(activeSet.previousElementSibling != null)
+    {
+        activeSet.previousElementSibling.classList.add("completeSetRow");
+        activeSet = activeSet.previousElementSibling;
+    }
+}
+function updateStatNumbers()
+{
+    getSessionStats(displayStatNumbers);
+}
+function displayStatNumbers(httpCode,httpBody)
+{
+    if(httpCode == 200)
+    {
+        let stats = JSON.parse(httpBody);
+        for (var key in stats) 
+        {
+            let row  = document.getElementById(key);  
+            if(row != null)
+            {
+                for(let i = 0;i< stats[key].length;i++)
+                {
+                    console.log(i);
+                    row.children[1].children[i].children[0].children[1].children[0].value = stats[key][i][0];
+                    row.children[1].children[i].children[0].children[1].children[1].value = stats[key][i][1];
+                }   
+            }                    
+        }
+    }
+}
+markCompletedSets();
+updateStatNumbers();
+
     
