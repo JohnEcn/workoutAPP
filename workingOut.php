@@ -68,10 +68,11 @@ function displayWorkout($sessionInfo,$workout)
                     {
                         $setClass = $activeSet == $j && $activeExercise == $exID ? '"setRow activeSetRow"' : 'setRow';
                         $currentSet = ($exSets+1) - $j; 
+                        $ordIndicator = $currentSet === 1 ? "st" : ($currentSet === 2 ? "nd" : ($currentSet === 3 ? "rd" : "th"));
                         echo 
                         "<div id='setRowContainer'>
                             <div id='$exID-setRow$j' class=$setClass>
-                                <div class='setNumber'>$currentSet<span class='numb'>st</span>&nbsp;Set</div>
+                                <div class='setNumber'>$currentSet<span class='numb'>$ordIndicator</span>&nbsp;Set</div>
                                 <div class='statsInput'>
                                     <input type='number' pattern=\"\d*\" class='repsInput' placeholder='Reps' onfocusout='editExerciseStatEntry(this)'>
                                     <input type='number' pattern=\"\d*\" class='kgInput' placeholder='Weight' onfocusout='editExerciseStatEntry(this)'>
