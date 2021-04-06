@@ -23,6 +23,7 @@ html {
   padding-top: 8%;
   padding-left: 12%;
   z-index: 1;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
