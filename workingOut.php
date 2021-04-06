@@ -73,8 +73,8 @@ function displayWorkout($sessionInfo,$workout)
                             <div id='$exID-setRow$j' class=$setClass>
                                 <div class='setNumber'>$currentSet<span class='numb'>st</span>&nbsp;Set</div>
                                 <div class='statsInput'>
-                                    <input type='number' pattern=\"\d*\" class='repsInput' placeholder='Reps'>
-                                    <input type='number' pattern=\"\d*\" class='kgInput' placeholder='Weight'>
+                                    <input type='number' pattern=\"\d*\" class='repsInput' placeholder='Reps' onfocusout='editExerciseStatEntry(this)'>
+                                    <input type='number' pattern=\"\d*\" class='kgInput' placeholder='Weight' onfocusout='editExerciseStatEntry(this)'>
                                 </div>
                             </div> 
                         </div>";
