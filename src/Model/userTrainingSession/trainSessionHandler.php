@@ -28,11 +28,14 @@ function createTrainSession($workoutID,$userID)
 function nextSet($userID)
 {
     $trainSession = new trainingSession(NULL,$userID);
-    $status = $trainSession->nextSet();
+    $trainSession->nextSet();
     $sessionArray = $trainSession->getSessionASSOC();
-    if($status == "WORKOUT COMPLETE")
+    $completeCheck = $trainSession->workoutCompleteCheck();
+    if($completeCheck == true)
     {
-        return $status;
+        workoutComplete($userID);
+        $trainSession->endSession();
+        return "workout Complete";
     }
     else
     {
@@ -62,6 +65,12 @@ function changeExercise($userID,$exerciseId)
     {
         return $status;
     }    
+}
+
+function workoutComplete($userID)
+{
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/workoutApp/src/Model/workoutLogHandle/workoutLogHandler.php");  
+    logSessionStats($userID);
 }
 
 ?>

@@ -103,8 +103,7 @@ class trainingSession
     {  
         if($this->workoutCompleteFlag == 2)
         {
-            return $this->workoutComplete();
-            
+            return null;            
         }
         for($i = 0; $i < count($this->exerciseList); $i++)
         {
@@ -145,9 +144,16 @@ class trainingSession
         $this->updateSession();
     }
 
-    function workoutComplete()
+    function workoutCompleteCheck()
     {
-        return "WORKOUT COMPLETE";
+        if($this->workoutCompleteFlag >= 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     function selectExercise($exerciseId)
@@ -183,6 +189,12 @@ class trainingSession
         $trainSession['exerciseList'] = $this->exerciseList;        
         
         return $trainSession;
+    }
+    function endSession()
+    {
+        require_once("trainingSessionDB.php");
+        $sessionDB = new trainingSessionDB;
+        $sessionDB->deleteSession($this->userID);        
     }
 }
 ?>
