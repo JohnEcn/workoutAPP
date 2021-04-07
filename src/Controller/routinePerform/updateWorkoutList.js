@@ -1,6 +1,7 @@
 function updateWorkoutList(httpCode,httpBody)
 {
-    if(httpCode == 200)
+    let completeCheck = JSON.parse(httpBody)['message'] == "Workout session complete." ? true : false;
+    if(httpCode == 200 && !completeCheck)
     {
         let updatedWorkout = JSON.parse(httpBody);
         let exerciseList = updatedWorkout.exerciseList;
@@ -33,6 +34,10 @@ function updateWorkoutList(httpCode,httpBody)
         }
         markCompletedSets();
         updateTimerValue();
+    }
+    else if(httpCode == 200 && completeCheck)
+    {
+        workoutComplete();
     }
     else
     {
@@ -72,6 +77,10 @@ function displayStatNumbers(httpCode,httpBody)
             }                    
         }
     }
+}
+function workoutComplete()
+{
+    window.location.href = "/workoutAPP/userPanel.php";
 }
 markCompletedSets();
 updateStatNumbers();

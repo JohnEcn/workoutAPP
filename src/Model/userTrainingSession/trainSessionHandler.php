@@ -35,7 +35,7 @@ function nextSet($userID)
     {
         workoutComplete($userID);
         $trainSession->endSession();
-        return "workout Complete";
+        return "WORKOUT COMPLETE";
     }
     else
     {
