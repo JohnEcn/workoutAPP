@@ -49,6 +49,8 @@ function startTimer()
         }
         let minutes = Math.floor(ms / 60000);
         let seconds = ((ms % 60000) / 1000).toFixed(0);
+        seconds = seconds < 0 ? 0 : seconds;
+        minutes = minutes < 0 ? 0 : minutes;
         let result = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds
         timerContainer.innerText = result;  
                 
