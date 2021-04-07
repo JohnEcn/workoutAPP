@@ -34,7 +34,6 @@ function nextSet($userID)
     if($completeCheck == true)
     {
         workoutComplete($userID);
-        $trainSession->endSession();
         return "WORKOUT COMPLETE";
     }
     else
@@ -71,6 +70,9 @@ function workoutComplete($userID)
 {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/workoutApp/src/Model/workoutLogHandle/workoutLogHandler.php");  
     logSessionStats($userID);
+
+    $trainSession = new trainingSession(NULL,$userID);
+    $trainSession->endSession();
 }
 
 ?>

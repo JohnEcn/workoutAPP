@@ -20,10 +20,15 @@ function logSessionStats($userID)
     
     require_once("workoutLog.php");
     $log = new workoutLog($userID); 
-    if($sessionStats != null || count($sessionStats) !=0)
+    if($sessionStats == null || count($sessionStats) ==0)
+    {     
+
+    }   
+    else
     {
         $log->addWorkoutLogEntry($workoutID,$sessionStats,$workout,$date);
-    }    
+             
+    }  
 }
 
 ?>

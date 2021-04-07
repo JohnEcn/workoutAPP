@@ -333,6 +333,18 @@ function setComplete($userID)
     }    
     return $response;
 }
+function endWorkoutSession($userID)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
+    workoutComplete($userID);
+    
+    $response["HttpCode"] = 200;
+    $response["HttpBody"]  =  ["message"=>"Workout session complete."];
+    $response["cookie"] = NULL;    
+    
+    return $response;
+}
 function autoComplete($queryParameters)
 {
     $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   

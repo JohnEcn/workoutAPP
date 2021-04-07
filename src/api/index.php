@@ -193,7 +193,11 @@
                 elseif(isset($queryParameters['action']) && $queryParameters['action'] == "setComplete")
                 {
                     $response = setComplete($userID);
-                }    
+                }
+                elseif(isset($queryParameters['action']) && $queryParameters['action'] == "endWorkout")
+                {
+                    $response = endWorkoutSession($userID);
+                }      
                 else
                 {
                     $response = 400;
