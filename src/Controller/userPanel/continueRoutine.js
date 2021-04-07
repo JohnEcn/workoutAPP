@@ -8,7 +8,9 @@ function displayContButt()
 }
 function dismissCurrentRoutine()
 {
+    updateSession('endWorkout',null,dismissCurrentRoutineResponseHandler);
     btnDiv = document.getElementById("contRoutineBut");
+
     btnDiv.id = "startWorkoutBut";
     btnDiv.innerHTML = "Start workout";
     setTimeout(() => 
@@ -17,6 +19,21 @@ function dismissCurrentRoutine()
         initializeRoutine();
         });
     }, 1000);    
+}
+function dismissCurrentRoutineResponseHandler(httpCode,httpBody)
+{
+    if(httpBody == 200)
+    {
+        
+        btnDiv.id = "startWorkoutBut";
+        btnDiv.innerHTML = "Start workout";
+        setTimeout(() => 
+        {   indicateOK();
+            btnDiv.addEventListener("click", function (){
+            initializeRoutine();
+            });
+        }, 1000); 
+    }     
 }
 function contCurrentRoutine(){
     window.location.href = "WorkingOut.php";
