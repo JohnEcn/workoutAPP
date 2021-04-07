@@ -284,7 +284,8 @@
 
             if($response['cookie'] != NULL)
             {
-                setcookie("token", $response['cookie'], time()+(60*60*24*10),"/");
+                //setcookie("token", $response['cookie'], time()+(60*60*24*10),"/");
+                setcookie("token", $response['cookie'],0,"/");
             }
             if($response['HttpBody'] != NULL)
             {
