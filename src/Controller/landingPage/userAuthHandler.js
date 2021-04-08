@@ -37,8 +37,6 @@ function signUpResponseHandle(statusCode,httpBody)
         logInForm();
 
         let errorMessageContainer = document.getElementById("errorMessage");
-        errorMessageContainer.innerText = "Registration Succesfull!";
-        errorMessageContainer.style.color = "green";
     }
     else
     {

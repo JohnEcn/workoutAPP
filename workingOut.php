@@ -123,7 +123,7 @@ $activeWorkout = getActiveWorkout($sessionInfo['workoutID'])['HttpBody'];
         <div id="rightSection">
             <div id="rtopSection"></div>
             <div id="rcenterSection">
-                <div id='timer'> <span id='secondsSpan' stopSignal = "off"> 01:23</span>
+                <div id='timer'> <span id='secondsSpan' stopSignal = "off"> 00:00</span>
                 <div id="secondsPlusMinus"><div id='plusBut' onclick='modifyTimer(10)'>+ 10''</div><div id='minusBut' onclick='modifyTimer(-10)'>- 10''</div></div>
                         
                 </div>
