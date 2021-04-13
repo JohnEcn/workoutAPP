@@ -36,6 +36,36 @@ class workoutLog
             }          
         }
     }
+    function getExerciseLogs($exercise,$entriesNum)//Last X logs of a single exercise
+    {
+        require_once("workoutLogDB.php");
+        $logsDB = new workoutLogDB(); 
+        $exerciseLog = $logsDB->retrieveExerciseLogs($exercise,$this->userID);
+        $exerciseLogDesc = array_reverse($exerciseLog);
+        $exerciseLog = array_slice($exerciseLogDesc, 0, $entriesNum);
+        return $exerciseLog;
+    }    
+    function getExercisesCount($entriesNum)//Exercise list with times performed
+    {
+        require_once("workoutLogDB.php");
+        $logsDB = new workoutLogDB(); 
+        $exerciseCount = $logsDB->retrieveExercisesCount($this->userID);
+        $exerciseCountSliced = array_slice($exerciseCount, 0, $entriesNum);
+        return $exerciseCountSliced;
+    }   
+    function getExerciseRP($exercise)//RP for an exercise
+    {
+        require_once("workoutLogDB.php");
+        $logsDB = new workoutLogDB(); 
+        $exerciseRP = $logsDB->retrieveExerciseRP($exercise,$this->userID);
+        return $exerciseRP;
+    }
+    function routinesLogs()//routineList and times performed each routine
+    {
+        require_once("workoutLogDB.php");
+        $logsDB = new workoutLogDB(); 
+        $routinesLogs = $logsDB->retrieveRoutinesLogs($this->userID);
+        return $routinesLogs;        
+    }
 }
-
 ?>

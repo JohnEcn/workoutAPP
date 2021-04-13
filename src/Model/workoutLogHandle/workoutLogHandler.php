@@ -30,5 +30,48 @@ function logSessionStats($userID)
              
     }  
 }
-
+function getExerciseListLogs($userID,$numberOfresults)
+{
+    require_once("workoutLog.php");
+    $log = new workoutLog($userID); 
+    $result = $log->getExercisesCount($numberOfresults);
+    if(count($result) <= 0)
+    {
+        return false;
+    }
+    return $result;
+}
+function getRoutinesListLogs($userID)
+{
+    require_once("workoutLog.php");
+    $log = new workoutLog($userID); 
+    $result = $log->routinesLogs();
+    if(count($result) <= 0)
+    {
+        return false;
+    }
+    return $result;
+}
+function getExerciseLogsList($userID,$exercise,$numberOfresults)
+{
+    require_once("workoutLog.php");
+    $log = new workoutLog($userID); 
+    $result = $log->getExerciseLogs($exercise,$numberOfresults);
+    if(count($result) <= 0)
+    {
+        return false;
+    }
+    return $result;
+}
+function getExerciseRepMax($userID,$exercise)
+{
+    require_once("workoutLog.php");
+    $log = new workoutLog($userID); 
+    $result = $log->getExerciseRP($exercise);
+    if(count($result) == 0 || $result[0]['1RP']== null)
+    {
+        return false;
+    }
+    return $result;
+}
 ?>
