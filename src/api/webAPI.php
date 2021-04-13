@@ -492,5 +492,85 @@ function deleteAllEntries($userID)
     }  
     return $response;       
 }
+function getRoutineLogsEntries($userID)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/workoutLogHandle/workoutLogHandler.php");
+    $status = getRoutinesListLogs($userID);
+    
+    if($status === false)
+    {
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;    
+    }    
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $status;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function getExercisesLogsEntries($userID,$numberOfresults)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/workoutLogHandle/workoutLogHandler.php");
+    $status = getExerciseListLogs($userID,$numberOfresults);
+    
+    if($status === false)
+    {
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;    
+    }    
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $status;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function getExerciseLogsEntries($userID,$exercise,$numberOfresults)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/workoutLogHandle/workoutLogHandler.php");
+    $status = getExerciseLogs($userID,$exercise,$numberOfresults);
+    
+    if($status === false)
+    {
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;    
+    }    
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $status;
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
+function getExerciseRP($userID,$exercise)
+{
+    $response = ["HttpCode"=>"","HttpBody"=>"","cookie"=>""];   
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/workoutLogHandle/workoutLogHandler.php");
+    $status = getExerciseRepMax($userID,$exercise);
+    
+    if($status === false)
+    {
+        $response["HttpCode"] = 204;
+        $response["HttpBody"]  =  NULL; 
+        $response["cookie"] = NULL;    
+    }    
+    else
+    {
+        $response["HttpCode"] = 200;
+        $response["HttpBody"]  =  $status[0];
+        $response["cookie"] = NULL; 
+    }  
+    return $response;       
+}
 ?>
 

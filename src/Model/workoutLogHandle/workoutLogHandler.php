@@ -52,7 +52,7 @@ function getRoutinesListLogs($userID)
     }
     return $result;
 }
-function getExerciseLogsList($userID,$exercise,$numberOfresults)
+function getExerciseLogs($userID,$exercise,$numberOfresults)
 {
     require_once("workoutLog.php");
     $log = new workoutLog($userID); 

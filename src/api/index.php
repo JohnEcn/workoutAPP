@@ -35,6 +35,10 @@
                 $response =  $userID == NULL ? 401 : user_workouts_exercises($requestMethod,$httpBodyParameters,$userID,$queryParameters);
             break;
 
+            case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "logs":
+                $response =  $userID == NULL ? 401 : user_workouts_logs($requestMethod,$httpBodyParameters,$userID,$queryParameters);
+            break;
+
             case $path[0] == "user" && $path[1] == "workouts" && $path[2] == "sessions" && isset($path[3]) == false:
                 $response =  $userID == NULL ? 401 : user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters);
             break;
@@ -157,6 +161,45 @@
                     $response = 400;
                 }    
             break;  
+                    
+            default:
+                $response = 405;
+            break;           
+        } 
+
+        return $response;
+    }
+    function user_workouts_logs($requestMethod,$httpBodyParameters,$userID,$queryParameters)
+    {   
+        $response = NULL;  
+        switch($requestMethod)
+        {                      
+            case "GET": 
+                if(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" && isset($queryParameters['exName']) && isset($queryParameters['info']) && $queryParameters['info'] == 'rp')
+                {
+                    $exercise = $queryParameters['exName'];
+                    $response = getExerciseRP($userID,$exercise);
+                }
+                elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" && isset($queryParameters['exName']))
+                {
+                    $exercise = $queryParameters['exName'];
+                    $numberOfresults = isset($queryParameters['resultsNum']) && is_int((int)$queryParameters['resultsNum']) ? $queryParameters['resultsNum'] : 10;
+                    $response = getExerciseLogsEntries($userID,$exercise,$numberOfresults);
+                }
+                elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" )
+                {
+                    $entriesNum = isset($queryParameters['resultsNum']) && is_int((int)$queryParameters['resultsNum']) ? $queryParameters['resultsNum'] : 10;
+                    $response = getExercisesLogsEntries($userID,$entriesNum);
+                }
+                elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/routines" )
+                {
+                    $response = getRoutineLogsEntries($userID);
+                }
+                else
+                {
+                    $response = 400;
+                }                  
+            break;             
                     
             default:
                 $response = 405;
