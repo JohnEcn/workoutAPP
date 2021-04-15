@@ -43,7 +43,7 @@ class workoutLog
         $exerciseLog = $logsDB->retrieveExerciseLogs($exercise,$this->userID);
         $exerciseLogDesc = array_reverse($exerciseLog);
         $exerciseLog = array_slice($exerciseLogDesc, 0, $entriesNum);
-        return $exerciseLog;
+        return array_reverse($exerciseLog);
     }    
     function getExercisesCount($entriesNum)//Exercise list with times performed
     {

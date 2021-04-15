@@ -1,7 +1,7 @@
 <?php 
 
 function fetchAndDisplayRoutines()
-{   
+{   $_GET =[];  
     $GLOBALS["internalRequest"] = true;   
     $_GET['q'] ='user/workouts';    
     $URL  = ['user','workouts'];
