@@ -11,6 +11,8 @@ function requestPage(page,callBackMethod){
             url += "/workoutAPP/src/View/routineInsert/workoutInsert.php"
             httpMethod = "GET";                        
         break;
+        default: url += page;
+        break;
     }
 
     let requestPage = new XMLHttpRequest;

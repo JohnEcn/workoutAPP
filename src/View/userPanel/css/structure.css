@@ -144,6 +144,18 @@ userPanel {
   justify-content: flex-start;
   align-items: center;
 }
+#secondaryBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#chartImg {
+  width: 25px;
+  padding-left: 20px;
+  cursor: pointer;
+  display: none;
+}
 #addWorkoutBut {
   height: 30px;
   width: 150px;
@@ -293,5 +305,8 @@ userPanel {
     grid-row-start: 2;
     grid-row-end: 5;
     display: none;
+  }
+  #chartImg {
+    display: initial;
   }
 }

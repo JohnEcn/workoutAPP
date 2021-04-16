@@ -6,6 +6,7 @@ function displayContent(statusCode,responseBody)
     sessionStorage.removeItem("tempWorkout");  
     displayExerciseList(); 
     changeActivePage("left");
+    enableButton("addWorkoutBut");
 }
 function doneLoading()
 {   

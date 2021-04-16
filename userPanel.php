@@ -29,7 +29,9 @@ if($authStatus == false)
     <link rel="stylesheet" href="src/View/userPanel/css/routinePreview.css">
     <link rel="stylesheet" href="src/View/topBar/css/topBar.css"> 
     <link rel="stylesheet" href="src/View/loadingAnimations/loading.css"> 
-    <link rel="stylesheet" href="src/View/statusIndicator/statusIndicator.css">      
+    <link rel="stylesheet" href="src/View/statusIndicator/statusIndicator.css">  
+    <link rel="stylesheet" href="src/View/chartsPage/css/charts.css">    
+    <link rel="stylesheet" href="src/View/routineInsert/css/backButton.css">
     <title>Document</title>
 </head>
 <body>
@@ -47,6 +49,7 @@ if($authStatus == false)
             <?php include "src/View/topBar/topBar.php" ?>         
         </div>
         <div id="leftSection">
+            <?php include "src/View/chartsPage/charts.php"?> 
         </div>
         <div id="rightSection">
            <div id="rtopSection">
@@ -55,7 +58,8 @@ if($authStatus == false)
                <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/View/userPanel/routineList.php"); ?>                        
             </div>                        
             <div id="rbottomSection">
-                <div id="addWorkoutBut" onclick="InsertRoutinePage()">Add new routine</div>
+                <div id='secondaryBtns'>
+                <div id="addWorkoutBut" onclick="InsertRoutinePage()">Add new routine</div><div id='chartsIcon'><img id='chartImg' onclick='requestStatsPage(0)' src='src/View/chartsPage/css/chart-646.png'></div></div>
                 <div id="startWorkoutBut" onclick="initializeRoutine()">Start workout</div>
                 <div id="deleteRoutineBut" onclick="deleteRoutine()">Delete selected routine</div>
             </div>
@@ -83,6 +87,7 @@ if($authStatus == false)
     <script src="src/Controller/logOut/logOutAndRedirect.js"></script> 
     <script src="src/Controller/routinePerform/startRoutine.js"></script>
     <script src="src/Controller/clientEndPoint/endPoint.js"></script> 
-    <script src="src/Controller/userPanel/continueRoutine.js"></script>                  
+    <script src="src/Controller/userPanel/continueRoutine.js"></script> 
+    <script src="src/Controller/userPanel/chartsPage.js"></script>                   
 </body>
 </html>    
