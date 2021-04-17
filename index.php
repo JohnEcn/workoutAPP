@@ -1,5 +1,10 @@
 <?php
 
+if(isset($_GET['demo']))
+{
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/demoUserAcc/demoAccount.php");
+    exit();
+}
 
 
 ?>
@@ -44,7 +49,7 @@
                      <h3 class='secondaryTitles'>&bull; Visualize your progress.</h3>
                      <h3 class='secondaryTitles'>&bull; Compare yourself to others.</h3>
                      <h3 class='secondaryTitles'>&bull; Improve.</h3>
-                     <input type="submit" value="Try a demo" id="demoButton">
+                     <input onclick="location.href='/workoutApp/userPanel.php';" type="submit" value="Try a demo" id="demoButton">
                 </div>       
             </div>
             <div id='topHorizSect_right'>
