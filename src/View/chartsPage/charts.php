@@ -76,6 +76,7 @@ function createChartDataArr($startIndex = 0 )
         $GLOBALS["internalRequest"] = true;   
         $_GET['q'] ="user/workouts/logs/exercises"; 
         $_GET['exName'] = $exerciseName;   
+        $_GET['resultsNum'] =100; 
         $URL  = ['user','workouts','logs','exercises'];
         require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");    
         $exerciseLogs = ApiRequest("GET",$URL,"",$_GET,$_COOKIE);
