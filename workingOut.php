@@ -136,7 +136,7 @@ $activeWorkout = getActiveWorkout($sessionInfo['workoutID'])['HttpBody'];
                     <div id='skipSetBut' class='bottomButton' onclick="setComplete()">
                     Next exercise                   
                 </div>  
-                <div id='endWorkoutBut' class='bottomButton' onclick="setComplete()">
+                <div id='endWorkoutBut' class='bottomButton' onclick="endWorkout()">
                     End workout                    
                 </div>
                 </div>
