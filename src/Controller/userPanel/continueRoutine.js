@@ -10,29 +10,21 @@ function dismissCurrentRoutine()
 {
     updateSession('endWorkout',null,dismissCurrentRoutineResponseHandler);
     btnDiv = document.getElementById("contRoutineBut");
-
-    btnDiv.id = "startWorkoutBut";
-    btnDiv.innerHTML = "Start workout";
-    setTimeout(() => 
-    {
-        btnDiv.addEventListener("click", function (){
-        initializeRoutine();
-        });
-    }, 1000);    
 }
 function dismissCurrentRoutineResponseHandler(httpCode,httpBody)
 {
-    if(httpBody == 200)
+    if(httpCode == 200)
     {
         
         btnDiv.id = "startWorkoutBut";
         btnDiv.innerHTML = "Start workout";
         setTimeout(() => 
         {   indicateOK();
+            requestStatsPage();  
             btnDiv.addEventListener("click", function (){
             initializeRoutine();
-            });
-        }, 1000); 
+            });  
+        }, 200); 
     }     
 }
 function contCurrentRoutine(){
