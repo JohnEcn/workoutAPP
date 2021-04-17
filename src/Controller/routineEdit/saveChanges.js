@@ -32,10 +32,13 @@ function saveChangesResponseHandle(statusCode,responseBody)
     if(statusCode == 200 || statusCode == 201)
     {
         indicateOK();
+        if(window.innerWidth > 800){requestStatsPage();}
     }
     else
     {
         indicateError();
     }
     changeActivePage("right");
+    
+   
 }

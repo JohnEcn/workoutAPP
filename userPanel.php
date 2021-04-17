@@ -59,7 +59,7 @@ if($authStatus == false)
             </div>                        
             <div id="rbottomSection">
                 <div id='secondaryBtns'>
-                <div id="addWorkoutBut" onclick="InsertRoutinePage()">Add new routine</div><div id='chartsIcon'><img id='chartImg' onclick='requestStatsPage(0)' src='src/View/chartsPage/css/chart-646.png'></div></div>
+                <div id="addWorkoutBut" onclick="InsertRoutinePage()">Add new routine</div><div id='chartsIcon'><img id='chartImg' onclick='requestStatsPage()' src='src/View/chartsPage/css/chart-646.png'></div></div>
                 <div id="startWorkoutBut" onclick="initializeRoutine()">Start workout</div>
                 <div id="deleteRoutineBut" onclick="deleteRoutine()">Delete selected routine</div>
             </div>

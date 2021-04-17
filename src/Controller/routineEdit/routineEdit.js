@@ -9,6 +9,7 @@ function displayEditRoutinePage(statusCode,responseBody)
 {
     //Loads the page that is used for routine insertion and displays the selected routine
     displayContent(statusCode,responseBody);
+    displayChartPageBut();
     getWorkout(window.workoutForEdit,insertWorkoutToSessionStorage);
     window.workoutForEdit = null;
 }
