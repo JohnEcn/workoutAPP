@@ -18,6 +18,7 @@ if(isset($_GET['demo']))
     <link rel="stylesheet" href="./src/View/landingPage/css/landingStructure.css">
     <link rel="stylesheet" href="./src/View/landingPage/css/navBar.css">
     <link rel="stylesheet" href="./src/View/landingPage/css/topHorizSection.css">
+    <link rel="stylesheet" href="./src/View/landingPage/css/botHorizSection.css">
     <link rel="stylesheet" href="./src/View/landingPage/css/authContainer.css">
     <link rel="stylesheet" href="./src/View/loadingAnimations/loading.css">
     <link rel="stylesheet" href="./src/View/statusIndicator/statusIndicator.css">
@@ -32,13 +33,13 @@ if(isset($_GET['demo']))
     </div>
     <landingPage id='landingPage'>
         <div id='navBar'>
-            <div id='navLeft'><span id='appTitle'>WorkoutApp    </span></div>
+            <div id='navLeft'><span id='appTitle'>WorkoutApp</span></div>
             <div id='navRight'>
                 <ul id='navLinks'>
-                    <li class='navlink'>Whatever</li>
-                    <li class='navlink'>Whatever</li>
-                    <li class='navlink'>Whatever</li>
-                    <li class='navlink'>Whatever</li>
+                    <li class='navlink'></li>
+                    <li class='navlink'></li>
+                    <li class='navlink'></li>
+                    <li class='navlink'></li>
                 </ul>                
             </div>            
         </div>
@@ -47,9 +48,9 @@ if(isset($_GET['demo']))
                 <div id='mainTextContainer'>
                     <h1 id='mainTitle'><span>Organize</span> and <span>track</span> your workouts.</h1>
                      <h3 class='secondaryTitles'>&bull; Visualize your progress.</h3>
-                     <h3 class='secondaryTitles'>&bull; Compare yourself to others.</h3>
+                     <h3 class='secondaryTitles'>&bull; Optimize your workouts  .</h3>
                      <h3 class='secondaryTitles'>&bull; Improve.</h3>
-                     <input onclick="location.href='/workoutApp/userPanel.php';" type="submit" value="Try a demo" id="demoButton">
+                     <input onclick="location.href='/workoutApp?demo';" type="submit" value="Try a demo" id="demoButton">
                 </div>       
             </div>
             <div id='topHorizSect_right'>
@@ -63,7 +64,24 @@ if(isset($_GET['demo']))
                 </div>
             </div>
             </div>
-        <div id='bottomHorizSect'>  </div>    
+        <div id='bottomHorizSect'> 
+        <div class='tabs' id='tab1'>
+        <h3 class='tabheader'><span class='verb'>Create</span> workout routines.</h3>   
+            <div class='tabImgDiv'><img class=tabImg src="./src/View/landingPage/css/list_transparent.png" alt=""></div>     
+        </div> 
+         <div class='tabs' id='tab1'>
+          <h3 class='tabheader'><span class='verb'>Perform</span> them and log your stats.</h3>    
+           <div class='tabImgDiv'><img class=tabImg src="./src/View/landingPage/css/lift.png" alt=""></div>       
+         </div>
+          <div class='tabs' id='tab1'>
+           <h3 class='tabheader'><span class='verb'>Track</span> your progress.</h3>     
+           <div class='tabImgDiv'><img class=tabImg src="./src/View/landingPage/css/chart.png" alt=""></div>      
+          </div>
+           <div class='tabs' id='tab1'>
+            <h3 class='tabheader'><span class='verb'>Optimize</span> your training.</h3>     
+            <div class='tabImgDiv'><img class=tabImg src="./src/View/landingPage/css/success.png" alt=""></div>      
+           </div>        
+        </div>    
     </landingPage>  
     <script src="./src/Controller/landingPage/userAuthForms.js"></script>  
     <script src="./src/Controller/landingPage/userAuthHandler.js"></script> 

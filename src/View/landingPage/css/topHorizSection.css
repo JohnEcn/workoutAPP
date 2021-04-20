@@ -45,12 +45,13 @@
   width: 190px;
   height: 40px;
   border-radius: 25px;
-  border: 0px;
+  border: 1px solid #00000056;
   background-color: #94bfff;
   color: var(--secondaryColor);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0px 0px 8px 3px rgba(80, 80, 80, 0.37);
 }
 #demoButton:hover {
   background-color: #fcfcfc;
