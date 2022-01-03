@@ -18,13 +18,15 @@
     
     function ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies)
     {
-        $userID = checkAuth($cookies);  //Check if the user us authorized
+        require_once("endpoints/userAuthEndpoint.php");
+        $user = new userAuthEndpoint;
+        $userID = $user->identifyUser($cookies['token']); //Check if the user us authorized
         $response = NULL;               //response[0] contains the httpCode and the response[1] contains the reply body and response[2] contains cookies              
 
         switch($path)
         {
             case $path[0] == "user" && $path[1] == "auth" && isset($path[2]) == false:                        
-                $response =  $userID == NULL && $requestMethod == "DELETE"  ? 401 : user_auth($requestMethod,$httpBodyParameters,$userID);                
+                $response =  $userID == NULL && $requestMethod == "DELETE"  ? 401 : user_auth($requestMethod,$httpBodyParameters,$cookies);                
             break;
                     
             case $path[0] == "user" && $path[1] == "workouts" && isset($path[2]) == false:
@@ -58,21 +60,28 @@
         
         return $response;
     }
-    function user_auth($requestMethod,$httpBodyParameters,$userID)
+    function user_auth($requestMethod,$httpBodyParameters,$token)
     {   
+        require_once("endpoints/userAuthEndpoint.php");
         $response = NULL;  
         switch($requestMethod)
         {                  
             case "POST": 
-                $response = userAuth($httpBodyParameters);
+                $user = new userAuthEndpoint;
+                $user->userAuth($httpBodyParameters);
+                $response = $user->getResponse();
             break; 
                     
             case "PUT": 
-                $response = userSignUp($httpBodyParameters);
+                $user = new userAuthEndpoint;
+                $user->userSignUp($httpBodyParameters);
+                $response = $user->getResponse();
             break;
 
             case "DELETE": 
-                $response = endAuth($userID);
+                $user = new userAuthEndpoint;
+                $user->endAuth($token);
+                $response = $user->getResponse();
             break;  
                     
             default:
