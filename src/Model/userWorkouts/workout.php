@@ -106,7 +106,7 @@ class workout
         $name = $exercise['name'];
         $sets = $exercise['sets'];
         $rest = $exercise['rest'];
-        $index = count($this->exerciseList)+1;
+        $index = $exercise['index'];
         $workoutID = $this->workoutID;
         $exerciseID = NULL;
 

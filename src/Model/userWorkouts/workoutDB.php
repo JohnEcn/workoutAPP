@@ -5,7 +5,10 @@ class workoutDB
     public $pdo = null;
     public function __construct()
     {
-        require $_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/databaseConnection/dbConnect.php"; 
+        $DBusername = "root";
+        $DBpassword = "";
+        $DBserver = "mysql:server=localhost;dbname=workoutapi";
+
         $this->pdo = new PDO($DBserver,$DBusername,$DBpassword);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     }
