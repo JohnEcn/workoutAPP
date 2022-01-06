@@ -5,11 +5,7 @@ class DBconnect
     public $pdo = null;
     public function __construct()
     {
-        //require_once($_SERVER["DOCUMENT_ROOT"]."\workoutApp\src\Model\databaseConnection\dbConnect.php");     
-        $DBusername = "root";
-        $DBpassword = "";
-        $DBserver = "mysql:server=localhost;dbname=workoutapi";
-        
+        require $_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/databaseConnection/dbConnect.php"; 
         $this->pdo = new PDO($DBserver,$DBusername,$DBpassword);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     }
@@ -53,7 +49,7 @@ class DBconnect
     }
     public function retrieveUserID($token)
     {
-        $statement = $this->pdo->prepare("SELECT userID FROM user WHERE token = ?");
+        $statement = $this->pdo->prepare("SELECT userID , username   FROM user WHERE token = ?");
         $statement->bindParam(1,$token,PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);        
