@@ -93,13 +93,16 @@
     }
     function user_workouts($requestMethod,$httpBodyParameters,$userID,$queryParameters)
     {   
+        require_once("endpoints/userWorkoutEndpoint.php");
+        $workoutEndp = new userWorkoutEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {   
             case "GET": 
                 if(isset($queryParameters['wid']))
                 {
-                    $response = getWorkout($queryParameters['wid'],$userID);
+                    $workoutEndp->retrieveWorkout($queryParameters['wid'],$userID);
+                    $response = $workoutEndp->getResponse();
                 }
                 elseif(count($queryParameters) == 1)
                 {
@@ -112,13 +115,15 @@
             break; 
 
             case "POST": 
-                $response = saveWorkout($httpBodyParameters,$userID);
+                $workoutEndp->insertWorkout($httpBodyParameters,$userID);
+                $response = $workoutEndp->getResponse();
             break; 
                     
             case "PUT": 
                 if(isset($queryParameters['newName']) && isset($queryParameters['wid']))
                 {
-                    $response = alterWorkoutName($queryParameters['wid'],$userID,$queryParameters['newName']);
+                    $workoutEndp->changeWorkoutName($queryParameters['wid'],$userID,$queryParameters['newName']);
+                    $response = $workoutEndp->getResponse();
                 }
                 else
                 {
@@ -129,7 +134,8 @@
             case "DELETE":
                 if(isset($queryParameters['wid']) && $queryParameters['wid'] != "")
                 {
-                    $response = removeWorkout($queryParameters['wid'],$userID);
+                    $workoutEndp->deleteWorkout($queryParameters['wid'],$userID);
+                    $response = $workoutEndp->getResponse();
                 }
                 else
                 {
@@ -146,13 +152,16 @@
     }
     function user_workouts_exercises($requestMethod,$httpBodyParameters,$userID,$queryParameters)
     {   
+        require_once("endpoints/userWorkoutEndpoint.php");
+        $workoutEndp = new userWorkoutEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {                      
             case "PUT": 
                 if(isset($queryParameters['wid']) && $queryParameters['wid'] != "" )
                 {
-                    $response = addNewExercise($queryParameters['wid'],$userID,$httpBodyParameters);
+                    $workoutEndp->addExercise($queryParameters['wid'],$userID,$httpBodyParameters);
+                    $response = $workoutEndp->getResponse();
                 }
                 else
                 {
@@ -163,7 +172,8 @@
             case "DELETE":
                 if(isset($queryParameters['wid']) && isset($queryParameters['exid']) && $queryParameters['wid'] != "" && $queryParameters['exid'] != "" )
                 {
-                    $response = removeExercise($queryParameters['wid'],$userID,$queryParameters['exid']);
+                    $workoutEndp->deleteExercise($queryParameters['wid'],$userID,$queryParameters['exid']);
+                    $response = $workoutEndp->getResponse();
                 }
                  else
                 {
@@ -175,7 +185,6 @@
                 $response = 405;
             break;           
         } 
-
         return $response;
     }
     function user_workouts_logs($requestMethod,$httpBodyParameters,$userID,$queryParameters)
