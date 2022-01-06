@@ -9,6 +9,11 @@ Class userWorkoutEndpoint extends Endpoint
         try
         {
             //get workout data
+            if(!isset($Workout['workout']['name']) || !isset($Workout['workout']['exerciseList']))
+            {
+                throw new Exception("Required data missing");
+            }
+            
             $name =  $Workout['workout']['name'];
             $exerciseList = $Workout['workout']['exerciseList'];  
 

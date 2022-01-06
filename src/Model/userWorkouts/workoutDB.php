@@ -107,10 +107,10 @@ class workoutDB
         $statement->bindParam(1, $workoutID, PDO::PARAM_INT);
         $statement->execute();
 
-        $statement = $this->pdo->prepare("INSERT INTO `userDeletedroutine` (`userID`, `routineID`) VALUES (?,?)");
-        $statement->bindParam(1, $userID, PDO::PARAM_INT);
-        $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
-        $statement->execute();
+        // $statement = $this->pdo->prepare("INSERT INTO `userDeletedroutine` (`userID`, `routineID`) VALUES (?,?)");
+        // $statement->bindParam(1, $userID, PDO::PARAM_INT);
+        // $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
+        // $statement->execute();
     }      
 }
 ?>

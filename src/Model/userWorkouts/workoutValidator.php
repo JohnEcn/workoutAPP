@@ -11,7 +11,7 @@ Class workoutValidator{
         {   
             try
             {
-                validateWorkoutName($userID,$name);
+                $this->validateWorkoutName($userID,$name);
                 $exercisesValid = $this->validateExercises($exerciseList);
 
                 if(!$exercisesValid)

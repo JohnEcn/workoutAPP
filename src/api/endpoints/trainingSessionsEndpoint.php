@@ -31,12 +31,12 @@ Class trainingSessionsEndpoint extends Endpoint
             $UserWorkoutEndpoint->retrieveWorkout($workoutID,$userID);
             $workoutRoutine = $UserWorkoutEndpoint->getResponse();
             
-            if($workoutRoutine['httpCode'] != 200)
+            if($workoutRoutine['HttpCode'] != 200)
             {
                 throw new Exception("Workout routine not found.");
             }
 
-            $trainSession = new trainingSession($workoutRoutine,$userID);
+            $trainSession = new trainingSession($workoutRoutine["HttpBody"],$userID);
             $sessionInfo = $trainSession->getSessionASSOC();
             parent::setResponse(201,$sessionInfo,NULL);
         }
@@ -83,13 +83,13 @@ Class trainingSessionsEndpoint extends Endpoint
             //End the session only after the stats have saved, because endSession() deletes the workout stats
             $trainSession = new trainingSession(NULL,$userID);
             $trainSession->endSession();
-            parent::setResponse(200,$sessionInfo,NULL);
+            parent::setResponse(200,NULL,NULL);
         }
         catch(Exception $e)
         {
         }
     } 
-    public function changeExercise($userID,$exerciseId)
+    public function changeExercise($exerciseId,$userID)
     {
         try
         {
