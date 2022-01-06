@@ -63,23 +63,21 @@
     function user_auth($requestMethod,$httpBodyParameters,$token)
     {   
         require_once("endpoints/userAuthEndpoint.php");
+        $user = new userAuthEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {                  
             case "POST": 
-                $user = new userAuthEndpoint;
                 $user->userAuth($httpBodyParameters);
                 $response = $user->getResponse();
             break; 
                     
             case "PUT": 
-                $user = new userAuthEndpoint;
                 $user->userSignUp($httpBodyParameters);
                 $response = $user->getResponse();
             break;
 
             case "DELETE": 
-                $user = new userAuthEndpoint;
                 $user->endAuth($token);
                 $response = $user->getResponse();
             break;  
@@ -228,17 +226,21 @@
     }
     function user_workouts_sessions($requestMethod,$httpBodyParameters,$userID,$queryParameters)
     {   
+        require_once("endpoints/trainingSessionsEndpoint.php");
+        $sessionEndpoint = new trainingSessionsEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {     
-            case "GET":                 
-                $response = getTrainingSession($userID);                         
+            case "GET":   
+                $sessionEndpoint->retrieveTrainSession($userID);   
+                $response = $sessionEndpoint->getResponse();                     
             break;
 
             case "POST": 
                 if(isset($queryParameters['wid']) && $queryParameters['wid'] != "" )
                 {
-                    $response = newTrainingSession($queryParameters['wid'],$userID);
+                    $sessionEndpoint->createTrainSession($queryParameters['wid'],$userID);  
+                    $response = $sessionEndpoint->getResponse();  
                 }
                 else
                 {
@@ -249,15 +251,18 @@
             case "PUT":
                 if(isset($queryParameters['exid']) && $queryParameters['exid'] != "")
                 {
-                    $response = selectExercise($queryParameters['exid'],$userID);
+                    $sessionEndpoint->changeExercise($queryParameters['exid'],$userID);  
+                    $response = $sessionEndpoint->getResponse();  
                 }
                 elseif(isset($queryParameters['action']) && $queryParameters['action'] == "setComplete")
                 {
-                    $response = setComplete($userID);
+                    $sessionEndpoint->nextSet($userID);
+                    $response = $sessionEndpoint->getResponse();  
                 }
                 elseif(isset($queryParameters['action']) && $queryParameters['action'] == "endWorkout")
                 {
-                    $response = endWorkoutSession($userID);
+                    $sessionEndpoint->workoutComplete($userID);
+                    $response = $sessionEndpoint->getResponse(); 
                 }      
                 else
                 {
