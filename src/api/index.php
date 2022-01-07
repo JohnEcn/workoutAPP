@@ -383,8 +383,7 @@
             } 
         }          
     }
-
-    require_once("webAPI.php");    
+   
     if(isset($GLOBALS["internalRequest"]) == false)
     {
         $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
