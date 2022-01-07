@@ -124,6 +124,13 @@ class workout
                 }                
             }   
         return $selectedExercise;
+    } 
+    public function getRoutineList()
+    {
+        require_once("workoutDB.php");
+        $workoutDB = new workoutDB();  
+        $routineList = $workoutDB->getWorkoutList($this->userID);
+        return $routineList;
     }    
 }
 

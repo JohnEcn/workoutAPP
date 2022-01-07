@@ -104,7 +104,8 @@
                 }
                 elseif(count($queryParameters) == 1)
                 {
-                    $response = getWorkoutList($userID);
+                    $workoutEndp->getWorkoutsList($userID);
+                    $response = $workoutEndp->getResponse();
                 }
                 else
                 {

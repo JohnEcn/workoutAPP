@@ -163,4 +163,25 @@ Class userWorkoutEndpoint extends Endpoint
             parent::setResponse(404,["message"=>$e->getMessage()],NULL);
         }
     }
+    public function getWorkoutsList($userID)
+    {
+        try
+        {
+            $workout = new workout(NULL,0,$userID,NULL);
+            $routines = $workout->getRoutineList();
+
+            if(empty($routines))
+            {
+                parent::setResponse(204,["message"=>"Workout List IS empty"],NULL);
+            }
+            else
+            {   
+                parent::setResponse(200,$routines,NULL);
+            }
+        }
+        catch(Exception $e)
+        {
+            parent::setResponse(409,NULL,NULL);
+        }
+    }
 }
