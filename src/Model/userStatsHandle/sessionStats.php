@@ -4,7 +4,7 @@ class sessionStats
     private $exerciseList =[];
     private $sessionExists;
     
-    function __construct($userID)
+    public function __construct($userID)
     {  
         $this->userID = $userID;
         $this->exerciseList = $this->getStatsList();
@@ -23,8 +23,7 @@ class sessionStats
         {
             $this->sessionExists = true;
         }  
-        return $response == null ? [] : json_decode($response[0],true);
-        
+        return $response == null ? [] : json_decode($response[0],true);        
     }        
     private function saveStatsList()
     {
@@ -65,8 +64,7 @@ class sessionStats
         else
         {
             return false;
-        }
-       
+        }       
     }
     public function clearAllEntries()
     {
@@ -84,8 +82,7 @@ class sessionStats
         else
         {
             return false;
-        }
-       
+        }       
     }  
     public function sessionExistsCheck()
     {

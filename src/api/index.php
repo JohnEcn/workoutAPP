@@ -279,17 +279,21 @@
     }
     function user_workouts_sessions_stats($requestMethod,$httpBodyParameters,$userID,$queryParameters)
     {   
+        require_once("endpoints/sessionStatsEndpoint.php");
+        $sessionStatsEndpoint = new sessionStatsEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {     
-            case "GET":                 
-                $response = getWorkoutStats($userID);                      
+            case "GET":     
+                $sessionStatsEndpoint->getRoutineStats($userID);          
+                $response = $sessionStatsEndpoint->getResponse();                   
             break;
 
             case "POST": 
                 if(isset($queryParameters['exid']) && $queryParameters['exid'] != "" && isset($queryParameters['reps']) && $queryParameters['reps'] != "" && isset($queryParameters['wt']) && $queryParameters['wt'] != "" )
                 {
-                    $response = addExerciseStats($userID,$queryParameters['exid'],$queryParameters['reps'],$queryParameters['wt']);
+                    $sessionStatsEndpoint->addEntry($userID,$queryParameters['exid'],$queryParameters['reps'],$queryParameters['wt']);         
+                    $response = $sessionStatsEndpoint->getResponse(); 
                 }
                 else
                 {
@@ -300,7 +304,8 @@
             case "PUT":
                 if(isset($queryParameters['exid']) && $queryParameters['exid'] != "" && isset($queryParameters['reps']) && $queryParameters['reps'] != "" && isset($queryParameters['wt']) && $queryParameters['wt'] != "" && isset($queryParameters['exIndex']) && $queryParameters['exIndex'] != "" )
                 {
-                    $response = changeExerciseEntry($userID,$queryParameters['exid'],$queryParameters['exIndex'],$queryParameters['reps'],$queryParameters['wt']);
+                    $sessionStatsEndpoint->changeEntry($userID,$queryParameters['exid'],$queryParameters['exIndex'],$queryParameters['reps'],$queryParameters['wt']);       
+                    $response = $sessionStatsEndpoint->getResponse(); 
                 }
                 else
                 {
@@ -311,11 +316,13 @@
             case "DELETE":
                 if(isset($queryParameters['exid']) && $queryParameters['exid'] != "")
                 {
-                    $response = deleteExerciseEntry($userID,$queryParameters['exid']);
+                    $sessionStatsEndpoint->removeExerciseEntry($userID,$queryParameters['exid']);      
+                    $response = $sessionStatsEndpoint->getResponse(); 
                 }
                 else
                 {
-                    $response = deleteAllEntries($userID);
+                    $sessionStatsEndpoint->removeAllEntries($userID);
+                    $response = $sessionStatsEndpoint->getResponse(); 
                 }    
             break;
                     
