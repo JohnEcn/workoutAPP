@@ -187,6 +187,9 @@
     }
     function user_workouts_logs($requestMethod,$httpBodyParameters,$userID,$queryParameters)
     {   
+        
+        require_once("endpoints/workoutLogsEndpoint.php");
+        $workoutLogsEndp = new workoutLogsEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {                      
@@ -194,22 +197,28 @@
                 if(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" && isset($queryParameters['exName']) && isset($queryParameters['info']) && $queryParameters['info'] == 'rp')
                 {
                     $exercise = $queryParameters['exName'];
-                    $response = getExerciseRP($userID,$exercise);
+                    $workoutLogsEndp->getExerciseRepMax($userID,$exercise);
+                    $response = $workoutLogsEndp->getResponse();
                 }
                 elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" && isset($queryParameters['exName']))
                 {
                     $exercise = $queryParameters['exName'];
                     $numberOfresults = isset($queryParameters['resultsNum']) && is_int((int)$queryParameters['resultsNum']) ? $queryParameters['resultsNum'] : 10;
-                    $response = getExerciseLogsEntries($userID,$exercise,$numberOfresults);
+
+                    $workoutLogsEndp->getExerciseLogs($userID,$exercise,$numberOfresults);
+                    $response = $workoutLogsEndp->getResponse();
                 }
                 elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/exercises" )
                 {
                     $entriesNum = isset($queryParameters['resultsNum']) && is_int((int)$queryParameters['resultsNum']) ? $queryParameters['resultsNum'] : 10;
-                    $response = getExercisesLogsEntries($userID,$entriesNum);
+
+                    $workoutLogsEndp->getExerciseListLogs($userID,$entriesNum);
+                    $response = $workoutLogsEndp->getResponse();
                 }
                 elseif(isset($queryParameters['q']) && $queryParameters['q'] == "user/workouts/logs/routines" )
                 {
-                    $response = getRoutineLogsEntries($userID);
+                    $workoutLogsEndp->getRoutinesListLogs($userID);
+                    $response = $workoutLogsEndp->getResponse();
                 }
                 else
                 {

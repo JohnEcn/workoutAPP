@@ -75,10 +75,16 @@ Class trainingSessionsEndpoint extends Endpoint
     public function workoutComplete($userID)
     {
         try
-        {            
-            //Use the workoutLogEndpoint.php to save the completed workout stats
-            // ----------- To be completed ---------------------
-            // -------------------------------------------------
+        {   
+                 
+            require_once("workoutLogsEndpoint.php");
+            $workoutLogger = new workoutLogsEndpoint;
+            $workoutLogger->logSessionStats($userID);
+            $wasLoggerSuccessfull = $workoutLogger->getResponse(); 
+            if(!$wasLoggerSuccessfull)
+            {
+                throw new Exception("Workout did not get saved.");
+            }
 
             //End the session only after the stats have saved, because endSession() deletes the workout stats
             $trainSession = new trainingSession(NULL,$userID);
@@ -87,6 +93,7 @@ Class trainingSessionsEndpoint extends Endpoint
         }
         catch(Exception $e)
         {
+            parent::setResponse(409,$e->getMessage(),NULL);
         }
     } 
     public function changeExercise($exerciseId,$userID)
