@@ -344,11 +344,14 @@
     }
     function request_AutoComplete($requestMethod,$queryParameters)
     {
+        require_once("endpoints/autocompleteExercisesEndpoint.php");
+        $autocomplete = new autocompleteExercisesEndpoint;
         $response = NULL;  
         switch($requestMethod)
         {     
-            case "GET":                 
-                $response = autoComplete($queryParameters);                         
+            case "GET":  
+                $autocomplete->autoComplete($queryParameters);           
+                $response = $autocomplete->getResponse();                
             break;
 
             default:
@@ -380,7 +383,7 @@
         }          
     }
 
-    require_once("webAPI.php");
+    require_once("webAPI.php");    
     if(isset($GLOBALS["internalRequest"]) == false)
     {
         $response = ApiRequest($requestMethod,$path,$httpBodyParameters,$queryParameters,$cookies);
