@@ -5,10 +5,7 @@ class workoutDB
     public $pdo = null;
     public function __construct()
     {
-        $DBusername = "root";
-        $DBpassword = "";
-        $DBserver = "mysql:server=localhost;dbname=workoutapi";
-
+        require $_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/databaseConnection/dbConnect.php"; 
         $this->pdo = new PDO($DBserver,$DBusername,$DBpassword);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     }
@@ -110,10 +107,10 @@ class workoutDB
         $statement->bindParam(1, $workoutID, PDO::PARAM_INT);
         $statement->execute();
 
-        $statement = $this->pdo->prepare("INSERT INTO `userDeletedroutine` (`userID`, `routineID`) VALUES (?,?)");
-        $statement->bindParam(1, $userID, PDO::PARAM_INT);
-        $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
-        $statement->execute();
+        // $statement = $this->pdo->prepare("INSERT INTO `userDeletedroutine` (`userID`, `routineID`) VALUES (?,?)");
+        // $statement->bindParam(1, $userID, PDO::PARAM_INT);
+        // $statement->bindParam(2, $workoutID, PDO::PARAM_INT);
+        // $statement->execute();
     }      
 }
 ?>

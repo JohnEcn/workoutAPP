@@ -1,4 +1,8 @@
 <?php
+require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/endpoints/userAuthEndpoint.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/endpoints/userWorkoutEndpoint.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/endpoints/trainingSessionsEndpoint.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainingSessionDB.php");
 class demoAccount 
 {
     private $token = null;
@@ -17,38 +21,30 @@ class demoAccount
     private function newDemoUser()
     {    
         $token = null;
-        $status = 400;
+        $authStatus = 400;
         $userParameters = []; 
+        $userAuth = new userAuthEndpoint;
         
-        while($status != 201)
+        while($authStatus != 201)
         {      
             $userParameters['user'] = "Demo_".bin2hex(openssl_random_pseudo_bytes(5));
             $userParameters['pass'] = bin2hex(openssl_random_pseudo_bytes(5));
             $userParameters['passconf'] = $userParameters['pass'];
             $userParameters['email'] = bin2hex(openssl_random_pseudo_bytes(3))."@demo.dm";
             
-            $_GET = [];
-            $GLOBALS["internalRequest"] = true;   
-            $_GET['q'] ='user/auth';    
-            $URL  = ['user','auth'];
-            require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");    
-            $response = ApiRequest("PUT",$URL,$userParameters,$_GET,$_COOKIE);
-            $status = $response['HttpCode'];
+            $userAuth->userSignUp($userParameters);
+            $response =  $userAuth->getResponse();
+            $authStatus = $response['HttpCode'];
         }
 
-        $_GET = [];
-        $GLOBALS["internalRequest"] = true;   
-        $_GET['q'] ='user/auth';    
-        $URL  = ['user','auth'];
-        require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");    
-        $response = ApiRequest("POST",$URL,$userParameters,$_GET,$_COOKIE);   
-        $token = $response['cookie'];
-        return $token;      
+        $userAuth->userAuth($userParameters);
+        $response =  $userAuth->getResponse();
+        return $response['cookie'];
     }
     private function getUserID()
     {
-        require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userAuth/checkAuth.php");
-        return getUserID($this->token);
+        $userAuth = new userAuthEndpoint;
+        return $userAuth->identifyUser($this->token);
     }
     private function insertDemoWorkouts()
     {
@@ -58,9 +54,11 @@ class demoAccount
         $URL  = ['user','workouts'];    
         require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/api/index.php");   
 
-        $response = ApiRequest("POST",$URL,json_decode($this->demoRoutines[0], true),$_GET,$_COOKIE);
-        $response = ApiRequest("POST",$URL,json_decode($this->demoRoutines[1], true),$_GET,$_COOKIE);
-        $response = ApiRequest("POST",$URL,json_decode($this->demoRoutines[2], true),$_GET,$_COOKIE);
+        $workoutsEndpoint = new userWorkoutEndpoint;      
+        
+        $workoutsEndpoint->insertWorkout(json_decode($this->demoRoutines[0],true),$this->userID);
+        $workoutsEndpoint->insertWorkout(json_decode($this->demoRoutines[1],true),$this->userID);
+        $workoutsEndpoint->insertWorkout(json_decode($this->demoRoutines[2],true),$this->userID);
     }
     private function insertDemoLogs()
     {
@@ -73,13 +71,11 @@ class demoAccount
             $exerciseList = $logs[0]['exerciseList'];
             $sessionStats = $logs[$i]['sessionStats'];
 
-            require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainingSessionDB.php");
-            $sessionDB = new trainingSessionDB;
+            $sessionDB = new trainingSessionDB($userID); 
             $sessionDB->saveSession($userID,$workoutID,1,1,$exerciseList,$sessionStats);
 
-            require_once($_SERVER["DOCUMENT_ROOT"] . "/workoutAPP/src/Model/userTrainingSession/trainSessionHandler.php");
-
-            workoutComplete($this->userID);
+            $session = new trainingSessionsEndpoint;
+            $session->workoutComplete($this->userID);
         }
     }
     private function sendCookieAndRedirect()
@@ -88,6 +84,5 @@ class demoAccount
         header("Location:/workoutApp/userPanel.php");
     }
 }
-
 $dm = new demoAccount();
 ?>
